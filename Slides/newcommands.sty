@@ -1,0 +1,692 @@
+%
+% User-defined latex commands for All latex documents in ATLAS
+%
+
+\RequirePackage{xspace}
+\RequirePackage{xcolor}
+\RequirePackage{textpos}
+\RequirePackage{tikz}
+\RequirePackage{minted}
+
+%%% Units
+\newcommand{\nmrad}     {\ensuremath{\mathrm{nm}}-\ensuremath{\mathrm{rad}}\xspace}
+\newcommand{\um}        {\ensuremath{\mathrm{\mu m}}\xspace}
+\newcommand{\mum}       {\um}
+\newcommand{\mamp}      {\ensuremath{{\rm \,mA}}\xspace}%% milliAmps
+\newcommand{\muamp}     {\ensuremath{{\mu\rm A}}\xspace}%% microAmps
+
+\DeclareGraphicsRule{.png}{png}{.png}{}
+\DeclareGraphicsRule{.pdf}{pdf}{.pdf}{}
+\DeclareGraphicsRule{.gif}{gif}{.gif}{}
+\DeclareGraphicsRule{.GIF}{GIF}{.GIF}{}
+
+
+%%% Math symbols
+\newcommand{\approptoinn}[2]{\mathrel{\vcenter{
+  \offinterlineskip\halign{\hfil$##$\cr
+    #1\propto\cr\noalign{\kern2pt}#1\sim\cr\noalign{\kern-2pt}}}}}
+
+\newcommand{\appropto}{\mathpalette\approptoinn\relax}
+
+
+%%% Energy
+\newcommand{\fourfgev}    {\ensuremath{450~\mathrm{GeV}}\xspace}
+\newcommand{\ninehgev}    {\ensuremath{900~\mathrm{GeV}}\xspace}
+\newcommand{\seventev}    {\ensuremath{7~\mathrm{TeV}}\xspace}
+\newcommand{\eighttev}    {\ensuremath{8~\mathrm{TeV}}\xspace}
+\newcommand{\thirteentev} {\ensuremath{13~\mathrm{TeV}}\xspace}
+\newcommand{\fourteentev} {\ensuremath{14~\mathrm{TeV}}\xspace}
+\newcommand{\tevrange}    {\ensuremath{13-14~\mathrm{TeV}}\xspace}
+\newcommand{\sqsthrteen}  {\ensuremath{\sqrt{s} = \thirteentev}\xspace}
+\newcommand{\sqsthirteen} {\ensuremath{\sqrt{s} = \thirteentev}\xspace}
+\newcommand{\sqsfourt}    {\ensuremath{\sqrt{s} = \fourteentev}\xspace}
+\newcommand{\sqsTev}      {\ensuremath{\sqrt{s} = 1.96~\mathrm{TeV}}\xspace}
+\newcommand{\threehtev}   {\ensuremath{3.5~\mathrm{TeV}}\xspace}
+\newcommand{\sqsnineh}    {\ensuremath{\sqrt{s} = \ninehgev}\xspace}
+\newcommand{\sqsseven}    {\ensuremath{\sqrt{s} = \seventev}\xspace}
+\newcommand{\sqseight}    {\ensuremath{\sqrt{s} = \eighttev}\xspace}
+\newcommand{\sqsthirt}    {\ensuremath{\sqrt{s} = \thirteentev}\xspace}
+\newcommand{\sqsrange}    {\ensuremath{\sqrt{s} = \tevrange}\xspace}
+\newcommand{\bunchSp}     {\ensuremath{\tau_{\rm bunch}}\xspace}
+
+%%% Collider
+\newcommand{\pp}        {\ensuremath{pp}\xspace}
+\newcommand{\ppbar}     {\ensuremath{p\overline{p}}\xspace}
+%\newcommand{\ee}        {\ensuremath{e^+e^-}\xspace}
+\newcommand{\qqbar}     {\ensuremath{q\overline{q}}\xspace}
+\newcommand{\eetomm }   {\ensuremath{\ee\rightarrow\mu^+\mu^-}\xspace}
+\newcommand{\SppS}      {\ensuremath{S\ppbar S}\xspace}
+
+%%% Processes and final states
+\newcommand{\Zprime}    {\ensuremath{Z^{\prime}}\xspace}
+\newcommand{\Wprime}    {\ensuremath{W^{\prime}}\xspace}
+\newcommand{\tprime}    {\ensuremath{t^{\prime}}\xspace}
+\newcommand{\atprime}   {\ensuremath{\overline{t}^{\prime}}\xspace}
+\newcommand{\bprime}    {\ensuremath{b^{\prime}}\xspace}
+\newcommand{\abprime}   {\ensuremath{\overline{b}^{\prime}}\xspace}
+\newcommand{\Zprimett}  {\ensuremath{\Zprime\ra \ttbar}\xspace}
+\newcommand{\Zqq}       {\ensuremath{Z\ra \qqbar}\xspace}
+\newcommand{\Wqq}       {\ensuremath{W\ra \qqbar}\xspace}
+\newcommand{\Wlnu}      {\ensuremath{W\ra \ell\nu}\xspace}
+\newcommand{\Wmunu}     {\ensuremath{W\ra \mu\nu}\xspace}
+\newcommand{\Wenu}      {\ensuremath{W\ra e\nu}\xspace}
+\newcommand{\Zbb}       {\ensuremath{Z\ra\bbbar}\xspace}
+\newcommand{\tWb}       {\ensuremath{t \ra Wb}\xspace}
+\newcommand{\Wqqbar}    {\ensuremath{W \ra \qqbar}\xspace}
+\newcommand{\WpT}       {\ensuremath{\pT^{\Wboson}}\xspace}
+\newcommand{\Wmass}     {\ensuremath{m_{\Wboson}}\xspace}
+\newcommand{\WmassT}    {\ensuremath{m^{\Wboson}_{T}}\xspace}
+\newcommand{\topmass}   {\ensuremath{m_{\rm top}}\xspace}
+\newcommand{\Wjet}      {\ensuremath{W}+jet\xspace}
+\newcommand{\Wjets}     {\ensuremath{W}+jets\xspace}
+\newcommand{\Zjet}      {\ensuremath{Z}+jet\xspace}
+\newcommand{\Zjets}     {\ensuremath{Z}+jets\xspace}
+\newcommand{\Ztautau}   {\ensuremath{Z\rightarrow\tau\tau}\xspace}
+\newcommand{\Ztautaujets}{\Ztautau+jets\xspace}
+\newcommand{\gamjet}    {\ensuremath{\gamma}+jet\xspace}
+\newcommand{\Znunu}     {\ensuremath{\Zboson\ra\nu\nu}\xspace}
+\newcommand{\Zmumu}     {\ensuremath{\Zboson\ra\mu\mu}\xspace}
+\newcommand{\Znunujets} {\Znunu+jets\xspace}
+\newcommand{\Zmumujets} {\Zmumu+jets\xspace}
+\newcommand{\Wlnujets}  {\Wlnu+jets\xspace}
+\newcommand{\mstop}     {\ensuremath{m_{\stop}}\xspace}
+
+%%% Luminosity
+\newcommand{\invpb}     {~\ensuremath{{\rm pb}^{-1}}\xspace}
+\newcommand{\invnb}     {~\ensuremath{{\rm nb}^{-1}}\xspace}
+\newcommand{\invfb}     {~\ensuremath{{\rm fb}^{-1}}\xspace}
+\newcommand{\invmub}    {~\ensuremath{\mu{\rm b}^{-1}}\xspace}
+\newcommand{\cmSqSec}   {cm\ensuremath{^{-2}}s\ensuremath{^{-1}}\xspace}
+\newcommand{\lumi}      {\ensuremath{\mathcal L}\xspace}
+\newcommand{\calL}      {\lumi}
+\newcommand{\dldz}      {\ensuremath{d\lumi/dz}\xspace}
+\newcommand{\lofz}      {\ensuremath{{\mathcal L}(z)}\xspace}
+\newcommand{\sigyofz}   {\ensuremath{\sigma_y(z)}\xspace}
+\newcommand{\Lsp}       {\ensuremath{{\mathcal L}_{sp}}\xspace}
+\newcommand{\StoB}      {\ensuremath{S/B}\xspace}
+
+%%% Jet kinematics
+%\newcommand{\pT}        {\ensuremath{p_{T}}\xspace}
+%\newcommand{\pt}        {\ensuremath{p_{T}}\xspace}
+%\newcommand{\eT}        {\ensuremath{E_{T}}\xspace}
+%\newcommand{\ET}        {\ensuremath{E_{T}}\xspace}
+\newcommand{\JVF}       {\ensuremath{JVF}\xspace}
+\newcommand{\ptjet}     {\ensuremath{\pt^{\rm jet}}\xspace}
+\newcommand{\ptthr}     {\ensuremath{\pt^{3}}\xspace}
+\newcommand{\ptfour}    {\ensuremath{\pt^{4}}\xspace}
+\newcommand{\mjet}      {\ensuremath{m^{\rm jet}}\xspace}
+\newcommand{\massjet}   {\mjet}
+\newcommand{\Mjet}      {\mjet}
+\newcommand{\MJ}        {\ensuremath{M_{\textrm{J}}^{\Sigma}}\xspace}
+\newcommand{\mjetAvg}   {\ensuremath{\langle\mjet\rangle}\xspace}
+\newcommand{\masstrkjet}{\ensuremath{M^{\rm track \;jet}}\xspace}
+\newcommand{\ptemjes}   {\ensuremath{\pt^{\rm jet, EM+JES}}\xspace}
+\newcommand{\mThresh}   {\ensuremath{M_{\rm threshold}}\xspace}
+%\newcommand{\ptgjes}{\ensuremath{\pt^{{\rm \ jet},GCW+JES}}\xspace}
+%\newcommand{\ptljes}{\ensuremath{\pt^{{\rm \ jet},LCW+JES}}\xspace}
+\newcommand{\ptgjes}    {\ensuremath{\pt^{\rm GCW+JES}}\xspace}
+\newcommand{\ptljes}    {\ensuremath{\pt^{\rm LCW+JES}}\xspace}
+\newcommand{\ptem}      {\ensuremath{\pt^{\rm EM}}\xspace}
+\newcommand{\etemjet}   {\ensuremath{\pt^{\rm jet,EM}}\xspace}
+\newcommand{\etjet}     {\ensuremath{\et^{\rm jet}}\xspace}
+\newcommand{\etjesjet}  {\ensuremath{\et^{\rm jet, EM+JES}}\xspace}
+\newcommand{\etajet}    {\ensuremath{\eta^{\rm jet}}\xspace}
+\newcommand{\rapjet}    {\ensuremath{y^{\rm jet}}\xspace}
+\newcommand{\phijet}    {\ensuremath{\phi^{\rm jet}}\xspace}
+\newcommand{\wjet}      {\ensuremath{w^{\rm jet}}\xspace}
+\newcommand{\pthat}     {\ensuremath{\hat{p}_{T}}\xspace}
+\newcommand{\njet}      {\ensuremath{N_{\rm jet}}\xspace}
+\newcommand{\Njet}      {\njet}
+\newcommand{\HTtwo}     {\ensuremath{\frac{1}{2}H_{T,2}}\xspace}
+\newcommand{\ptavg}     {\ensuremath{\frac{1}{2}(p_{T,1} + p_{T,2})}\xspace}
+\newcommand{\etaDet}    {\ensuremath{\eta_{\rm det}}\xspace}
+\newcommand{\Ecalo}     {\ensuremath{E_{\rm calo}}\xspace}
+\newcommand{\EcaloEM}   {\ensuremath{E_{\rm calo}^{\rm EM}}\xspace}
+\newcommand{\EcaloEMJES}{\ensuremath{E_{\rm calo}^{\rm EM+JES}}\xspace}
+\newcommand{\pTlead}    {\ensuremath{p_{T,{\rm lead}}}\xspace}
+\newcommand{\pTsublead} {\ensuremath{p_{T,{\rm sub-leading}}}\xspace}
+\newcommand{\pTone}     {\ensuremath{p_{T,1}}\xspace}
+\newcommand{\ptone}     {\pTone}
+\newcommand{\pTtwo}     {\ensuremath{p_{T,2}}\xspace}
+\newcommand{\pttwo}     {\pTtwo}
+\newcommand{\pTthree}   {\ensuremath{p_{T,3}}\xspace}
+\newcommand{\ptthree}   {\pTthree}
+\newcommand{\rtrkjet}       {\ensuremath{r_{\rm track\; jet}}\xspace}
+\newcommand{\rtrkjetPt}     {\ensuremath{\rtrkjet^{p_T}}\xspace}
+\newcommand{\rtrkjetM}      {\ensuremath{\rtrkjet^{m}}\xspace}
+\newcommand{\rtrkjetPtData} {\ensuremath{\rtrkjet^{p_{T},{\rm data}}}\xspace}
+\newcommand{\rtrkjetMData}  {\ensuremath{\rtrkjet^{m,{\rm data}}}\xspace}
+\newcommand{\rtrkjetPtMC}   {\ensuremath{\rtrkjet^{p_{T},{\rm MC}}}\xspace}
+\newcommand{\rtrkjetMMC}    {\ensuremath{\rtrkjet^{m,{\rm MC}}}\xspace}
+\newcommand{\RtrkjetPt}     {\ensuremath{R_{r{\rm track\; jet}}^{p_T}}\xspace}
+\newcommand{\RtrkjetM}      {\ensuremath{R_{r{\rm track\; jet}}^{m}}\xspace}
+\newcommand{\fCB}           {\rm{fCloseBy}\xspace}
+
+%\newcommand{\HT}        {\ensuremath{H_{\mathrm{T}}}\xspace}
+%\newcommand{\ptsq}      {\ensuremath{p^2_{\mathrm{T}}}\xspace}
+%\newcommand{\degr}      {\ensuremath{^\circ}\xspace}
+%\newcommand{\abseta}    {\ensuremath{|\eta|}\xspace}    
+
+%%% Jet algorithms
+\newcommand{\kt}        {\ensuremath{k_{t}}\xspace}
+\newcommand{\AKT}       {anti-\kt}
+\newcommand{\antikt}    {\AKT}
+\newcommand{\AKTSix}    {\AKT, \ensuremath{R=0.6}\xspace}
+\newcommand{\AKTFat}    {\AKT, \ensuremath{R=1.0}\xspace}
+\newcommand{\AKTPrune}  {\AKT, \ensuremath{R=1.0} (pruned)\xspace}
+\newcommand{\AKTFilt}   {\AKT, \ensuremath{R=1.0} (filtered)\xspace}
+\newcommand{\AKTTrim}   {\AKT, \ensuremath{R=1.0} (trimmed)\xspace}
+\newcommand{\KT}        {\ensuremath{k_{t}}\xspace}
+\newcommand{\KTSix}     {\KT, \ensuremath{R=0.6}\xspace}
+\newcommand{\CamKt}     {\ensuremath{\mathrm{C/A}}\xspace}
+\newcommand{\CASix}     {\CamKt, \ensuremath{R=0.6}\xspace}
+\newcommand{\CAFat}     {\CamKt, \ensuremath{R=1.2}\xspace}
+\newcommand{\CAPrune}   {\CamKt, \ensuremath{R=1.2} (pruned)\xspace}
+\newcommand{\CAFilt}    {\CamKt, \ensuremath{R=1.2} (filtered) \xspace}
+\newcommand{\SISCone}   {SISCone}
+\newcommand{\SISConeSiz}{\SISCone, \ensuremath{R=0.6}\xspace}
+\newcommand{\minKt}     {\ensuremath{\min\left(\pti^2, p_{tj}^2\right)}\xspace}
+\newcommand{\minAKt}    {\ensuremath{\min\left(\pti^{-2}, p_{tj}^{-2}\right)}\xspace}
+\newcommand{\minGen}    {\ensuremath{\min\left(\pti^{2p}, p_{tj}^{2p}\right)}\xspace}
+\newcommand{\Rij}       {\ensuremath{R_{ij}}\xspace}
+\newcommand{\DRij}      {\ensuremath{\Delta\Rij}\xspace}
+\newcommand{\DRratio}   {\ensuremath{\frac{\DRij^2}{R^2}}\xspace}
+\newcommand{\diB}       {\ensuremath{d_{iB}}\xspace}
+\newcommand{\Rbb}       {\ensuremath{R_{bb}}\xspace}
+\newcommand{\Rfilt}     {\ensuremath{R_{\rm filt}}\xspace}
+\newcommand{\jone}      {\ensuremath{J_{1}}\xspace}
+\newcommand{\jtwo}      {\ensuremath{J_{2}}\xspace}
+\newcommand{\sjone}     {\ensuremath{j1}\xspace}
+\newcommand{\sjtwo}     {\ensuremath{j2}\xspace}
+\newcommand{\msubjone}  {\ensuremath{m^{\sjone}}\xspace}
+\newcommand{\msubjtwo}  {\ensuremath{m^{\sjtwo}}\xspace}
+\newcommand{\ptsubjone} {\ensuremath{p_{T, \sjone}}\xspace}
+\newcommand{\ptsubjtwo} {\ensuremath{p_{T, \sjtwo}}\xspace}
+\newcommand{\Rsubjets}  {\ensuremath{R_{\sjone,\sjtwo}}\xspace}
+\newcommand{\DRsubjets} {\ensuremath{\Delta\Rsubjets}\xspace}
+\newcommand{\pti}       {\ensuremath{p_{ti}}\xspace}
+\newcommand{\ycut}      {\ensuremath{y_{\rm cut}}\xspace}
+\newcommand{\ymin}      {\ensuremath{y_{\min}}\xspace}
+\newcommand{\yij}       {\ensuremath{y_{ij}}\xspace}
+\newcommand{\dcut}      {\ensuremath{d_{\rm cut}}\xspace}
+\newcommand{\dmin}      {\ensuremath{d_{\min}}\xspace}
+\newcommand{\dij}       {\ensuremath{d_{ij}}\xspace}
+\newcommand{\fcut}      {\ensuremath{f_{\rm cut}}\xspace}
+\newcommand{\Rsub}      {\ensuremath{R_{\rm sub}}\xspace}
+\newcommand{\drsub}     {\ensuremath{\Rsub}\xspace}
+\newcommand{\mufrac}    {\ensuremath{\mu_{\rm frac}}\xspace}
+\newcommand{\rcut}      {\ensuremath{R_{\rm cut}}\xspace}
+\newcommand{\zcut}      {\ensuremath{z_{\rm cut}}\xspace}
+\newcommand{\xj}        {\ensuremath{x_{J}}\xspace}
+\newcommand{\jetFunc}   {\ensuremath{J^{(eik),c} (\mjet,\pT,R)}\xspace}
+\newcommand{\tauN}      {\ensuremath{\tau_N}\xspace}
+%\newcommand{\tauTwoOne} {\ensuremath{\frac{\tau_2}{\tau_1}}\xspace}
+%\newcommand{\tauThrTwo} {\ensuremath{\frac{\tau_3}{\tau_2}}\xspace}
+\newcommand{\tauTwoOne} {\ensuremath{\tau_{21}}\xspace}
+\newcommand{\tauThrTwo} {\ensuremath{\tau_{32}}\xspace}
+\newcommand{\dip}       {\ensuremath{\mathcal{D}}\xspace}
+\newcommand{\dipmn}     {\ensuremath{\dip_{mn}}\xspace}
+\newcommand{\dipOneTwo} {\ensuremath{\dip_{12}}\xspace}
+\newcommand{\dipTwoThr} {\ensuremath{\dip_{23}}\xspace}
+\newcommand{\dipOneThr} {\ensuremath{\dip_{13}}\xspace}
+\newcommand{\DOneTwo}   {\ensuremath{\sqrt{d_{12}}}\xspace}
+\newcommand{\DTwoThr}   {\ensuremath{\sqrt{d_{23}}}\xspace}
+\newcommand{\largeR}    {large-\ensuremath{R}\xspace}
+\newcommand{\LargeR}    {Large-\ensuremath{R}\xspace}
+
+\newcommand{\fclus}     {\ensuremath{f_{\rm clus}}\xspace}
+
+
+% pileup subtraction related
+\newcommand{\ghostpt}     {\ensuremath{g_{t}}\xspace}
+\newcommand{\ghostptavg}  {\ensuremath{\langle\ghostpt\rangle}\xspace}
+\newcommand{\ghostfm}     {\ensuremath{g_{\mu}}\xspace}
+\newcommand{\ghostfmi}    {\ensuremath{g_{\mu,i}}\xspace}
+\newcommand{\ghostdensity}{\ensuremath{\nu_{g}}\xspace}
+\newcommand{\ghostrho}    {\ensuremath{\ghostdensity\ghostptavg}\xspace}
+\newcommand{\Aghost}      {\ensuremath{A_{g}}\xspace}
+\newcommand{\Amu}         {\ensuremath{A_{\mu}}}
+\newcommand{\Amui}        {\ensuremath{A_{\mu, i}}}
+\newcommand{\jetarea}     {\ensuremath{A^{\mathrm{jet}}}\xspace}
+\newcommand{\jetareafm}   {\ensuremath{A^{\mathrm{jet}}_{\mu}}\xspace}
+\newcommand{\jetareai}    {\ensuremath{\jetarea_{i}}\xspace}
+\newcommand{\rkt}         {\ensuremath{R_{\kt}}\xspace}
+
+%%% Event generator stuff
+\newcommand{\Herwig}    {\textsc{Herwig}\xspace}
+\newcommand{\HerwigJim} {\textsc{Herwig+Jimmy}\xspace}
+\newcommand{\herwigpp}  {\textsc{Herwig}++\xspace}
+\newcommand{\Herwigpp}  {\herwigpp}
+\newcommand{\Alpgen}    {\texttt{Alpgen}\xspace}
+\newcommand{\Fastjet}   {\texttt{FastJet}\xspace}
+\newcommand{\AtlFast}   {\texttt{AtlFast}\xspace}
+\newcommand{\AtlFastII} {\texttt{AtlFast II}\xspace}
+\newcommand{\AFII}      {\texttt{AFII}\xspace}
+\newcommand{\Sherpa}    {\texttt{Sherpa}\xspace}
+\newcommand{\Comphep}   {\texttt{CompHep}\xspace}
+\newcommand{\Madgraph}  {\texttt{MadGraph}\xspace}
+\newcommand{\Pythia}    {\texttt{PYTHIA}\xspace}
+\newcommand{\Powheg}    {\texttt{POWHEG}\xspace}
+\newcommand{\AcerMC}    {\texttt{AcerMC}\xspace}
+\newcommand{\MCatNLO}   {\texttt{MC@NLO}\xspace}
+\newcommand{\PowhegBox} {\Powheg-BOX\xspace}
+\newcommand{\PowPythia} {\texttt{POWHEG}+\Pythia}
+\newcommand{\PythiaP}   {\Pythia (Perugia 2010)\xspace}
+\newcommand{\Prospino}  {\textsc{Prospino}\xspace}
+\newcommand{\ntilde}    {{\~ n}}
+\newcommand{\nbar}      {\ensuremath{\overline{n}}}
+\newcommand{\LO}        {\ensuremath{\mathrm{LO}}\xspace}
+\newcommand{\NLO}       {\ensuremath{\mathrm{NLO}}\xspace}
+\newcommand{\NNLO}      {\ensuremath{\mathrm{N}}\NLO\xspace}
+\newcommand{\nLO}       {\nbar \LO\xspace}
+\newcommand{\nNLO}      {\nbar \NLO\xspace}
+\newcommand{\nnNLO}     {\nbar \nbar \NLO\xspace}
+\newcommand{\nnLO}      {\nbar \nbar \LO\xspace}
+\newcommand{\nNNLO}     {\nbar \NNLO\xspace}
+\newcommand{\muF}       {\ensuremath{\mu_\textsc{f}}\xspace}
+\newcommand{\muR}       {\ensuremath{\mu_\textsc{r}}\xspace}
+\newcommand{\LS}        {\ensuremath{\mathrm{LS}}\xspace}
+\newcommand{\nlojet}    {\textsc{NLOJet}\texttt{++}\xspace}
+
+%%% Track jets
+\newcommand{\ntrk}      {\ensuremath{N_{\rm track}}\xspace}
+\newcommand{\avntrk}    {\ensuremath{\langle\ntrk\rangle}\xspace}
+\newcommand{\ftrk}      {\ensuremath{f_{\rm track}}\xspace}
+\newcommand{\pttrk}     {\ensuremath{\pt^{\rm \ track}}\xspace}
+\newcommand{\DeltaR}    {\ensuremath{\Delta R}\xspace}
+\newcommand{\DeltaRdef} {\ensuremath{\DeltaR=\sqrt{\Delta\eta^{2} + \Delta\phi^{2}}}\xspace}
+\newcommand{\DeltaRtrk} {\ensuremath{\Delta R({\rm trk}_1,{\rm trk}_2)}\xspace}
+\newcommand{\pTtrkjet}  {\ensuremath{p^{\text{track\; jet}}_{T}}\xspace}
+\newcommand{\sumPtTrk}  {\ensuremath{\sum\pt^{\rm \ track}}\xspace}
+
+%%% Pile-up
+\newcommand{\Npv}       {\ensuremath{N_{\rm PV}}\xspace}
+\newcommand{\Nmb}       {\ensuremath{N_{\rm MB}}\xspace}
+\newcommand{\Nref}      {\ensuremath{\Npv^{\rm ref}}\xspace}
+\newcommand{\Navg}      {\ensuremath{\langle\Npv\rangle}\xspace}
+\newcommand{\avgmu}     {\ensuremath{\langle\mu\rangle}\xspace}
+\newcommand{\Npp}       {\ensuremath{N_{pp}}\xspace}
+\newcommand{\Nppavg}    {\ensuremath{\langle\Npp\rangle}\xspace}
+\newcommand{\pileup}    {pile-up\xspace}
+\newcommand{\Pileup}    {Pile-up\xspace}
+
+%%% Detector-related (towers)
+\newcommand{\pttw}      {\ensuremath{\pt^{\rm tower}}\xspace}
+\newcommand{\ettw}      {\ensuremath{E_{T}^{\rm tower}}\xspace}
+\newcommand{\etatw}     {\ensuremath{\eta^{\rm tower}}\xspace}
+\newcommand{\raptw}     {\ensuremath{y^{\rm tower}}\xspace}
+\newcommand{\phitw}     {\ensuremath{\phi^{\rm tower}}\xspace}
+\newcommand{\DetaDphi}  {\ensuremath{\Delta\eta\times\Delta\phi}\xspace}
+\newcommand{\Deta}      {\ensuremath{|\Delta\eta|}\xspace}
+\newcommand{\DPhi}      {\ensuremath{\Delta\phi}\xspace}
+\newcommand{\DyDphi}    {\ensuremath{\Delta y\times\Delta\phi}\xspace}
+\newcommand{\OneByOne}  {\ensuremath{0.1\times0.1}\xspace}
+\newcommand{\towerSize} {\ensuremath{\DetaDphi=0.1\times0.1}\xspace}
+%\newcommand{\DeltaR}    {\ensuremath{\Delta R}\xspace}
+
+%%% Particles
+%\newcommand{\ttbar}     {\ensuremath{t\overline{t}}\xspace}
+\newcommand{\bMet}      {\ensuremath{b+\slashed{E}_{T}+}jets }
+%\newcommand{\met}       {\ensuremath{\slashed{E}_{T}}\xspace}
+\newcommand{\ptmiss}    {\ensuremath{\vec{\pt}}^{\mathrm{miss}}\xspace} 
+\newcommand{\DeltaPP}   {\ensuremath{\Delta^{++}}\xspace}
+\newcommand{\TwoToTwo}  {\ensuremath{2\ra2}\xspace}
+\newcommand{\TwoToN}    {\ensuremath{2\ra n}\xspace}
+\newcommand{\ColA}      {\ensuremath{C_{A}}\xspace}
+\newcommand{\ColF}      {\ensuremath{C_{F}}\xspace}
+
+%%% Event shape related variables 
+\newcommand{\SumET}     {\ensuremath{\sum E_{T}}\xspace}
+\newcommand{\JetSumET}  {\ensuremath{\sum E^{\rm jet}_{T}}\xspace}
+\newcommand{\Qsq}       {\ensuremath{Q^{2}}\xspace}
+\newcommand{\dtwoth}    {\ensuremath{d_{23}}\xspace}
+\newcommand{\ytwoth}    {\ensuremath{y_{23}}\xspace}
+\newcommand{\lny}       {\ensuremath{{\rm ln}\ytwoth}\xspace}
+\newcommand{\sphtranv}  {\ensuremath{S^{pheri}_{\perp}}\xspace}
+\newcommand{\sph}       {\ensuremath{S^{pheri}}\xspace}
+\newcommand{\apl}       {\ensuremath{A}\xspace}
+\newcommand{\Mtensor}   {\ensuremath{M_{xyz}}\xspace}
+\newcommand{\thrmaj}    {\ensuremath{\tau_{\perp}}\xspace}
+\newcommand{\thrmin}    {\ensuremath{T_{m,\perp}}\xspace}
+\newcommand{\meff}      {\ensuremath{M_{\rm eff}}\xspace}
+\newcommand{\metsig}    {\ensuremath{\met/\sqrt{\HT}}\xspace}
+\newcommand{\mTTwo}     {\ensuremath{m_{T2}}\xspace}
+\newcommand{\thrvec}    {\ensuremath{\hat{n}_{\perp}}\xspace}
+
+
+%%% SUSY
+\newcommand{\SUSY}     {SUSY\xspace}
+\newcommand{\Ebar}     {\ensuremath{\bar E}\xspace}
+\newcommand{\Dbar}     {\ensuremath{\bar D}\xspace}
+\newcommand{\Ubar}     {\ensuremath{\bar U}\xspace}
+\newcommand{\rp}       {\ensuremath{R_p}\xspace}
+\newcommand{\rpv}      {\ensuremath{\not \!\! R_p}\xspace}
+\newcommand{\rpvm}     {\ensuremath{\not  R_p}\xspace}
+\newcommand{\Wrp}      {\ensuremath{W_{\rp}}\xspace}
+\newcommand{\Wrpv}     {\ensuremath{W_{\rpvm}}\xspace}
+\newcommand{\rpmssm}   {\ensuremath{R_p}-MSSM\xspace}
+\newcommand{\rpvmssm}  {\ensuremath{\rpv}-MSSM\xspace}
+\newcommand{\lam}      {\ensuremath{\lambda}\xspace}
+\newcommand{\lamp}     {\ensuremath{\lam^{\prime}}\xspace}
+\newcommand{\lampp}    {\ensuremath{\lam^{\prime\prime}}\xspace}
+\newcommand{\lamijk}   {\ensuremath{\lambda_{ijk}}\xspace}
+\newcommand{\lampijk}  {\ensuremath{\lam_{ijk}^{\prime}}\xspace}
+\newcommand{\lamppijk} {\ensuremath{\lam_{ijk}^{\prime\prime}}\xspace}
+\newcommand{\msquark}  {\ensuremath{m_{\squark}}\xspace}
+%\newcommand{\stop}  {\ensuremath{m_{\squark}}\xspace}
+\newcommand{\mgluino}  {\ensuremath{m_{\gluino}}\xspace}
+\newcommand{\mninoone} {\ensuremath{m_{\ninoone}}\xspace}
+\newcommand{\mchi}     {\ensuremath{m_{\ninoone}}\xspace}
+\newcommand{\NjetStd}  {\ensuremath{N_{\rm jet}^{\rm std}}\xspace}
+\newcommand{\ptgluino} {\ensuremath{\pt^{\gluino}}\xspace}
+\newcommand{\ABCD}     {\ensuremath{ABCD}\xspace}
+
+%%% Analysis Observables %%%
+\newcommand{\nlep}         {\ensuremath{N_\mathrm{ lepton}}\xspace}
+\newcommand{\nbjet}        {\ensuremath{N_{b-\mathrm{ jet}}}\xspace}
+\newcommand{\ngamma}       {\ensuremath{N_{\gamma}}\xspace}
+\newcommand{\dphimin}      {\ensuremath{\mathrm{\Delta}\phi_{\mathrm{min}}^{4j}}\xspace}
+\newcommand{\mbb}          {\ensuremath{m_{\bbbar}}\xspace}
+\newcommand{\mgamgam}      {\ensuremath{m_{\gamma\gamma}}\xspace}
+\newcommand{\mnonbb}       {\ensuremath{m_{\qqbar}}\xspace}
+\newcommand{\mt}           {\ensuremath{m_\mathrm{T}}\xspace}
+\newcommand{\mtmin}        {\ensuremath{\mt^{\mathrm{min}}}\xspace}
+\newcommand{\mT}           {\mt}
+\newcommand{\mtw}          {\ensuremath{\mt^{W}}\xspace}
+\newcommand{\mttwo}        {\ensuremath{m_\mathrm{T2}}\xspace}
+\newcommand{\mtb}          {\ensuremath{\mt^{b}}\xspace}
+\newcommand{\mTbmin}       {\ensuremath{\mt^{b,\mathrm{min}}}\xspace}
+\newcommand{\mtbmin}       {\mTbmin}
+\newcommand{\mTWgam}       {\ensuremath{\mt^{W \gamma}}\xspace}
+\newcommand{\mTWgami}      {\ensuremath{\mt^{W \gamma_{i}}}\xspace}
+\newcommand{\mTWgamone}    {\ensuremath{\mt^{W \gamma_{1}}}\xspace}
+\newcommand{\mTWgamtwo}    {\ensuremath{\mt^{W \gamma_{2}}}\xspace}
+\newcommand{\mctbb}        {\ensuremath{m_\mathrm{ CT}^{b\bar{b}}}\xspace}
+\newcommand{\ptg}          {\ensuremath{p_\mathrm{ T}^{\gamma}}\xspace}
+\newcommand{\ptl}          {\ensuremath{p_\mathrm{ T}^{\ell}}\xspace}
+\newcommand{\ptllead}      {\ensuremath{p_{\mathrm{ T},1}^{\ell}}\xspace}
+\newcommand{\pte}          {\ensuremath{p_\mathrm{ T}^{e}}\xspace}
+\newcommand{\ptmu}         {\ensuremath{p_\mathrm{ T}^{\mu}}\xspace}
+\newcommand{\mgg}          {\ensuremath{m_{\mathrm{\gamma\gamma}}}\xspace}
+\newcommand{\dphiWH}       {\ensuremath{\Delta \phi_{\mathrm{W,H}}}\xspace}
+\newcommand{\mDFOSnear}    {\ensuremath{m_{\ell_{\mathrm{DFOS}}+\ell_{\mathrm{near}}}}\xspace}
+\newcommand{\dphiSS}       {\ensuremath{\Delta \phi_{\mathrm{SS}}}\xspace}
+\newcommand{\DROSnear}     {\ensuremath{\Delta R_{\mathrm{OS, near}}}\xspace}
+\newcommand{\mSFOSmin}     {\ensuremath{m_{\mathrm{SFOS}}^{\mathrm{min}}}\xspace}
+\newcommand{\DEtaLL}       {\ensuremath{\Delta\eta _{\ell\ell}}\xspace}
+\newcommand{\mll}          {\ensuremath{m_{\ell\ell}}\xspace}
+
+
+%%% Detector quality
+\newcommand{\fQLar}     {\ensuremath{f_{\rm LAr Quality}}\xspace}
+\newcommand{\fHEC}      {\ensuremath{f_{\rm HEC}}\xspace}
+\newcommand{\nNinety}   {\ensuremath{n_{90}}\xspace}
+
+%%% EDITORIAL tools
+
+%\newcommand{\redtext}[1]      {{\textcolor{red} #1}}
+%\newcommand{\bluetext}[1]     {{\textcolor{blue} #1}}
+\newcommand{\editnote}[2][Ed] {{[{\bf {#1}: }{\textcolor{red}{#2}}]}}
+\newcommand{\placeholder}[3]  {\framebox[#1]{\begin{minipage}[t]{#1} \centering #3 \vspace{#2}\end{minipage}}}
+\newcommand{\comment}[1]      {}
+\newcommand{\alertbf}[1]      {{\alert{\textbf{#1}}}}
+\newcommand{\boldit}[1]       {{\textit{\textbf{#1}}}}
+\newcommand{\bluebf}[1]       {{\textcolor{blue}{\textbf{#1}}}}
+\newcommand{\greenbf}[1]      {{\textcolor{green}{\textbf{#1}}}}
+\newcommand{\ubf}[1]          {\underline{\textbf{#1}}}
+
+\newcommand{\etal}            {\textit{et al.}\xspace}
+
+\newcommand{\insitu}          {\textit{in situ}\xspace}
+\newcommand{\Insitu}          {\textit{In situ}\xspace}
+
+\renewcommand{\th}            {\ensuremath{^{\rm th}}\xspace}
+\newcommand{\st}              {\ensuremath{^{\rm st}}\xspace}
+\newcommand{\rd}              {\ensuremath{^{\rm rd}}\xspace}
+
+% Figure, section, subsection refs
+\newcommand{\figref}[1]       {Figure~\ref{fig:#1}}
+\newcommand{\Figref}[1]       {Figure~\ref{fig:#1}}
+\newcommand{\figsref}[2]      {Figures~\ref{fig:#1} and \ref{fig:#2}}
+\newcommand{\Figsref}[2]      {Figures~\ref{fig:#1} and \ref{fig:#2}}
+\newcommand{\figrange}[2]     {figures~\ref{fig:#1}--\ref{fig:#2}}
+\newcommand{\Figrange}[2]     {Figures~\ref{fig:#1}--\ref{fig:#2}}
+\newcommand{\eref}[1]         {Eq.~\ref{eq:#1}}
+\newcommand{\Eref}[1]         {Eq.~\ref{eq:#1}}
+\newcommand{\equref}[1]       {Eq.~(\ref{eq:#1})}
+\newcommand{\Equref}[1]       {Eq.~(\ref{eq:#1})}
+\newcommand{\tabref}[1]       {Table~\ref{tab:#1}}
+\newcommand{\Tabref}[1]       {Table~\ref{tab:#1}}
+\newcommand{\secref}[1]       {Section~\ref{sec:#1}}
+\newcommand{\Secref}[1]       {Section~\ref{sec:#1}}
+\newcommand{\appref}[1]       {Appendix~\ref{app:#1}}
+\newcommand{\Appref}[1]       {Appendix~\ref{app:#1}}
+\newcommand{\bibref}[1]       {\cite{#1}}
+
+
+%%% alphas
+\newcommand{\ayher}     {\ensuremath{\alpha_{y-}}\xspace}
+\newcommand{\ayle}      {\ensuremath{\alpha_{y+}}\xspace}
+\newcommand{\axher}     {\ensuremath{\alpha_{x-}}\xspace}
+\newcommand{\axler}     {\ensuremath{\alpha_{x+}}\xspace}
+
+%%% sigmas
+\newcommand{\sigx}      {\ensuremath{\sigma_{x}}\xspace}
+\newcommand{\sigy}      {\ensuremath{\sigma_{y}}\xspace}
+\newcommand{\sigz}      {\ensuremath{\sigma_{z}}\xspace}
+\newcommand{\sigib}     {\ensuremath{\sigma_{ib}}\xspace}
+\newcommand{\sigjb}     {\ensuremath{\sigma_{jb}}\xspace}
+\newcommand{\sigxb}     {\ensuremath{\sigma_{xb}}\xspace}
+\newcommand{\sigyb}     {\ensuremath{\sigma_{yb}}\xspace}
+\newcommand{\sigzb}     {\ensuremath{\sigma_{zb}}\xspace}
+\newcommand{\sigxher}   {\ensuremath{\sigma_{x-}}\xspace}
+\newcommand{\sigxler}   {\ensuremath{\sigma_{x+}}\xspace}
+\newcommand{\sigyher}   {\ensuremath{\sigma_{y-}}\xspace}
+\newcommand{\sigyler}   {\ensuremath{\sigma_{y+}}\xspace}
+\newcommand{\sigzher}   {\ensuremath{\sigma_{z-}}\xspace}
+\newcommand{\sigzler}   {\ensuremath{\sigma_{z+}}\xspace}
+
+\newcommand{\sigst}     {\ensuremath{\sigma^*}\xspace}
+\newcommand{\sigstx}    {\ensuremath{\sigma^*_{x}}\xspace}
+\newcommand{\sigsty}    {\ensuremath{\sigma^*_{y}}\xspace}
+\newcommand{\sigstxy}   {\ensuremath{\sigma^*_{x,y}}\xspace}
+
+\newcommand{\sigL}      {\ensuremath{\sigma_{\mathcal L}}\xspace} 
+\newcommand{\sigiL}     {\ensuremath{\sigma_{i{\mathcal L}}}\xspace} 
+\newcommand{\sigxL}     {\ensuremath{\sigma_{x{\mathcal L}}}\xspace}
+\newcommand{\sigyL}     {\ensuremath{\sigma_{y{\mathcal L}}}\xspace}
+\newcommand{\sigzL}     {\ensuremath{\sigma_{z{\mathcal L}}}\xspace}
+
+\newcommand{\capsig}    {\ensuremath{\Sigma}\xspace}
+\newcommand{\capsigj}   {\ensuremath{\Sigma_j}\xspace}
+\newcommand{\capsigx}   {\ensuremath{\Sigma_x}\xspace}
+\newcommand{\capsigy}   {\ensuremath{\Sigma_y}\xspace}
+\newcommand{\capsigz}   {\ensuremath{\Sigma_z}\xspace}
+\newcommand{\sxp}       {\ensuremath{\sigma'_{x}}\xspace}
+
+
+%%% emittances
+\newcommand{\emm}       {\ensuremath{\epsilon}\xspace}
+\newcommand{\emmib}     {\ensuremath{\epsilon_{ib}}\xspace}
+\newcommand{\emmx}      {\ensuremath{\epsilon_{x}}\xspace}
+\newcommand{\emmy}      {\ensuremath{\epsilon_{y}}\xspace}
+\newcommand{\emmyher}   {\ensuremath{\epsilon_{y-}}\xspace}
+\newcommand{\emmyler}   {\ensuremath{\epsilon_{y+}}\xspace}
+\newcommand{\emyeff}    {\ensuremath{\epsilon_{y,\mathrm{eff}}}\xspace}
+\newcommand{\emmxher}   {\ensuremath{\epsilon_{x-}}\xspace}
+\newcommand{\emmxler}   {\ensuremath{\epsilon_{x+}}\xspace}
+
+
+%%% betas
+\newcommand{\bib}       {\ensuremath{\beta_{ib}}\xspace}
+\newcommand{\bst}       {\ensuremath{\beta^*}\xspace}
+\newcommand{\bstib}     {\ensuremath{\beta_{ib}^*}\xspace}
+\newcommand{\bxst}      {\ensuremath{\beta_x^*}\xspace}
+\newcommand{\byst}      {\ensuremath{\beta_y^*}\xspace}
+\newcommand{\bxyst}     {\ensuremath{\beta_{x,y}^*}\xspace}
+\newcommand{\bysther}   {\ensuremath{\beta^*_{y-}}\xspace}
+\newcommand{\bystler}   {\ensuremath{\beta^*_{y+}}\xspace}
+\newcommand{\bxsther}   {\ensuremath{\beta^*_{x-}}\xspace}
+\newcommand{\bxstler}   {\ensuremath{\beta^*_{x+}}\xspace}
+\newcommand{\bysteff}   {\ensuremath{\beta^*_{y,\mathrm{eff}}}\xspace}
+\newcommand{\bystD}     {\ensuremath{\beta^*_{y,D}}\xspace}
+\newcommand{\bystB}     {\ensuremath{\beta^*_{y,B}}\xspace}
+\newcommand{\byher}     {\ensuremath{\beta_{y-}}\xspace}
+\newcommand{\byler}     {\ensuremath{\beta_{y+}}\xspace}
+\newcommand{\bxher}     {\ensuremath{\beta_{x-}}\xspace}
+\newcommand{\bxler}     {\ensuremath{\beta_{x+}}\xspace}
+
+
+%%% waists
+\newcommand{\waistx}    {\ensuremath{z^{w}_{x}}\xspace}
+\newcommand{\waistxher} {\ensuremath{z^{w}_{x-}}\xspace}
+\newcommand{\waistxler} {\ensuremath{z^{w}_{x+}}\xspace}
+\newcommand{\waisty}    {\ensuremath{z^{w}_{y}}\xspace}
+\newcommand{\waistyher} {\ensuremath{z^{w}_{y-}}\xspace}
+\newcommand{\waistyler} {\ensuremath{z^{w}_{y+}}\xspace}
+\newcommand{\waistib}   {\ensuremath{z^{w}_{ib}}\xspace}
+\newcommand{\waistyeff} {\ensuremath{z^{w}_{y,\mathrm{eff}}}\xspace}
+
+%%% centroids
+\newcommand{\xbarL}     {\ensuremath{\overline{x}_{\mathcal{L}}}\xspace}
+\newcommand{\ybarL}     {\ensuremath{\overline{y}_{\mathcal{L}}}\xspace}
+\newcommand{\zbarL}     {\ensuremath{\overline{z}_{\mathcal{L}}}\xspace}
+\newcommand{\xbarb}     {\ensuremath{\overline{x}_{b}}\xspace}
+\newcommand{\ybarb}     {\ensuremath{\overline{y}_{b}}\xspace}
+\newcommand{\zbarb}     {\ensuremath{\overline{z}_{b}}\xspace}
+
+
+%%% boost
+\newcommand{\xpB}       {\ensuremath{x'_\mathrm{B}}\xspace}
+\newcommand{\ypB}       {\ensuremath{y'_\mathrm{B}}\xspace}
+\newcommand{\xpBA}      {\ensuremath{\overline{x'}_\mathrm{B}}\xspace}
+\newcommand{\ypBA}      {\ensuremath{\overline{y'}_\mathrm{B}}\xspace}
+\newcommand{\thc}       {\ensuremath{\theta_c}\xspace}
+\newcommand{\sxpB}      {\ensuremath{\sigma_{x'_\mathrm{B}}}\xspace}
+\newcommand{\sypB}      {\ensuremath{\sigma_{y'_\mathrm{B}}}\xspace}
+\newcommand{\phN}       {\ensuremath{\phi_n}\xspace}
+\newcommand{\lmN}       {\ensuremath{\lambda_n}\xspace}
+\newcommand{\dypBAdyz}  {\ensuremath{\delta\overline{y'}_\mathrm{B}(z)/\delta y}\xspace}
+
+%%% xy tilt
+\newcommand{\txy}       {\ensuremath{t_{xy}}\xspace}
+
+%%% Checkbox
+\newcommand{\checkbox}  {$\text{\rlap{$\checkmark$}}\square$}
+
+%%% Go-to button
+\newcommand{\mygoto}[2] {\hyperlink{#1}{\beamergotobutton{#2}}}
+
+%%% TikZ Commands
+\makeatletter
+\newcommand{\includecoveredgraphics}[2][]{
+	\ifthenelse{\the\beamer@coveringdepth=1}{
+		\tikz
+		\node[inner sep=0pt,outer sep=0pt,opacity=0.15]
+		{\includegraphics[#1]{#2}};
+  }
+	{
+		\tikz
+		\node[inner sep=0pt,outer sep=0pt]
+		{\includegraphics[#1]{#2}};%
+	}
+}
+\makeatother
+\tikzstyle{every picture}+=[remember picture]
+\everymath{\displaystyle}
+
+%----------------------------------------------------
+% colorblock
+%----------------------------------------------------
+\newenvironment{colorblock}[2]
+{\setbeamercolor{item}{fg=#1,bg=#1}\begin{beamerboxesrounded}[upper=#1,lower=#2,shadow=true]}
+{\end{beamerboxesrounded}}
+
+%----------------------------------------------------
+% Shadow box
+%----------------------------------------------------
+\newlength{\boxw}
+\newlength{\boxh}
+\newlength{\shadowsize}
+\newlength{\boxroundness}
+\newlength{\tmpa}
+\newsavebox{\shadowblockbox}
+
+\setlength{\shadowsize}{6pt}
+\setlength{\boxroundness}{3pt}
+
+\newenvironment{shadowblock}[1]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1}}%
+{\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa, \boxh - \tmpa - \tmpa);
+    }
+
+    \filldraw[fill=yellow!50, draw=black!50, rounded corners=\boxroundness] (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,inner sep=0pt,outer sep=0pt,anchor=south west] (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}} 
+%----------------------------------------------------
+
+
+%----------------------------------------------------
+% python blocks
+%----------------------------------------------------
+\newenvironment{ucpythonblock}[1]
+{\VerbatimEnvironment\begin{colorblock}{maroon}{lightmaroon}{#1}\begin{minted}{python}}
+{\end{minted}\end{colorblock}}
+
+\newenvironment{pythonshadowblock}[1]
+{\VerbatimEnvironment\begin{shadowblock}{#1}\begin{minted}{python}}
+{\end{minted}\end{shadowblock}}
+
+%----------------------------------------------------
+% graphitemize
+%----------------------------------------------------
+\makeatletter 
+\@namedef{color@1}{red!40}
+\@namedef{color@2}{green!40}   
+\@namedef{color@3}{blue!40} 
+\@namedef{color@4}{cyan!40}  
+\@namedef{color@5}{magenta!40} 
+\@namedef{color@6}{yellow!40}
+\@namedef{color@7}{teal!40}
+\@namedef{color@8}{violet!40}
+
+\newcommand{\graphitemize}[2]{%
+\begin{tikzpicture}[every node/.style={align=center}]  
+  \node[minimum size=5cm,circle,fill=gray!40,font=\Large,outer sep=1cm,inner sep=.5cm](ce){#1};  
+\foreach \gritem [count=\xi] in {#2}
+{\global\let\maxgritem\xi}  
+\foreach \gritem [count=\xi] in {#2}
+{% 
+\pgfmathtruncatemacro{\angle}{360/\maxgritem*\xi}
+\edef\col{\@nameuse{color@\xi}}
+\node[circle,
+     ultra thick,
+     draw=white,
+     fill opacity=.5,
+     fill=\col,        
+     minimum size=3cm] at (ce.\angle) {\gritem };}%
+\end{tikzpicture}  
+}%
+
+%----------------------------------------------------
+% ATLAS Work In Progress
+%----------------------------------------------------
+%\newcommand{\ATLASWiPBox}[3]
+%{
+%  \begin{textblock}{#1}(#2,#3)
+%  \scriptsize \textit{\textbf{ATLAS} Work in Progress}
+%  \end{textblock} 
+%}

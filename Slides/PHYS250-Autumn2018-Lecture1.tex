@@ -1,0 +1,155 @@
+%----------------------------------------------------
+% Setup Beamer
+%----------------------------------------------------
+\documentclass[hyperref={colorlinks=true}]{beamer}
+
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+
+\input{packages.sty}
+
+%----------------------------------------------------
+% Setup Theme
+%----------------------------------------------------
+\input{theme.sty}
+
+%----------------------------------------------------
+% Table of Contents at each section transition
+%----------------------------------------------------
+
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \setcounter{tocdepth}{1}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+%----------------------------------------------------
+% Colors
+%----------------------------------------------------
+
+\input{mycolors.sty}
+
+%----------------------------------------------------
+% Style, formatting, and new commands
+%----------------------------------------------------
+
+\input{newcommands.sty}
+
+
+%-----------------------------------------------------------------------------------------
+% Title: [Column]{Title}
+%-----------------------------------------------------------------------------------------
+\title[PHYS 250 (Autumn 2018) -- Lecture 1]{Introduction to Computational Physics}
+
+%-----------------------------------------------------------------------------------------
+% SubTitle: [Column]{Subtitle}
+%-----------------------------------------------------------------------------------------
+\subtitle{PHYS 250 (Autumn 2018) -- Lecture 1}
+
+%-----------------------------------------------------------------------------------------
+% Author: [SubAuthor]{Author}
+%-----------------------------------------------------------------------------------------
+\author[D.W.~Miller]{David Miller}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\institute[EFI, Chicago] 
+{
+  Department of Physics and the Enrico Fermi Institute\\
+  University of Chicago
+}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\date[September 27, 2018]{September 27, 2018}
+
+\subject{PHYS 250 Lecture}
+
+\begin{document}
+
+%==========================================================================================
+% TITLE PAGE
+%==========================================================================================
+
+{
+\begin{frame}
+  \titlepage
+\end{frame}
+}
+
+%==========================================================================================
+\section[Introduction]{Introduction}%==========================================================================================
+
+\begin{frame}%[shrink=1]
+  \frametitle{An example: The Large Hadron Collider}
+
+  Hi there
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Code examples]{Code examples}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Hello world!}
+
+\begin{ucpythonblock}{Code example}
+import numpy as np
+import matplotlib.pyplot as plt
+
+def p(x):
+    return np.exp(-x**2)
+    
+#let's plot it
+x = np.linspace(-3,3,100)
+y = p(x)
+plt.plot(x,y)
+\end{ucpythonblock}
+  
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Hello world!}
+
+\begin{pythonshadowblock}{0.7\textwidth}
+import numpy as np
+import matplotlib.pyplot as plt
+
+def p(x):
+    return np.exp(-x**2)
+    
+#let's plot it
+x = np.linspace(-3,3,100)
+y = p(x)
+plt.plot(x,y)
+\end{pythonshadowblock}
+  
+  
+\end{frame}
+
+
+%==========================================================================================
+\section[Conclusions]{Conclusions}%==========================================================================================
+
+\begin{frame}%[shrink=1]
+  \frametitle{Conclusions}
+
+  \begin{itemize}
+    \item Something
+  \end{itemize}
+  
+\end{frame}
+
+%==========================================================================================
+%==========================================================================================
+\end{document}

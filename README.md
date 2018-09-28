@@ -33,3 +33,13 @@ We also have a platform that provisions (creates, maintains, and hosts) Jupyter 
 * https://ml.maniac.uchicago.edu/
 
 To use this service, you will need an account.
+
+### Git, GitHub, and Homework
+As part of the tools of the trade that you will learn in this course, you will be expected to use the modern versioning system Git for keeping tracking of your code and turning in homework.
+
+* git: https://git-scm.com/
+
+Most people interact with git using GitHub
+
+* GitHub: https://github.com/
+

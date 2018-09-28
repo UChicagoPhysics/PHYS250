@@ -1,0 +1,193 @@
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{multirow}
+\usepackage{xspace}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=red,
+  urlcolor=blue
+}
+
+%----------------------------------------------------
+% Page Setup
+%----------------------------------------------------
+\usepackage{setspace}
+\usepackage[margin=0.90in]{geometry}
+\linespread{1.3}
+%\doublespacing
+%\addtolength{\hoffset}{-2.5cm}
+%\addtolength{\voffset}{-2.5cm}
+%\addtolength{\textwidth}{2.0cm}
+%\addtolength{\textheight}{4.0cm}
+
+%----------------------------------------------------
+% New commands
+%----------------------------------------------------
+\input{../../../EandMcommands.sty}
+
+%----------------------------------------------------
+% Header and Footer Information
+%----------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{PHYS 227, Spring Quarter 2018}
+\rhead{\today, v1.0}
+
+%----------------------------------------------------
+% Course Number, Course Title, Prof Name, Location
+%----------------------------------------------------
+\title{\sc Physics 227: Intermediate Electricity and Magnetism II\\Learning Goals}
+\author{\textbf{Instructor:} David W. Miller, PRC 245, \\ 773-702-7671, \href{mailto:David.W.Miller@uchicago.edu}{David.W.Miller@uchicago.edu}}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{fancy}
+
+%----------------------------------------------------
+% Learning Goals
+%----------------------------------------------------
+
+\noindent This document differs from a syllabus in that it is not a list of nouns (topics covered), but a list of verbs that indicate what students are \textit{expected to be able \textbf{to do} after taking this course}.
+
+%--------------------------------
+\subsection*{Electrodynamics}
+%--------------------------------
+
+\begin{itemize}
+  \item Determine the EMF, \EMF, from a changing magnetic field inside of a conducting loop
+  \item Be able to apply Lenz's law to determine the orientation of the induced current, \Ivec, and resulting magnetic flux, \Flux, in the case of magnetic induction
+\end{itemize}
+
+%--------------------------------
+\subsection*{Maxwell's Equations}
+%--------------------------------
+
+\begin{itemize}
+  \item Recognize the addition of the displacement current to Ampere's Law
+  \item Write down each of Maxwell's equations in both a vacuum and a linear medium with and without free charge and current densities and identify the key features related to time dependence and sources ($\rho$ and \Jvec)
+\end{itemize}
+
+%--------------------------------
+\subsection*{Conservation Laws and Energy}
+%--------------------------------
+
+\begin{itemize}
+  \item Employ the conservation of energy, momentum, and charge in the context of time varying fields
+  \item Calculate the rate of change of energy in an arbitrary EM field, including it's direction, via Poynting's Vector for both purely real fields as well as field with a complex phase
+  \item Compute the forces acting on a surface due to EM fields using Maxwell's stress tensor
+  \item Recognize the relationship between Ohm's law and the capacity of EM fields to carry energy and momentum
+  \item Understand the connection between classical EM waves and the quantum description of photons and their spin in the context of angular momentum
+\end{itemize}
+
+%--------------------------------
+\subsection*{Electromagnetic Wave Equation and Functions}
+%--------------------------------
+
+\begin{itemize}
+  \item Write down the wave equation in both 1D and 3D and evaluate whether an arbitrary field wave function satisfies the wave equation
+  \item Determine the velocity of a wave given the coefficients of the wave equation
+  \item Establish the vectorial relationship between an arbitrary electric field wave function and its magnetic field counterpart using the known relationship between E and B for an EM wave
+  \item Determine the radiation pressure associated with an EM wave for given E and B field wave functions
+  \item Specify the polarization direction when given the vectorial form of the E and B field wave functions
+\end{itemize}
+
+%--------------------------------
+\subsection*{Electromagnetic Waves in Vacuum and Materials}
+%--------------------------------
+
+\begin{itemize}  
+  \item Describe the notion of effective velocity of light in a material with a real index of refraction greater than 1.0
+  \item Match boundary conditions at an interface between two non-conducting materials with different indices of refraction
+  \item Understand and use Fresnel's equations for a wave impinging on a boundary at normal incidence and determine the reflected and transmitted amplitudes relative to the incident amplitude
+  \item Understand and use Fresnel's equation for a wave impinging on a boundary at oblique incidence  and determine the reflected, transmitted amplitudes relative to the incident amplitude, in the case of polarization both parallel and perpendicular to the plane of incidence
+  \item Explain the gross features that differentiate the cases of oblique incidence reflection and transmission for polarization both parallel and perpendicular to the place of incidence
+  \item Use and explain Brewster's angle for the case of polarization parallel to the place of incidence
+  \item Describe the dissipation time of free charge in the case that an EM wave impinges on a conducting surface
+  \item Describe the depth at which the dissipation of free charge occurs in terms of the skin depth in the case case that an EM wave impinges on a conducting surface
+  \item Use both the real and imaginary components of complex indices of refraction and wavenumbers in the context of an EM wave impinging on a conducting surface
+  \item Derive the critical angle at which total internal reflection takes place from Snell's law and describe the impact of this angle on optical and EM devices
+  \item Discuss the phenomenon of evanescent waves and the features of the attenuation experienced by an EM wave in a material in which such a wave propagates
+\end{itemize}
+
+%--------------------------------
+\subsection*{Guided Electromagnetic Waves}
+%--------------------------------
+
+\begin{itemize}  
+  \item Understand the notion of a ``guide'' wavelength or ``group'' wavelength ($\lambda_g$), how this translates into a group velocity ($v_g$), and how to use the relationship between the group wavenumber ($k_g$), nominal wavenumber ($k_0$), and cutoff wavenumber ($k_c$) or wavelength ($\lambda_c$)
+  \item Determine the conditions placed on the allowed values of the wavenumber in all three dimensions in the case of EM waves guided by conducting surfaces
+  \item Apply the separation of variables technique for solving the wave equation in a wave guide to find an appropriate wave function for a wave that satisfies the conditions imposed on it by a rectangular wave guide 
+  \item Describe the quantitative and qualitative differences between a TE, TM and TEM mode wave in a wave guide
+  \item Be able to calculate the Poynting vector for a TE, TM, and TEM wave in a waveguide
+  \item Describe the key qualitative and quantitative differences between a wave guide that is able to support a TEM mode wave, and one that is not able to support a TEM mode wave
+\end{itemize}
+
+%--------------------------------
+\subsection*{Potential formulation of Maxwell's Equations}
+%--------------------------------
+
+\begin{itemize}  
+  \item Be able to write the \Evec and \Bvec fields in terms of the scalar and vector potentials, $\phi$ and \Avec
+  \item Be able to calculate the \Evec and \Bvec fields from a given set of scalar and vector potentials, $\phi$ and \Avec
+  \item Derive a wave equation in terms of $\phi$ and \Avec from Maxwell's equations written in terms of the potentials
+  \item Apply the Lorentz gauge and obtain the canonical forms of the inhomogenous Maxwell's equations in terms of the scalar and vector potentials, $\phi$ and \Avec, and the source terms, $\rho$ and \Jvec
+  \item Explain the relationship and differences between the Lorentz gauge and the Coulomb gauge
+\end{itemize}
+
+%--------------------------------
+\subsection*{Fields and energy transport due to moving and accelerated charged particles}
+%--------------------------------
+
+\begin{itemize}  
+  \item Write down the definition of the retarded time and explain why it is necessary in the context of radiation from charge and current sources
+  \item Calculate $\phi$ and \Avec, and then the resulting \Evec and \Bvec, for basic canonical systems (e.g. wire) using the principles of retarded time and the potential formulations of Maxwell's equations
+  \item Perform the requisite change of variables in order to translate the scalar and vector potentials into the Li\'enard--Wiechert potentials for a point charge moving with a given velocity 
+  \item Be able to write down the functional dependence of \Evec and \Bvec on \Rvec (the distance between a particle at a given retarded time and a field point)
+  \item Identify and manipulate the relevant terms in the Li\'enard--Wiechert fields, \Evec and \Bvec, at various limits (e.g. non-relativistic, small \avec, etc)
+  \item Describe the relationship between \Evec, \Bvec for an accelerated charge
+  \item Compute the Poynting vector for an accelerated charged particle and identify the quantitative relationship between the resulting magnitude of the energy flux per unit time and \Rvec
+  \item Understand the concept of radiation in terms of energy transport to $\infty$
+  \item Be able to draw the \Evec field for a particle moving with constant velocity as $|\vec{v}|\rightarrow c$
+  \item Compute the total power emitted by an accelerated charged particle with a given $\Evec_{a}$ (i.e. the term uniquely due  to acceleration in the \Evec for a charged particle moving with a velocity and acceleration). 
+\end{itemize}
+
+%--------------------------------
+\subsection*{Multipole radiation and antennas}
+%--------------------------------
+
+\begin{itemize}   
+  \item Write down (quantitatively) the three approximations typically made as part of the determination of the radiation due to a dipole: dipole approximation, local non-relativistic approximation, radiation-zone approximation.
+  \item Determine the scalar and vector potentials for a simple dipole without any approximations
+  \item Be able to apply the three approximations mentioned above in the calculation of of the scalar and vector potentials for a dipole
+  \item Determine the \Evec and \Bvec fields for a dipole given the scalar and vector potentials
+  \item Derive the expression for radiation from a dipole given the \Evec and \Bvec fields
+  \item Express the functional dependence of the energy flux per unity time for a dipole, as well as the total power, on the angular frequency, $\omega$, the dipole moment, $p_0$ and the angle between the dipole and the field point, $\theta$
+  \item Draw the dipole radiation pattern described by the time-averaged Poynting vector. 
+  \item Determine the half-wave antenna 
+\end{itemize}
+
+
+%--------------------------------
+\subsection*{Relativistic Electrodynamics}
+%--------------------------------
+
+\begin{itemize}   
+  \item Be able to state the general guiding principle behind the theory of special relativity
+  \item Transform the time and spatial coordinates in a moving inertial reference frame to one that is at rest with respect to the observer.
+  \item Be able to understand and use Einstein notation.
+  \item Compute a dot product in 4-vector notation
+  \item Compute derivatives in 4-vector notation
+  \item Derive the inhomogeneous Maxwell's equations from the 4-vector definitions of the scalar and vector potentials.
+\end{itemize}
+
+\end{document}

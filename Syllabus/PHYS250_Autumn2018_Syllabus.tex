@@ -1,0 +1,87 @@
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{multirow}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=red,
+  urlcolor=blue
+}
+
+%----------------------------------------------------
+% Page Setup
+%----------------------------------------------------
+\usepackage{setspace}
+\usepackage[margin=0.90in]{geometry}
+\linespread{1.3}
+%\doublespacing
+%\addtolength{\hoffset}{-2.5cm}
+%\addtolength{\voffset}{-2.5cm}
+%\addtolength{\textwidth}{2.0cm}
+%\addtolength{\textheight}{4.0cm}
+
+%----------------------------------------------------
+% Header and Footer Information
+%----------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{PHYS 250, Autumn Quarter 2018}
+\rhead{\today, v0.1}
+
+%----------------------------------------------------
+% Course Number, Course Title, Prof Name, Location
+%----------------------------------------------------
+\title{\sc Physics 250: Computational Physics}
+\author{\textbf{Instructor:} David W. Miller, PRC 245, \\ 773-702-7671, \href{mailto:David.W.Miller@uchicago.edu}{David.W.Miller@uchicago.edu}}
+\date{}
+
+%----------------------------------------------------
+% Course Global Variables
+%----------------------------------------------------
+
+\newcommand{\CanvasURL}   {https://canvas.uchicago.edu/courses/16987}
+\newcommand{\CanvasLink}  {\href{\CanvasURL}{\CanvasURL}}
+\newcommand{\GitLab}      {Wave Motion \& Sound}
+\newcommand{\Website}     {Interference}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{fancy}
+
+%----------------------------------------------------
+% Basic Information: Location, TA Info, Contact Info
+%----------------------------------------------------
+\input{PHYS250_Autumn2018_BasicInfo}
+
+
+%----------------------------------------------------
+% Course Outline
+%----------------------------------------------------
+
+\clearpage
+\input{PHYS250_Autumn2018_CourseOutline}
+
+%----------------------------------------------------
+% Course Outline
+%----------------------------------------------------
+
+\clearpage
+\input{PHYS250_Autumn2018_ReadingList}
+
+%----------------------------------------------------
+% Additional Information
+%----------------------------------------------------
+
+\clearpage
+\input{PHYS250_Autumn2018_AdditionalInfo}
+
+
+
+\end{document}

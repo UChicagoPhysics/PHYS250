@@ -2,8 +2,10 @@
 *.aux
 *.bcf
 *.bbl
+*_minted*
 *-blx.bib
 *.blg
+*.vrb
 .*.lb
 *.fdb_latexmk
 *.fls
@@ -15,4 +17,6 @@
 *.spl
 *.synctex.gz
 *.toc
+*.snm
+*.nav
 .DS_Store

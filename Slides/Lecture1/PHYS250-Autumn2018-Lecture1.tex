@@ -373,6 +373,10 @@ print("Area = " + area)           # Output
 
 \end{frame}
 
+%==========================================================================================
+\section[Software]{Software}
+%==========================================================================================
+
 %-----------------------------------------------------------------------------------------
 \subsection[Version Control Software Systems]{Version Control Software Systems}
 %-----------------------------------------------------------------------------------------
@@ -511,9 +515,6 @@ print("Area = " + area)           # Output
   
 \end{frame}
 
-%==========================================================================================
-\section[Software: Python]{Software: Python}
-%==========================================================================================
 
 %-----------------------------------------------------------------------------------------
 \subsection[Why python?]{Why python?}
@@ -604,23 +605,18 @@ plt.show()
   
 \end{frame}
 
+%==========================================================================================
+\section[Resources]{Resources}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Textbooks]{Textbooks}
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}[fragile]
-  \frametitle{Hello world!}
+\begin{frame}[shrink=15]
+  \frametitle{Textbooks that I suggest}
 
-\begin{pythonshadowblock}{0.7\textwidth}
-import numpy as np
-import matplotlib.pyplot as plt
-
-def p(x):
-    return np.exp(-x**2)
-    
-#let's plot it
-x = np.linspace(-3,3,100)
-y = p(x)
-plt.plot(x,y)
-\end{pythonshadowblock}
+  \begin{table}[htbp]  \centering  \begin{tabular}{@{} cp{3cm}p{6cm}p{4cm} @{}}    \hline     & Author & Textbook & Comments \\     \hline    \includegraphics[width=0.10\textwidth]{Textbook-KN.png} & Kinder \& Nelson & A Student's Guide to Python for Physical Modeling & Very good for python examples, not great for physics principles \\     \includegraphics[width=0.10\textwidth]{Textbook-Franklin.jpg} & Franklin & Computational Methods for Physics & Amazing for physical principles, no python \\     \includegraphics[width=0.10\textwidth]{Textbook-LPB.jpg} & Landau, Paez, Bordeianu  & Computational Physics, Problem Solving with Python & Great for both physics and python \\     \includegraphics[width=0.10\textwidth]{Textbook-Halterman.pdf} & Halterman & Fundamentals of \texttt{C++} Programming & Great for physical principles, no python \\     \hline  \end{tabular}  \end{table}
   
   
 \end{frame}

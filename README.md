@@ -34,12 +34,12 @@ We also have a platform that provisions (creates, maintains, and hosts) Jupyter 
 
 To use this service, you will need an account.
 
-### Git, GitHub, and Homework
+### Git, GitHub
 As part of the tools of the trade that you will learn in this course, you will be expected to use the modern versioning system `git` for keeping tracking of your code and turning in homework.
 
 * `git`: https://git-scm.com/
 
-Most people interact with `git` using GitHub
+Most people interact with `git` using GitHub (that's this thing you're using now on the web):
 
 * GitHub: https://github.com/
 
@@ -79,4 +79,31 @@ There are a huge number of `git` and `GitHub` tutorials out there, but here are 
 * https://guides.github.com/activities/hello-world/
 * https://guides.github.com/introduction/flow
 * https://guides.github.com/activities/forking/
+
+
+To have students complete assignments using forks (note: this setup means that **students will be able to see one another's work**):
+
+### Homework submissions
+
+#### 1. Homework repositories
+
+I will **Create one repository per assignment**. That will include any boilerplate files that you will need to get started.
+
+These will be *private repositories* and there will be one private repository per assignment.
+
+#### 2. Completing assignments
+
+You must then follow these steps for each assignment:
+
+1. To start, [**fork** the repository][forking].
+1. [**Clone**][ref-clone] the repository to your computer.
+1. Modify the files and [**commit**][ref-commit] changes to complete your solution.
+1. [**Push**][ref-push]/sync the changes up to GitHub.
+1. [Create a **pull request**][pull-request] on the original repository to turn in the assignment.
+
+#### 3. Reviewing assignments
+
+We will then do code review with line-by-line feedback directly within the pull request. For assignments that allow for corrections, you can push fixes up to their forks, which will be reflected in the pull request that I (the professor) will receive.
+
+Since I don't want any solutions in the original assignment repository, I will leave the pull request unmerged. When I am finished giving feedback, I will close the pull request and leave a :+1: (`:+1:`) in a final comment.
 

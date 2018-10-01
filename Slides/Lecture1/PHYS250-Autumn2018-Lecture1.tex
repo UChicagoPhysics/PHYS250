@@ -6,7 +6,6 @@
 %----------------------------------------------------
 % Packages to use
 %----------------------------------------------------
-
 \input{../packages.sty}
 
 %----------------------------------------------------
@@ -30,14 +29,17 @@
 %----------------------------------------------------
 % Colors
 %----------------------------------------------------
-
 \input{../mycolors.sty}
 
 %----------------------------------------------------
 % Style, formatting, and new commands
 %----------------------------------------------------
-
 \input{../newcommands.sty}
+
+%----------------------------------------------------
+% Set paths for plots and images
+%----------------------------------------------------
+\input{../paths.sty}
 
 
 %-----------------------------------------------------------------------------------------
@@ -84,7 +86,12 @@
 }
 
 %==========================================================================================
-\section[Introduction]{Introduction}%==========================================================================================
+\section[Introduction to PHYS 250]{Introduction}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Course Description]{Course Description}
+%-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=1]
   \frametitle{Computational Physics (PHYS 250)}
@@ -102,14 +109,49 @@
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
+\subsection[Philosophy and Learning Goals]{Philosophy and Learning Goals}
+%-----------------------------------------------------------------------------------------
+
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}%[shrink=1]
+  %\frametitle{Patterns}
+
+  \begin{figure}
+    \includegraphics<1>[width=\textwidth]{\sciPath/Physics/CMB/Planck_CMB_black_background_fullwidth.pdf}
+    \includegraphics<2>[width=0.7\textwidth]{\sciPath/Physics/CMB/CMBPowerSpectrum-PlanckWMAPACTSPT.pdf}
+  \end{figure}
+
+  \textcolor{white}{\textbf{The Nature of Science:} Science is all about models. We look at something in real life and try to make a model of it. We can use this model to predict future (or new) events in real life. If the model doesn't agree with real data, we change the model. Repeat forever. [\href{https://www.wired.com/2015/11/what-computational-physics-is-really-about/}{From Wired}]}	  
+	  
+\end{frame}
+}
+
+%---------------------------------------------------------------------------------------------
+\begin{frame}%[shrink=1]
+  \frametitle{Theory and Practice (or...Theory and Experiment)}
+
+  We often divide the world of science (and perhaps even moreso, Physics) into two deeply related and intertwined but often distinct categories of activities and research:
+  
+  \begin{itemize}
+    \item \bluebf{Theoretical:} building models
+    \item \bluebf{Experimental:} testing models
+  \end{itemize}	  
+	  
+  \centering \textbf{We use computers to do \textit{both} of these crucial activities!} 
+  
+  \flushleft In doing so, we often blur the distinction between the two, as well.
+	  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=1]
   \frametitle{Overarching Learning Goals for this Quarter}
 
   \begin{itemize}
-    \item \bluebf{Identify problems} that benefit from or require \bluebf{computational/numerical approaches} and tools to solve. 
-    \item Develop an \bluebf{algorithmic approach} to answering those problems computationally.
-    \item Familiarity with \bluebf{common computational algorithms} and numerical approaches to typical problems.
+    \item \bluebf{Identify models} that benefit from or require \bluebf{computational/numerical approaches} and tools to either develop and understand or to evalaute. 
+    \item Develop an \bluebf{algorithmic approach} to addressing those problems computationally.
+    \item Familiarity with \bluebf{common computational models and algorithms} and numerical approaches to typical problems.
     \item Use \bluebf{modern, high-level programming languages} to implement the computational algorithms. 
     \item Use modern software tools for \bluebf{developing, preserving, disseminating, and expanding} on those solutions.
     \item \bluebf{Apply computational tools} to contemporary physics questions.
@@ -120,7 +162,7 @@
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=1]
-  \frametitle{What are we doing here?}
+  \frametitle{The role of the physicist}
 
   \textit{``The computer is incredibly fast, accurate, and stupid. Man is incredibly slow, inaccurate, and brilliant. The marriage of the two is a force beyond calculation.''}
   
@@ -133,11 +175,254 @@
   
 \end{frame}
 
+%==========================================================================================
+\section[Computational approaches generally]{Computational approaches generally}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Algorithmic and process-based thinking]{Algorithmic and process-based thinking}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=1]
-  \frametitle{What are we doing here?}
+  \frametitle{Algorithmic and process-based thinking}
     
+  You probably already learned in your first year courses that certain approaches to problem solving in physics are important to efficiently identifying solutions and paths through a particular problem. 
+  
+  \vspace{1cm}
+  
+  Before we get into any code, let's discuss the thought process behind developing a computational model or approach to problem solving. 
+    
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Thinking like a machine}
+  \framesubtitle{From the Kinder \& Nelson text}
+    
+  \setbeamercovered{transparent}  
+    
+  \pause
+  
+  \begin{ucpythonblock}{Human-readable (high level) instructions to start a car}
+    Put the key in the ignition
+    Turn the key until the engine starts, 
+        then let go
+    Push the button on the shifter and move it 
+        to REVERSE
+    ...
+  \end{ucpythonblock}
+
+  \pause
+
+  \begin{ucpythonblock}{Bug!!!}
+    Press down the left pedal # Needed for some cars
+  \end{ucpythonblock}
+  
+  \pause
+
+  \begin{ucpythonblock}{Machine-readable (low level) instructions}
+    Grab the wide end of the key
+    Insert pointed end of key into slot on lower 
+        right side of steering column
+    Rotate key clockwise about long axis when viewed 
+        toward the pointed end
+  \end{ucpythonblock}
+  
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Logical vs. algorithmic instructions}
+    
+  \setbeamercovered{transparent}  
+    
+  Let's say you want to write an algorithm to calculate the area of a circle. 
+  
+  \begin{enumerate}[<+->]
+    \item Write ``pseudocode'' or the \alertbf{logical instructions} for the algorithm
+    \item Extend pseudocode with \alertbf{parameters and input/output}
+    \item Specify algorithm \alertbf{explicitly}
+  \end{enumerate}
+    
+  \begin{ucpythonblock}{Pseudocode algorithm for area calculation}
+    calculate area of circle  # Do this computer!
+  \end{ucpythonblock}
+
+  \pause
+
+  \begin{ucpythonblock}{Better algorithm for area calculation}
+    read radius              # Input
+    calculate area of circle # Numeric
+    print area               # Output
+  \end{ucpythonblock}
+  
+  \pause
+
+  \begin{ucpythonblock}{Actual algorithm for area calculation}
+    radius = input("Specify radius")  # Input
+    pi     = 3.141593                 # Set constant
+    area   = pi  * radius^2           # Algorithm
+    print("Area = " + area)           # Output 
+  \end{ucpythonblock}
+  
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Computational algorithm development cycles]{Computational algorithm development cycles}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=10]
+  \frametitle{Translate algorithmic thinking into a development process}
+  %\framesubtitle{Concepts adopted from colleague Salvatore Rappoccio at SUNY Buffalo}
+  
+  We can adapt to the need for algorithmic thinking by adopting a process for developing algorithms, computational approaches, and  software generally.
+  
+  \begin{center}
+  
+  %\column{0.8\textwidth}
+  
+  \begin{shadowblock}{0.7\textwidth}
+  
+  \setlength{\leftmargini}{40pt}
+  
+  \begin{enumerate}
+    \item[Step 1:] write the algorithm down on paper
+    \item[Step 2:] think
+    \begin{itemize}
+      \item[If:] you don't understand everything
+      \item[Then:] \texttt{goto} Step 1
+      \item[Else:] \texttt{continue}
+    \end{itemize}
+    \item[Step 3:] write pseudocode
+    \item[Step 4:] think
+    \begin{itemize}
+      \item[If:] you don't understand everything
+      \item[Then:] \texttt{goto} Step 3
+      \item[Else:] \texttt{continue}
+    \end{itemize}
+    \item[Step 5:] write actual code
+    \item[Step 6:] test code with unit tests
+    \begin{itemize}
+      \item[If:] code does not unit checks
+      \item[Then:] \texttt{goto} Step 5
+      \item[Else:] \texttt{continue}
+    \end{itemize}
+    \item[Step 7:] publish!
+  \end{enumerate}
+  \end{shadowblock}
+
+  \end{center}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Alas, sometimes, it's a bit more complicated than that...}
+  
+  \includegraphics[width=0.95\textwidth]{\physPath/ParticlePhysicsWorkflow.png}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Version Control Software Systems]{Version Control Software Systems}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Version control}
+  
+  \begin{columns}
+  
+    \column{0.5\textwidth}
+    
+      \begin{itemize}
+        \item The most important message of thisslide is simple...\alertbf{Use a software revision control system for all of your code}
+        \begin{itemize}
+          \item And that means now...not tomorrow or next week
+          \item Because if you wait until you need it, it will be too late
+        \end{itemize}
+      \end{itemize}
+      
+      \pause
+      
+      \centering
+      
+      \includegraphics[width=0.75\columnwidth]{/Users/fizisist/Pictures/Random/Git-Logo-2Color.png}
+      \includegraphics[width=0.75\columnwidth]{/Users/fizisist/Pictures/Random/GitHub_Logo.png}
+    
+    \column{0.5\textwidth}
+    
+      \includegraphics[width=0.95\textwidth]{/Users/fizisist/Pictures/Random/version-control.jpg}
+  
+  \end{columns}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{A brief history of version control}
+    \begin{itemize}
+    \item \bluebf{The first RCS were designed to be used on large systems where everyone logged into the same machine}
+    \begin{itemize}
+      \item They tracked code on the same filesystem where it lived (e.g., in a subdirectory)
+      \item SCCS and RCS are examples
+    \end{itemize}
+    \item \bluebf{Then client-server systems were developed, so that developers could work on their own machines}
+    \begin{itemize}
+      \item Checking code into a central server to share and collaborate
+      \item CVS and SVN are examples
+    \end{itemize}
+    \item  \bluebf{More recently distributed version control systems have arisen}
+    \begin{itemize}
+      \item These are decentralised, so everyone has a complete copy of the repository
+      \item Gives a lot of freedom to developers to share and merge as they like, so liked very much by the open source community
+      \item git, mercurial and bit keeper are examples
+    \end{itemize}
+  \end{itemize}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{\git \& \github}
+  \framesubtitle{\url{https://git-scm.com} and \url{https://github.com}}
+    \begin{itemize}
+    \item \bluebf{\git is the most popular open source version control system}
+    \begin{itemize}
+      \item can host huge projects (Linux Kernel, LHC experiment software, etc)
+      \item scales very well and it?s extremely fast and powerful
+      \item very flexible (= complex)
+    \end{itemize}
+    \item \bluebf{Distributed version control systems (\git) are great, but they are made even better by using a social coding website (\github)}
+    \item \bluebf{These sites allow developers:}
+    \begin{itemize}
+      \item browse code easily
+      \item compare different versions
+      \item take copies (a.k.a. fork)
+      \item offer patches back to upstream repositories
+      \begin{itemize}
+        \item And discuss and review these patches before acceptance
+      \end{itemize}
+      \item even build websites
+    \end{itemize}
+    \item \bluebf{The best known social coding site is GitHub, but there are others, e.g. BitBucket and GitLab}
+  \end{itemize}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{ATLAS Experiment analysis software package on \github}
+  
+  \includegraphics[width=0.95\textwidth]{xAODAnaHelpers.png}
+
 \end{frame}
 
 %-----------------------------------------------------------------------------------------

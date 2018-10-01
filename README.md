@@ -87,7 +87,7 @@ To have students complete assignments using forks (note: this setup means that *
 
 #### 1. Homework repositories
 
-I will **[Create one repository][create-repo] per assignment**. That will include any boilerplate files that you will need to get started.
+I will **Create one repository per assignment**. That will include any boilerplate files that you will need to get started.
 
 These will be *private repositories* and there will be one private repository per assignment.
 

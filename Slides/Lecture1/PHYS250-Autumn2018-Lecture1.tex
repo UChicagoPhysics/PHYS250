@@ -34,6 +34,7 @@
 %----------------------------------------------------
 % Style, formatting, and new commands
 %----------------------------------------------------
+\input{../../global.sty}
 \input{../newcommands.sty}
 
 %----------------------------------------------------
@@ -175,6 +176,50 @@
   
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
+\subsection[Course Syllabus]{Course Syllabus}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{Some of the specific problems that we will tackle}
+
+  There are literally hundreds of texts, and even more webpages and software repos, for computational physics, methods, numerical recipes. 
+  
+  $\rightarrow$ \bluebf{I have chosen a subset of ubiquitous problems and which are the ``bread and butter'' of nearly all domains in physics and beyond}.
+
+  \begin{columns}
+   
+    \column{0.5\textwidth}
+    
+      \begin{itemize}
+        \item Programming basics and Software design concepts
+        \item Basic visualization
+        \item Random numbers, errors
+        \item Ising model, Metropolis algo
+        \item Minimization 
+      \end{itemize}
+    
+    \column{0.5\textwidth}
+  
+      \begin{itemize}
+        \item Monte Carlo method
+        \item Ordinary differential equations
+        \item Partial differential equations
+        \item Fourier transforms
+        \item Data analysis techniques
+        \item Neural networks
+      \end{itemize}
+  
+  \end{columns}
+  
+  \vspace{0.5cm}
+  
+  \centering \textbf{I hope you walk out of this class able to effectively engage with most of the computational physics issues and tools in a modern research group.}
+  
+\end{frame}
+
+
+
 %==========================================================================================
 \section[Computational approaches generally]{Computational approaches generally}
 %==========================================================================================
@@ -248,24 +293,24 @@
   \end{enumerate}
     
   \begin{ucpythonblock}{Pseudocode algorithm for area calculation}
-    calculate area of circle  # Do this computer!
+calculate area of circle  # Do this computer!
   \end{ucpythonblock}
 
   \pause
 
   \begin{ucpythonblock}{Better algorithm for area calculation}
-    read radius              # Input
-    calculate area of circle # Numeric
-    print area               # Output
+read radius              # Input
+calculate area of circle # Numeric
+print area               # Output
   \end{ucpythonblock}
   
   \pause
 
   \begin{ucpythonblock}{Actual algorithm for area calculation}
-    radius = input("Specify radius")  # Input
-    pi     = 3.141593                 # Set constant
-    area   = pi  * radius^2           # Algorithm
-    print("Area = " + area)           # Output 
+radius = input("Specify radius")  # Input
+pi     = 3.141593                 # Set constant
+area   = pi  * radius^2           # Algorithm
+print("Area = " + area)           # Output 
   \end{ucpythonblock}
   
   
@@ -340,7 +385,7 @@
     \column{0.5\textwidth}
     
       \begin{itemize}
-        \item The most important message of thisslide is simple...\alertbf{Use a software revision control system for all of your code}
+        \item The most important message of this slide is simple...\alertbf{Use a software version control system for all of your code}
         \begin{itemize}
           \item And that means now...not tomorrow or next week
           \item Because if you wait until you need it, it will be too late
@@ -367,7 +412,7 @@
 \begin{frame}%[shrink=10]
   \frametitle{A brief history of version control}
     \begin{itemize}
-    \item \bluebf{The first RCS were designed to be used on large systems where everyone logged into the same machine}
+    \item \bluebf{The first version control systems were designed to be used on large systems where everyone logged into the same machine}
     \begin{itemize}
       \item They tracked code on the same filesystem where it lived (e.g., in a subdirectory)
       \item SCCS and RCS are examples
@@ -390,16 +435,16 @@
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{\git \& \github}
-  \framesubtitle{\url{https://git-scm.com} and \url{https://github.com}}
+  \frametitle{\git, \github, \& \gitlab }
+  \framesubtitle{\url{https://git-scm.com}, \url{https://github.com}, \url{https://about.gitlab.com}}
     \begin{itemize}
     \item \bluebf{\git is the most popular open source version control system}
     \begin{itemize}
       \item can host huge projects (Linux Kernel, LHC experiment software, etc)
-      \item scales very well and it?s extremely fast and powerful
+      \item scales very well and it's extremely fast and powerful
       \item very flexible (= complex)
     \end{itemize}
-    \item \bluebf{Distributed version control systems (\git) are great, but they are made even better by using a social coding website (\github)}
+    \item \bluebf{Distributed version control systems (\git) are great, but they're made even better by using a social coding site (\github or \gitlab)}
     \item \bluebf{These sites allow developers:}
     \begin{itemize}
       \item browse code easily
@@ -412,6 +457,9 @@
       \item even build websites
     \end{itemize}
     \item \bluebf{The best known social coding site is GitHub, but there are others, e.g. BitBucket and GitLab}
+    \begin{itemize}
+      \item Familiarity with \git/\github/\gitlab will serve you well, trust me
+    \end{itemize}
   \end{itemize}
   
 \end{frame}
@@ -426,11 +474,105 @@
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{\github \& \gitlab resources }
+  
+  \github is a free resource as long as your code remains public (you can pay for private repositories). The Physical Sciences Division (PSD) at UChicago hosts a \bluebf{private} \gitlab repository.
+
+  \begin{itemize}
+    \item \url{https://psdcomputing.uchicago.edu/page/psd-repo}
+  \end{itemize}
+  
+  \includegraphics[width=0.95\textwidth]{PSDRepo.png}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{PHYS 250 \github}
+  \framesubtitle{\url{https://github.com/UChicagoPhysics/PHYS250}}
+  
+  Course materials are hosted in the \github \texttt{UChicagoPhysics} repository
+  
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{PHYS250-GitHub.png}
+  \end{center}
+
+  \vspace{-0.5cm}
+
+  \begin{itemize}
+    \item Slides (e.g. \textit{these!}), syllabi, learning goals, and code examples
+    \item Stable versions will be cross-posted to \href{\CanvasURL}{Canvas} as well.
+    \item Homework submission will be done via \github (\textit{instructions to come})
+  \end{itemize}
+  
+  
+\end{frame}
+
+%==========================================================================================
+\section[Software: Python]{Software: Python}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Why python?]{Why python?}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{Python as our programming language}
+    
+  \begin{ucblock}{From \url{www.python.org}}
+    Python is a dynamic object-oriented programming language that can be used for many kinds of software development. It offers strong support for integration with other languages and tools, comes with extensive standard libraries, and can be learned in a few days.
+  \end{ucblock}
+  
+  \bluebf{And in my own words:}
+  
+  \begin{itemize}
+    \item It is \bluebf{ubiquitous, flexible, useful, and \textit{relatively} easy}
+  \end{itemize}
+    
+  From \href{https://spectrum.ieee.org/static/interactive-the-top-programming-languages-2018}{IEEE Spectrum rankings (July 2018)}:
+
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{Python-Trending.png}
+    \includegraphics[width=0.45\textwidth]{Python-Jobs.png}
+  \end{center}  
+    
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
 \subsection[Code examples]{Code examples}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}[fragile]
   \frametitle{Hello world!}
+
+  \begin{ucpythonblock}{Interactive in the python interpreter}
+python
+>>> print "hello world"
+hello
+>>> CTRL-d  # to exit python
+  \end{ucpythonblock}
+  
+  \begin{ucpythonblock}{From a script (containing the above print line):}
+python helloworld.py
+  \end{ucpythonblock}
+  
+  \begin{ucpythonblock}{Self-running script:}
+#!/usr/bin/env python# This script prints hello to the screenprint "hello world"
+  \end{ucpythonblock}
+  
+  \begin{ucpythonblock}{}
+chmod +x helloworld.py./helloworld.pyhello world
+  \end{ucpythonblock}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Hello Gaussian!}
 
 \begin{ucpythonblock}{Code example}
 import numpy as np
@@ -443,8 +585,22 @@ def p(x):
 x = np.linspace(-3,3,100)
 y = p(x)
 plt.plot(x,y)
+plt.show()
 \end{ucpythonblock}
   
+  \pause
+
+  \begin{textblock}{12}(8,-7)
+    \includegraphics[width=0.55\textwidth]{Gaussian.png}
+  \end{textblock}  
+  
+  \pause
+  
+  But what about that \texttt{linspace} thingy? Google it! (\href{https://docs.scipy.org/doc/numpy-1.15.0/reference/generated/numpy.linspace.html}{numpy docs})
+  
+  \texttt{numpy.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)}
+  
+  ``Returns num evenly spaced samples, calculated over the interval [start, stop].''
   
 \end{frame}
 

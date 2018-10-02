@@ -659,6 +659,19 @@
 {\end{minted}\end{shadowblock}}
 
 %----------------------------------------------------
+% bash blocks
+%----------------------------------------------------
+\newenvironment{ucbashblock}[1]
+{\VerbatimEnvironment\begin{colorblock}{maroon}{lightmaroon}{#1}\begin{minted}{bash}}
+{\end{minted}\end{colorblock}}
+
+\newenvironment{bashshadowblock}[1]
+{\VerbatimEnvironment\begin{shadowblock}{#1}\begin{minted}{bash}}
+{\end{minted}\end{shadowblock}}
+
+
+
+%----------------------------------------------------
 % graphitemize
 %----------------------------------------------------
 \makeatletter 

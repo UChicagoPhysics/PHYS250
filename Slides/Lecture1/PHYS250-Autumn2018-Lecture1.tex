@@ -515,6 +515,79 @@ print("Area = " + area)           # Output
   
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Operating systems and platforms}
+  
+  \begin{itemize}
+    \item Operating systems (like Windows or Mac OS)
+    \item We will generally be using UNIX/LINUX (an offshoot of UNIX)
+    \begin{itemize}
+      \item Invented by Linus Torvalds in 1991
+      \item Mac OS X is built upon LINUX
+    \end{itemize}
+    \item I have arranged for a ``minicourse'' from CSIL on Friday (info in later slides)
+    \begin{itemize}
+      \item Also have an EdX course (free) from the creator here:
+      \item \url{https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-0\#!}
+    \end{itemize}
+    \item Linux is completely open source
+    \begin{itemize}
+      \item you can modify it at your will and debuggers are also free
+    \end{itemize}
+    \item Predominantly command line tools
+  \end{itemize}
+  
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Linux ``shell''}
+  
+  \begin{itemize}
+    \item We will be using an interface to Linux called a ``shell''
+    \item It is a command-line interpreter : you type, it executes
+    \item Two major options are \texttt{bash} (as in, smash) and \texttt{csh} (like ``sea shell'', modern version is ``tcsh'', ``tea sea shell'')
+    \begin{itemize}
+      \item Only real difference: environment variables syntax
+      \item \texttt{bash:} \texttt{export X=value}
+      \item \texttt{csh:} \texttt{setenv X value}
+    \end{itemize}
+  \end{itemize}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Shell basics}
+  
+  \begin{ucbashblock}{Listing directory contents : \texttt{ls}, like ``list''}
+> ls
+Examples/ LearningGoals/ README.md Slides/ 
+Syllabus/ global.sty
+  \end{ucbashblock}
+  
+  \begin{ucbashblock}{Copy: \texttt{cp}}
+> cp stuff.txt stuff1.txt
+  \end{ucbashblock}
+  
+  \begin{ucbashblock}{Where am I?: \texttt{pwd}, \texttt{cd}}
+> pwd
+/ComputationalPhysics/PHYS250/PHYS250-Autumn2018
+> ls
+Examples/ LearningGoals/ README.md Slides/ Syllabus/
+> cd Examples/
+> ls
+HelloGaussian.ipynb
+HelloGaussian.py
+Introduction_to_Jupyter_Notebooks_and_Python.ipynb
+  \end{ucbashblock}  
+\end{frame}
+
 
 %-----------------------------------------------------------------------------------------
 \subsection[Why python?]{Why python?}
@@ -778,6 +851,48 @@ plt.show()
   
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
+\subsection[Jupyter notebooks]{Jupyter notebooks}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Jupyter notebooks}
+  \framesubtitle{Interactive, web-based, integrated code and documentation environment}
+
+  We will be following-up with more technical practice with python, but I want to introduce you to the resources that we'll be using this quarter for many of our examples and projects: \href{http://jupyter.org/}{Jupyter notebooks}.
+
+  \centering
+  \includegraphics[width=0.85\textwidth]{JupyterNotebooks.png}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Jupyter notebooks on the PHYS 250 computing platform}
+
+  Built for machine learning applications running mostly in Jupyter.
+
+  \begin{figure}
+  \centering
+  \includegraphics<1>[width=0.85\textwidth]{Platform-homepage.png}
+  \includegraphics<2>[width=0.85\textwidth]{Platform-login.png}
+  \includegraphics<3>[width=0.85\textwidth]{Platform-homepage-loggedin.png}
+  \includegraphics<4>[width=0.85\textwidth]{Platform-profile.png}
+  \includegraphics<5>[width=0.85\textwidth]{Platform-menu.png}
+  \includegraphics<6>[width=0.85\textwidth]{Platform-deployments.png}
+  \includegraphics<7>[width=\textwidth]{Platform-configuration-lecture1.png}
+  \includegraphics<8>[width=\textwidth]{Platform-deployments-lecture1.png}
+  \includegraphics<9>[width=\textwidth]{Platform-launcher-lecture1.png}
+  \includegraphics<10>[width=\textwidth]{Platform-terminal-lecture1.png}
+  \includegraphics<11>[width=\textwidth]{Platform-launcher-lecture1-cdworkspace.png}
+  \includegraphics<12>[width=\textwidth]{Platform-launcher-lecture1-getGitHub.png}
+  \includegraphics<13>[width=\textwidth]{Platform-launcher-lecture1-clone.png}
+  \includegraphics<14>[width=\textwidth]{JupyterNotebook-running-maniac.png}
+  \end{figure}
+
+\end{frame}
+
 %==========================================================================================
 \section[External Resources]{External Resources}
 %==========================================================================================
@@ -820,19 +935,41 @@ plt.show()
     
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
 
+\begin{frame}%[shrink=15]
+  \frametitle{Research Computing Center (RCC)}
+  \framesubtitle{\url{https://rcc.uchicago.edu/}}
 
-%==========================================================================================
-\section[Conclusions]{Conclusions}%==========================================================================================
-
-\begin{frame}%[shrink=1]
-  \frametitle{Conclusions}
+  In addition to the short ``minicourse'' from CSIL, I have arranged for the possibility of holding longer tutorials (2-3 hrs) conducted by the RCC for the following topics:
 
   \begin{itemize}
-    \item Something
+    \item Introduction to Linux and the RCC
+    \item Introduction to Python
   \end{itemize}
+    
+  These are much more in-depth and would be a jumpstart to the quarter if you are interested. Please make sure to fill out the survey if you are interested:
   
+  \begin{itemize}
+    \item \url{https://goo.gl/forms/q10QVRf7RjSQp91E3}
+  \end{itemize}
+    
 \end{frame}
+
+
+
+
+%%==========================================================================================
+%\section[Conclusions]{Conclusions}%==========================================================================================
+%
+%\begin{frame}%[shrink=1]
+%  \frametitle{Conclusions}
+%
+%  \begin{itemize}
+%    \item Something
+%  \end{itemize}
+%  
+%\end{frame}
 
 %==========================================================================================
 %==========================================================================================

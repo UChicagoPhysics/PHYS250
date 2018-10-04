@@ -455,12 +455,36 @@ where
     \item $\chisq$ = Pearson's cumulative test statistic, which asymptotically approaches a $\chisq$.
     \item $O_i$ = the number of observations of type $i$.
     \item $N$ = total number of observations
+    \item $p_i$ = the fraction of type $i$ w.r.t. the total ($N$)
     \item $E_i = N p_i$ = the expected (theoretical) count of type $i$
     \item $n$ = the number of cells in the table.
   \end{itemize}
   
   This resembles a normalized sum of squared deviations between observed and theoretical frequencies of occurrence.
   
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]%[shrink=10]
+  \frametitle{Hypothesis testing in our case}
+  
+  Instead of testing the \alertbf{randomness} we can test the \bluebf{uniformity} of our RNG using the \chisq and a simple histogram:
+  
+  \begin{equation}
+    \chisq = \sum_{i=1}^{n} \frac{(O_i - E_i)^2}{E_i} =  N \sum_{i=1}^n \frac{\left(O_i/N - p_i\right)^2}{p_i}
+  \end{equation}
+
+  In the following, we can think of these quantities as:
+
+  \begin{itemize}  
+    \item $O_i$ = the number of times we get a number in some range (i.e. bin $i$ of the histogram)
+    \item $N$ = total number of random numbers that we analyze
+    \item $p_i$ = the fraction of the total range of the random numbers that each bin $i$ represents
+    \item $E_i = N p_i$ = the expected number of times a random number lands in each bin $i$
+    \item $n$ = the number of bins in the histogram.
+  \end{itemize}
+    
 \end{frame}
 
 

@@ -522,8 +522,31 @@ plt.show()
 
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[fragile]%[shrink=10]
+  \frametitle{Words of caution regarding hypothesis testing and data sets}
+  
+  We want to compute a \chisq to see if it's uniform (part of your homework assignment due next Thursday).
+  
+  However, before going further: be \alertbf{very wary of reliance on any one method} for analyzing a dataset. For example, look at these graphs:
+  
+  \begin{figure}
+    \includegraphics[width=\textwidth]{SameStatsDiffGraphs.pdf}
+  \end{figure} 
+  
+  \pause
+  
+  As discussed in \href{https://www.autodeskresearch.com/publications/samestats}{this paper}, while different in appearance, \alertbf{each has the same summary statistics to 2 decimal places}:
+  
+  \begin{itemize}
+    \item means: $\overline{x}=54.02, \overline{y}=48.09$
+    \item std. deviation: $\sigma_x = 14.52, \sigma_y = 24.79$
+    \item Pearson's correlation coefficient: $r = +0.32$
+  \end{itemize}
 
 
+\end{frame}
 
 
 

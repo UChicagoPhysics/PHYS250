@@ -1,4 +1,5 @@
 # Generic files to ignore
+*.pyg
 *.aux
 *.bcf
 *.bbl

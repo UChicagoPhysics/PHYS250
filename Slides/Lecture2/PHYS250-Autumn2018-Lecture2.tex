@@ -646,22 +646,22 @@ plt.show()
 
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
+\begin{frame}[fragile]%[shrink=10]
   \frametitle{Python random number generator: Mersenne Twister}
   
   Python comes with a built-in (\texttt{stdlib}) random number generator that can be accessed with:
   
-%  \begin{ucpythonblock}{}
-%import random as rng
-%rng.random()  
-%  \end{ucpythonblock}
+  \begin{ucpythonblock}{}
+import random as rng
+rng.random()  
+  \end{ucpythonblock}
 
   In addition, the \texttt{numpy} package provides an even more developed set of tools with \texttt{numpy.random}. 
   
-%  \begin{ucpythonblock}{}
-%from numpy import random as rng
-%rng.random()  
-%  \end{ucpythonblock}  
+  \begin{ucpythonblock}{}
+from numpy import random as rng
+rng.random()  
+  \end{ucpythonblock}  
 
   Both of these use the Mersenne Twister algorithm, which was developed in 1997 by Matsumoto and Nishimura and is a version of a generalized feedback shift register PRNG. The name comes from the fact that the period is given by a Mersenne prime 
   
@@ -669,13 +669,13 @@ plt.show()
     M_n = 2^n - 1, n \in  \mathbb{N}
   \end{equation}
 
-  (In preparing this, I found out that the largest known prime number $2^{77,232,917} − 1$ is a Mersenne prime, found on December 26, 2017.)
+  (In preparing this, I found out that the largest known prime number $2^{77,232,917} - 1$ is a Mersenne prime, found on December 26, 2017.)
 
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
+\begin{frame}[fragile]%[shrink=10]
   \frametitle{Testing the uniformity of this PRNG}
   
   A histogram is a graphical representation of a discrete probability distribution. To make a simple histogram, all you need to do is:
@@ -684,13 +684,10 @@ plt.show()
 from numpy import random as rng
 import matplotlib.pyplot as plt
 data = rng.random(100)  
-plt.hist(data)
-  \end{ucpythonblock}   
-
-  
+plt.hist(data)  
+  \end{ucpythonblock}
 
 \end{frame}
-
 
 
 

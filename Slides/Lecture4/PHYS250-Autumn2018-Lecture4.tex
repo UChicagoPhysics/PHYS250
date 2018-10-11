@@ -1,0 +1,150 @@
+%----------------------------------------------------
+% Setup Beamer
+%----------------------------------------------------
+\documentclass[hyperref={colorlinks=true}]{beamer}
+
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\input{../packages.sty}
+
+%----------------------------------------------------
+% Setup Theme
+%----------------------------------------------------
+\input{../theme.sty}
+
+%----------------------------------------------------
+% Table of Contents at each section transition
+%----------------------------------------------------
+
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \setcounter{tocdepth}{2}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+%----------------------------------------------------
+% Colors
+%----------------------------------------------------
+\input{../mycolors.sty}
+
+%----------------------------------------------------
+% Style, formatting, and new commands
+%----------------------------------------------------
+\input{../../global.sty}
+\input{../newcommands.sty}
+\input{../EandMcommands.sty}
+
+%----------------------------------------------------
+% Set paths for plots and images
+%----------------------------------------------------
+\input{../paths.sty}
+
+
+%-----------------------------------------------------------------------------------------
+% Title: [Column]{Title}
+%-----------------------------------------------------------------------------------------
+\title[PHYS 250 (Autumn 2018) -- Lecture 4]{Introduction to Computational Physics}
+
+%-----------------------------------------------------------------------------------------
+% SubTitle: [Column]{Subtitle}
+%-----------------------------------------------------------------------------------------
+\subtitle{PHYS 250 (Autumn 2018) -- Lecture 4}
+
+%-----------------------------------------------------------------------------------------
+% Author: [SubAuthor]{Author}
+%-----------------------------------------------------------------------------------------
+\author[D.W.~Miller]{David Miller}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\institute[EFI, Chicago] 
+{
+  Department of Physics and the Enrico Fermi Institute\\
+  University of Chicago
+}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\date[October 11, 2018]{October 11, 2018}
+
+\subject{PHYS 250 Lecture}
+
+\begin{document}
+
+%==========================================================================================
+% TITLE PAGE
+%==========================================================================================
+
+{
+\begin{frame}
+  \titlepage
+\end{frame}
+}
+
+%==========================================================================================
+\section[Simulation methods and techniques]{Simulation methods and techniques}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Recall: random walks]{Recall: random walks}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Slow random diffusion}
+  
+  Last time, we determined that if the diffusion (i.e. walking speed) is also slow, such that the time derivative of the position probability distribution function, $\rho$, is approximately linear with respect to time and $\rho(x, t + \Delta t) - \rho(x, t) \approx (\partialt{\rho}) \Delta t$, then
+  %
+  \begin{eqnarray}
+    \partialt{\rho} = \frac{a^2}{2 \Delta t} \partialxsq{\rho}.
+  \end{eqnarray}
+
+  We observed that this \textbf{is} the diffusion equation Eq.~\ref{eq:diffusion} with $D=\frac{a^2}{2 \Delta t}$.
+  
+  \vspace{0.3cm}
+  
+  The point is that we obtained an analytical description of a random walk via the diffusion equation under minimal assumptions: the probability distribution is broad and slowly varying compared to the size and time of the individual steps.
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Slow random diffusion}
+  
+  Last time, we determined that if the diffusion (i.e. walking speed) is also slow, such that the time derivative of the position probability distribution function, $\rho$, is approximately linear with respect to time and $\rho(x, t + \Delta t) - \rho(x, t) \approx (\partialt{\rho}) \Delta t$, then
+  %
+  \begin{eqnarray}
+    \partialt{\rho} = \frac{a^2}{2 \Delta t} \partialxsq{\rho}.
+  \end{eqnarray}
+
+  We observed that this \textbf{is} the diffusion equation Eq.~\ref{eq:diffusion} with $D=\frac{a^2}{2 \Delta t}$.
+  
+  \vspace{0.3cm}
+  
+  The point is that we obtained an analytical description of a random walk via the diffusion equation under minimal assumptions: the probability distribution is broad and slowly varying compared to the size and time of the individual steps.
+
+\end{frame}
+
+
+%%==========================================================================================
+%\section[Conclusions]{Conclusions}
+%==========================================================================================
+%
+%\begin{frame}%[shrink=1]
+%  \frametitle{Conclusions}
+%
+%  \begin{itemize}
+%    \item Something
+%  \end{itemize}
+%  
+%\end{frame}
+
+%==========================================================================================
+%==========================================================================================
+\end{document}

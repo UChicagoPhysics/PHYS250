@@ -88,409 +88,321 @@
 }
 
 %==========================================================================================
-\section[Ising model]{Ising model}
+\section[Computational Ising model]{Computational Ising model}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Statement of the problem]{Statement of the problem}
+\subsection[Reminders]{Reminders}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Ising model}
+  \frametitle{Reminder of the Ising model}
   
-  In seeking to explain a particular phenomenon in physics, namely the onset of ferromagnetism, Wilhelm Lenz proposed in 1924 that his PhD student, Ernst Ising should solve a puzzling 1-dimensional model of  [\href{https://arxiv.org/abs/1706.01764}{arXiv:1706.01764}]. 
+  In \href{https://github.com/UChicagoPhysics/PHYS250/blob/master/Slides/Lecture5/PHYS250-Autumn2018-Lecture5.pdf}{Lecture 5} we began discussing the Ising model and the general principles that we seek to understand about this deceptively \alertbf{``simple''} model for a set of spin states $\spins = \{\spini\}$, with a Hamiltonian, \Ham, for a given interaction coupling, $J$, and magnetic field, $H$, given by:
   
-  \vspace{0.3cm}
+  \begin{equation}
+    \Ham = -J \sum_{\mean{ij}}^N \spini \spinj - H \sum_i \spini , \label{eq:ising-field}
+  \end{equation} 
   
-  This model was meant to attempt to describe the interaction of \alertbf{``elementary magnetic units, which prefer alignment''}, a problem which belonged to the new and undeveloped quantum mechanics. 
+  \begin{ucblock}{}
+    \bluebf{Given a randomized set of $N$ spins, the Ising model has $2^N$ states $\spins = \{\spini\}$ in $d=2$ dimensions. What happens to the system when we let it evolve according to the laws of statistical mechanics? Does the average spin remain random? How does the application of an external field affect its evolution? Can we calculate a specific heat for this system (the temperature change required to raise the system's energy by a given amount)?} 
+  \end{ucblock}
   
-  \vspace{0.3cm}
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The statistical mechanics of the system}
   
-  In order to make any progress at all, Ising started in 1 dimension with the task of calculating analytically the macroscopic magnetization with the methods of statistical mechanics.
+  The energy $E_{\mu}$ of a particular microstate $\mu$ of this (discrete) system is given by the operator \Ham acting on that microstate, or specific  $\spins = \spinsmu$. We assume that although the system is in an \bluebf{equilibrium state} (i.e. the energy of a particular element is proportional to the temperature, $T$), it is a dynamic one in which each element's energy fluctuates as it exchanges energy with its environment. The probability for the ensemble \spins to have energy $E_{\mu}$ is 
+  
+  \begin{equation}
+    P(\spinsmu) = \frac{e^{-\beta E_{\mu}}}{\sum_{\mu} e^{-\beta E_{\mu}}},
+  \end{equation} 
+
+  And the mean and variance of the energy $\mean{E}$ (or \textit{any} observable) is given by 
+  
+  \begin{eqnarray}
+    \mean{E} &=& \sum_{\mu} E_{\mu} P(\spinsmu) = \frac{1}{Z} \sum_{\mu} E_{\mu} e^{-\beta E_{\mu}} \\
+    Var(E) = \mean{(E-\mean{E}^2)^2} &=& \sum_{\mu} E^2_{\mu} P(\spinsmu) - \left( \sum_{\mu} E_{\mu} P(\spinsmu) \right)^2
+  \end{eqnarray} 
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Computational obstacles (big ones)}
+  
+  If we were to brute-force calculate the sum in the previous slide, we would have to perform $4 \times N \times 2^{N}$ calculations, which quickly becomes $\sim\infty$. For example, for just a $5\times 5$ lattice, we have $2^{25} = 33,554,432$ states. For a $100\times100$ lattice, well...
+  
+  \pause
   
   \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Ising-spins-1D.pdf}
+    \includegraphics<2>[width=0.75\columnwidth]{Calculator.jpg}
   \end{figure}
   
-  % Statement of what it is
-  % How you think about it
-  % Some of the physics
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Thermodynamics and quantum mechanics]{Thermodynamics and quantum mechanics}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Thermodynamics of the problem}
-  
-  Before we go too far, let's ask the question:
-  
-  \begin{center}
-    \alertbf{What are we really attempting to calculate?} 
-  \end{center}
-  
-  What we want, actually, is a rather \textit{typical} thermodynamic description: 
-  
-  \vspace{0.3cm}
-  
-  \begin{ucblock}{}
-    \bluebf{What are relationships between macroscopic properties of the system and how will the system evolve in time towards an equilibrium state?} 
-  \end{ucblock}
-
-  For the case at hand, this becomes the specific question:
-  
-  \vspace{0.3cm}
-  
-  \begin{ucblock}{}
-    \bluebf{Given a randomized set of magnetic elements (think: \textit{spins!}) in $d$ dimensions, what happens to the system? Does the average spin remain random? How does the application of an external field affect its evolution? Can we calculate a specific heat for this system (the temperature change required to raise the system's energy by a given amount)?} 
-  \end{ucblock}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Thermodynamics \ra statistical mechanics}
-  
-  Since the microscopic properties are often (and certainly in this case) critical to understanding the answer to this question, we must -- and Ising did -- reformulate it in a statistical mechanical manner:
-  
-  \vspace{0.1cm}
-  
-  \begin{ucblock}{}
-    \bluebf{What are the microscopic properties of a system that govern how that system will evolve in time, and what is the process by which is will undergo that evolution?} 
-  \end{ucblock}
-  
-  \vspace{0.1cm}
-  
-  To answer this question, we have to understand several things:
-  
-  \begin{itemize}
-    \item \textit{How do we even talk about the microscopic state of a system like this?}
-    \item \textit{What properties matter?}
-    \item \textit{What causes the system to evolve?}
-    \item \textit{What is the likelihood that it evolves in a particular direction?}
-  \end{itemize}
-
-  These are seemingly simply questions that belie a deep set of physical principles and, since we're here, computational techniques.
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{What properties and states are we interested in? (Energy!)}
-
-  As you've probably seen in so many of your courses by now, the energy of the system is a critical piece of understanding its evolution.
-  
-  \vspace{0.3cm}
-  
-  In the case of \bluebf{thermodynamics} perhaps you have heard that the \alertbf{temperature} of the system is a property that we use to describe or \textit{map} on to the state of the system, and hence its energy.
-
-  \begin{figure}
-    \centering
-    \frame{\includegraphics[width=0.65\columnwidth]{Temperature.png}}
-    \caption{From my PHYS 133 notes}
-  \end{figure}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{What drives the evolution of the system?}
-
-  What causes a system to \bluebf{evolve} is the tendency towards an equilibrium state. This is effectively embodied in the second law of thermodynamics which states:
-  
-  \begin{ucblock}{Second law of thermodynamics}
-    The total entropy of an isolated system can never decrease over time. In all spontaneous processes, the total entropy increases and the process is irreversible. 
-  \end{ucblock}
-  
-  Ultimately, this means that when a system starts from an equilibrium state, is then \textit{perturbed} by a thermodynamic operation (e.g. bringing two components of the system of different temperatures into contact), it will spontaneously (given some relaxtion time) reach its own new state of internal thermodynamic equilibrium.
-  
-  \vspace{0.3cm}
-  
-  Statistical mechanics essentially \textit{explains} this law via an understanding of the micro states of the system.
-
-\end{frame}
-
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Probability distribution for a particular set of states}
-
-  Part of our task is therefore to count the various energy configurations based on the possible \textit{microscopic states} (or \textit{microstates}) of the system in order to determine the \alertbf{partition function}, which tells us how the states are distributed given their energies:
-  
-  \begin{equation}
-    Z = \sum_i e^{-\beta \Ham_i}
-  \end{equation}
-
-  where $\beta$ is the inverse ``temperature'' of the system, $\beta = (\kB T)^{-1}$ and \Ham is the Hamiltonian of the system, the expectation value of which is the energy, $E_i$, of that microstate, $i$. The configuration probability of an ensemble of microstates 
-  
-  \begin{equation}
-    P = \frac{e^{-\beta \Ham_i}}{Z}
-  \end{equation}
-
-  Since the total probability to find the system in some microstate must be equal to 1, the partition function serves as the normalization constant. In \textit{classical} systems, we'd merely obtain the expectation value by taking an integral over the appropriate volume in order to turn the exponential into a sum over energy states.
-
-\end{frame}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Boltzmann distribution and the ``canonical ensemble''}
-  
-  \begin{columns}
-  
-  \column{0.5\textwidth}
-  
-  You may have noticed the Boltzmann factor on the previous slide:
-  
-  \begin{equation}
-    e^{-\beta E_i}
-  \end{equation} 
-
-  This comes from the basic idea that \bluebf{the number of states decreases exponentially for high energies when the temperature is fixed}. This again is a very basic idea, but is crucial to understand the physics. An ensemble of micro states (e.g. particles) that follow this distribution is referred to as the \bluebf{canonical ensemble}. 
-  
-  \column{0.45\textwidth}
-  
-    \begin{figure}
-      \centering
-      \frame{\includegraphics[width=\columnwidth]{Boltzmann.png}}
-    \end{figure}
-  
-  \end{columns}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Quantum mechanics of the Ising model}
-
-  \begin{columns}
-  
-  \column{0.5\textwidth}
-  
-  The Hamiltonian for a system of $N$ spins $s_i$ in free space, which may take on values of $s_i = \pm1$ is given by the interaction of the spins
-  %
-  \begin{equation}
-    \Ham = -J \sum_{\mean{ij}}^N s_i s_{j} , \label{eq:ising-free}
-  \end{equation} 
-  %
-  where the sum \mean{ij} is over all pairs of nearest-neighbor sites, $J$ is the \alertbf{coupling} between these neighboring sites. (For example, there are four neighbors per site on the square lattice.)
-  
-  \vspace{-0.5cm}
-  
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.8\columnwidth]{Ising-spins-2D.png}
-    \end{figure}
+  \pause
     
-  \column{0.45\textwidth}
-  
-    \begin{figure}
-      \centering
-      \includegraphics[width=\columnwidth]{Ising-spins-1D-interaction.pdf}\\
-      \includegraphics[width=\columnwidth]{SpinOrbitMoment.png}
-    \end{figure}
-  
-  \end{columns}
-
-  
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Magnetism and spins (I)}
-
-  As we've discussed in E\&M, magnetism is caused by charged particles \bluebf{``spinning''} in closed orbits or about their axes
-  %
-  \begin{itemize}
-    \item For elementary particles, of course, we mean ``spinning'' in the quantum mechanical sense, not the rotational Newtonian sense
-  \end{itemize}
-  %
-  So atoms may have \bluebf{both an $L$ (orbit) and an $S$ (spin) contribution} (capital letters for ``operators'' for those of you in the know) to the magnetic properties. For the Ising model, we're concerned with just a single contribution which we will refer to as $s$ as on the previous slide.
+  We can save summing over half of these due to up/down symmetry, which means that for every state there is another one in which every spin is simply flipped upside down, with exactly the same energy (for $H=0$). So, we can simplify the calculation by just taking one out of every pair of such states, for a total of $16,777,216$ states, and summing up the corresponding terms in the partition function.
   
   \vspace{0.3cm}
   
-  In addition to the contribution to the Hamiltonian (and thus the energy) from the spin-spin interactions, there is the possibility that we apply an external magnetic field, $H$:
-  %
-  \begin{equation}
-    \Ham = -J \sum_{\mean{ij}}^N s_i s_{j} - H \sum_i s_i , \label{eq:ising-field}
-  \end{equation} 
-
-  Note that the ``magnetization'' is given by $M=\sum_i s_i$.
-
-\end{frame}
-
-
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Magnetism and spins (II)}
-
-  Let's discuss our Hamiltonian
-  %
-  \begin{equation}
-    \Ham = -J \sum_{\mean{ij}}^N s_i s_{j} - H \sum_i s_i , \label{eq:ising-field}
-  \end{equation} 
-  %
-  \begin{itemize}
-    \item \bluebf{If $J > 0$ : ferromagnetic}
-    \begin{itemize}
-      \item Energy is minimized if the spins point in the same direction
-    \end{itemize}
-    \item \bluebf{If $J < 0$ : antiferromagnetic}
-    \begin{itemize}
-      \item Energy is minimized if spins locally point in the opposite direction
-    \end{itemize}
-  \end{itemize}
-  
-  \begin{ucblock}{Important observations which we will study}
-    \begin{itemize}
-      \item At low temperatures, the \bluebf{spins will organize themselves} to either mostly point up or mostly point down, forming a ferromagnetic phase.
-      \item The spins will tend to align (in a 2D square lattice) in a \bluebf{checkerboard antiferromagnetic phase} at low temperatures. 
-      \item At high temperatures, independent of the sign of $J$, we expect entropy to dominate; the spins will fluctuate wildly in a \bluebf{paramagnetic phase} and the magnetization per spin $m(T ) = M (T )/N$ is zero 
-    \end{itemize}
-  \end{ucblock}
-    
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Emergent properties of the Ising model}
-  
-    \begin{figure}
-      \centering
-      \includegraphics[width=\columnwidth]{IsingDomains.png}
-    \end{figure}
-  
-  Amazing features result from the \bluebf{ensemble behavior} of the lattice sites of a 2D Ising model. Phase transitions, criticality, and other phenomena are all part of what we will study computationally with this model. 
-
-  \begin{figure}
-      \centering
-      \includegraphics[width=0.5\columnwidth]{MagnetizationPerSpin.pdf}
-  \end{figure}
+  We could save further time by using other symmetries too. For example, a square lattice also has a reflection symmetry and a four-fold rotational symmetry (symmetry group $C_4$), meaning that the states actually group into sets of 16 states (including the up/down symmetry pairs), all of which have the same energy. But $\infty/16$ still ain't great...
   
 \end{frame}
-
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{A few quantum mechanics notes}
-  
-  The Ising model parameters are rescaled from the microscopic ones. The Ising spin $s_i = \pm1$ represents twice the $z$-component of a spin-1/2 atom in a crystal, $\sigma_i^z = s_i/2$. 
-  
-  \vspace{0.5cm}
-  
-  The Ising interactions between spins, $J s_i s_j = 4 J \sigma_i^z \sigma_j^z$, is thus shifted by a factor of four from the $z-z$ coupling between spins. 
-  
-  \vspace{0.5cm}
-  
-  The coupling of the spin to the external magnetic field is microscopically $g \mu_B H \cdot \sigma_i^z$, where $g$ is the gyromagnetic ratio for the spin (close to two for the electron) and $\mu_B = \frac{e \hbar}{2 m_e}$ is the Bohr magneton. 
-  
-  \vspace{0.5cm}
-  
-  \bluebf{Hence, for those of you who've taken quantum mechanics, the Ising external field is rescaled from the physical one by $g \mu_B / 2$. }
-
-\end{frame}
-
-
-
-%-----------------------------------------------------------------------------------------
-\subsection[Practical implications and relationships]{Practical implications and relationships}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Broader context for the Ising model}
-  
-  Lattice models are a big industry within statistical mechanics. Many systems and their computational evaluation and study take place on a lattice:
-  
-  \begin{itemize}
-    \item \bluebf{Critical phenomena and phase transitions}
-    \item \bluebf{lattice QCD and quantum field theories}
-    \item \bluebf{quantum magnetism and models for high-temperature superconductors}
-    \item \bluebf{phase diagrams for alloys}
-    \item \bluebf{the behavior of systems with dirt or disorder}
-    \item \bluebf{non-equilibrium systems exhibiting avalanches and crackling noise}
-  \end{itemize}
-  
-  And many more!
-  
-  \center \textit{(now do you see why I spent time showing you \texttt{np.mgrid}?!)}
-  
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Complications and numerical and computational obstacles]{Complications and numerical and computational obstacles}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Computational complexity and simulation}
-  
-  The 1D model was solved analytically in 1924. 
-  
-  \vspace{0.3cm}
-  
-  The 2D model was not solved analytically until Lars Onsager did it in 1944. 
-  \begin{itemize}
-    \item Onsager solved is using the \bluebf{ transfer-matrix method}, where you essentially break up the partition function, $Z$ into many pieces and decompose the interactions in a matrix formulation and then do an eigenvector decomposition and solve it that way. 
-  \end{itemize}
-  
-  \vspace{0.3cm}
-  
-  However, this only really works for a small system. If there are many states (i.e. many sites) it can easily become analytically intractable even if solvable in principle.
-  
-  \vspace{0.3cm}
-  
-  \begin{ucblock}{}
-     \textbf{Instead, we will approach this using our Monte Carlo based approach!}
-  \end{ucblock}
-   
-\end{frame}
-
-%==========================================================================================
-\section[Simulation methods]{Simulation methods}
-%==========================================================================================
 
 %-----------------------------------------------------------------------------------------
 \subsection[Monte Carlo Methods]{Monte Carlo Methods}
 %-----------------------------------------------------------------------------------------
 
+\begin{frame}%[shrink=10]
+  \frametitle{Monte Carlo methods}
+  
+  There is essentially only \alertbf{one known numerical method} for calculating the partition function of a model such as the Ising model on a large lattice, and that method is \bluebf{Monte Carlo simulation}. 
+  
+  \begin{itemize}
+    \item If we are clever enough, we can obtain a \bluebf{relatively good estimate} by only performing a \alertbf{subset} of the calculations, $\{\mu\}$ instead of all $\mu$
+    \item One way to be clever is to only sample the distribution that we are attempting to model, $P(\spinsmu)$ in regions where it is important.
+    \item To put it another way, we want to perform a \alertbf{weighted sampling}
+  \end{itemize}
+  %
+  \begin{eqnarray}
+    \mean{E} &=& \frac{\sum_{\{\mu\}} E_{\mu} e^{-\beta E_{\mu}} W_{\mu}^{-1}}{\sum_{\{\mu\}} e^{-\beta E_{\mu}} W_{\mu}^{-1}} \\
+       &\approx& \frac{\sum_{\{\mu\}} E_{\mu}}{\sum_{\{\mu\}} 1} = \frac{1}{N^{\prime}}\sum_{\{\mu\}} E_{\mu}
+  \end{eqnarray} 
+  %
+  where $N^{\prime}$ is the number of terms in the subset $\{\mu\}$ and $W_{\mu} = e^{- \beta E_{\mu}}/Z$.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Heat-bath Monte Carlo}
+  \frametitle{Recap of the Monte Carlo methods}
+
+   We discussed (briefly) two approaches to the Monte Carlo implementation
+   
+   \begin{itemize}
+     \item \bluebf{Heat bath method:} always flip a spin according to the Boltzmann factor based on the energy difference (i.e. an energy difference of $\Delta E = 0$ has a 50\% probability of flipping)
+     \item \bluebf{Metropolis method:} always flip a spin if the energy difference is negative (i.e. the new spin configuration results in a lower energy), but only flip the spin according to the Boltzmann factor if the result is an energy increase.
+   \end{itemize}
+ 
+   In both cases, there are two underlying assumptions which were first proposed in 1949 by Nicolas Metropolis (hence the eponymous algorithm).
+ 
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[The origins of Monte Carlo]{The origins of Monte Carlo}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The beginning of the Monte Carlo}
   
-  One of the simplest approaches would be ``brute force:''
+  The idea of Monte Carlo calculation is a lot older than the computer. Under the older name of ``statistical sampling'' the method has a history stretching back well into the last century, when numerical calculations were performed by hand using pencil and paper and perhaps a slide-rule.
   
-  \begin{enumerate}
-    \item Pick a site $i = (x,y)$ at random. 
-    \item Check how many neighbor spins are pointing up:
-    \begin{equation}
-      m_i = \sum _{j:\mean{ij}} s_j = \begin{cases}
-               +4  (\mathrm{4\, neighbors\, up}),\\
-               +2  (\mathrm{3\, neighbors\, up}),\\
-                0  (\mathrm{2\, neighbors\, up}),\\
-               -2 (\mathrm{1\, neighbors\, up}),\\
-               -4 (\mathrm{0\, neighbors\, up}),\\
-            \end{cases}
-    \end{equation}
-    \item Calculate $E_{+} = - J m_i - H$ and $E_{-} = +J m_i + H$, the energy for spin $i$ to be $+1$ or $-1$ given its current environment.
-    \item Set spin $i$ up with probability $P_{\mathrm{up}} = e^{-\beta E_{+}} / (e^{-\beta E_{+}} + e^{-\beta E_{-}})$ and down with probability $P_{\mathrm{down}} = e^{-\beta E_{-}} / (e^{-\beta E_{+}} + e^{-\beta E_{-}})$.
-    \item Repeat.
-  \end{enumerate}
+  \vspace{0.3cm}
+  
+  \bluebf{The name ``Monte Carlo'' is relatively recent:} it was \href{https://www.tandfonline.com/doi/abs/10.1080/01621459.1949.10483310}{coined by Nicolas Metropolis in 1949 in a paper with Stanislav Ulam}
+  
+  \begin{figure}
+    \centering
+    \frame{\includegraphics[width=0.65\columnwidth]{MonteCarlo.pdf}}
+  \end{figure}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=20]
+  \frametitle{Nicolas Metropolis}
+  
+  Nicholas Constantine Metropolis was born in 1915, in Chicago (where all the coolest people were born). In 1936 he received his bachelor's degree, and in 1941, his doctorate, both from UChicago, and both in experimental physics. While here, Metropolis worked at the Met Lab as an assistant to Fermi. The MANIAC was Metropolis' computer at Los Alamos:  \bluebf{``Mathematical Analyzer, Numerical Integrator, and Computer''}. In 1957, Metropolis returned to UChicago and founded the Institute for Computer Research. Here, he oversaw the construction MANIACIII machine.
+  
+  \vspace{-0.4cm}
+  
+  \begin{columns}
+  
+    \column{0.5\textwidth}
+    
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.7\columnwidth]{MANIACII.jpg}\\
+        \includegraphics[width=0.7\columnwidth]{MANIACIII.jpg}
+      \end{figure}
+    
+    \column{0.5\textwidth}
+    
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.8\columnwidth]{FermiPhaseShiftComputation.pdf}
+      \end{figure}
+  
+  \end{columns}
+  
+\end{frame}
+
+
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The concepts behind Monte Carlo}
+  
+  The concept that Metropolis and Ulam sketched out is exactly what we have been discussing:
+  
+  \begin{figure}
+    \centering
+    \frame{\includegraphics[width=0.95\columnwidth]{MonteCarloConcept.pdf}}
+  \end{figure}
+  
+  but is also has a very important embedded concept from deep within statistical physics (we will come back to this in a moment):
+  
+  \begin{figure}
+    \centering
+    \frame{\includegraphics[width=\columnwidth]{Ergodic.pdf}}
+  \end{figure}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Computational physics was born}
+  
+  In the same paper, Metropolis and Ulam made a compelling suggestion: with a combination of good ideas (from Fermi) and computers, this could be very powerful!
+  
+  \begin{figure}
+    \centering
+    \frame{\includegraphics[width=0.9\columnwidth]{ModernComputingMachines.pdf}}\\
+    :\\
+    \frame{\includegraphics[width=0.9\columnwidth]{FermisSuggestion.pdf}}
+  \end{figure}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Deploying the tools}
+  
+  In a follow-up paper, now with some of the Manhattan project's heaviest hitters (from Chicago, of course) they put those ideas into action
+  
+  \begin{figure}
+    \centering
+    \frame{\includegraphics[width=\columnwidth]{EquationOfStateFastComputingMachines.pdf}}
+  \end{figure}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The Metropolis algorithm}
+  
+  It is in this paper that the proposal to use a Boltzmann factor for attempting the \alertbf{trials} a given change in configuration
+  
+  \begin{center}
+  \begin{minipage}{0.8\columnwidth}
+  \begin{framed}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{MetropolisWeight1.pdf}\\
+    \includegraphics[width=\columnwidth]{MetropolisWeight2.pdf}
+  \end{figure}
+  \end{framed}
+  \end{minipage}
+  \end{center}
+  
+  \vspace{-0.2cm}
+  
+  \begin{figure}
+    \centering
+    \frame{\includegraphics[width=0.8\columnwidth]{ConclusionsMetropolis.pdf}}
+  \end{figure}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Assumptions of the Metropolis algorithm]{Assumptions of the Metropolis algorithm}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The Metropolis algorithm's assumptions: ergodicity}
+  
+  Over a sufficiently long period of time, \bluebf{all accessible microstates will be sampled}. A corollary is that the time spent by a system in some region of the phase space of microstates with the same energy is proportional to the volume of this region. 
+
+  \vspace{0.3cm}
+  
+  The implication for our computational approach is that in principle, it should be \bluebf{possible for our Markov process to reach any state of the system from any other state}, if we run it for long enough. 
+  
+  \vspace{0.3cm}
+  
+  The condition of ergodicity tells us that we are allowed to make some of the transition probabilities of our Markov process zero, but that there must be at least one path of non-zero transition probabilities between any two states that we pick. 
+  
+  \vspace{0.3cm}
+  
+  In practice, most Monte Carlo algorithms set almost all of the transition probabilities to zero, and we \alertbf{must be careful that in so doing we do not create an algorithm which violates ergodicity}.
 
 \end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The Metropolis algorithm's assumptions: detailed balance}
+  
+  The detailed balance equation then tells us that the transition probabilities should satisfy
+  
+  \begin{equation}
+    \frac{P(\mu \ra \nu)}{P(\nu \ra \mu)} = \frac{P(\spins_{\nu})}{P(\spins_{\mu})} = e^{- \beta (E_{\nu} - E_{\mu})} = e^{- \beta \Delta E}
+  \end{equation}
+  
+  This equation and the requirement that the sum of all probabilities is unity are the basic constraints on our choice of transition probabilities. If we satisfy these, as well as the condition of ergodicity, then the equilibrium distribution of states in our Markov process will be the Boltzmann distribution. It is also useful to break this down a bit further:
+  %
+  \begin{eqnarray}
+    P(\mu \ra \nu) &=& g(\mu \ra \nu) A(\mu \ra \nu) \\
+    \frac{P(\mu \ra \nu)}{P(\nu \ra \mu)} &=& \frac{g(\mu \ra \nu) A(\mu \ra \nu)}{g(\nu \ra \mu) A(\nu \ra \mu)}
+  \end{eqnarray}
+  %
+  where $g$ is a \bluebf{selection probability} and $A$ is the \alertbf{acceptance ratio}
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Selection probability (I)}
+  
+  \begin{itemize}
+    \item \bluebf{$g(\mu \ra \nu)$ is the selection probability}
+    \begin{itemize}
+      \item this is the probability, given an initial state $\mu$, that our algorithm will generate a new target state $\nu$. 
+    \end{itemize}
+    \item \bluebf{$A(\mu \ra \nu)$ is the acceptance ratio (sometimes also called the ``acceptance probability'')}
+    \begin{itemize}
+      \item The acceptance ratio says that if we start off in a state $\mu$ and our algorithm generates a new state $\nu$ from it, we should accept that state and change our system to the new state $\nu$ a fraction of the time $A(\mu \ra \nu)$. 
+      \item The rest of the time we should just stay in the state $\mu$.
+      \item If the acceptance ratios for our moves are low, then the algorithm will on most time steps simply stay in the state.
+    \end{itemize}
+  \end{itemize}
+  
+  In the Metropolis algorithm the selection probabilities $g(\mu \ra \nu)$ for each of the possible states $\nu$ are all chosen to be equal.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Selection probability (II)}
+  
+  \begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{MetropolisAlgorithmAcceptanceRatio.pdf}
+  \end{figure}
+  
+\end{frame}
+
 %-----------------------------------------------------------------------------------------
 %\subsection[Accept-reject algorithms]{Accept-reject algorithms}
 %-----------------------------------------------------------------------------------------
@@ -498,48 +410,22 @@
 %-----------------------------------------------------------------------------------------
 \subsection[Metropolis-Hastings algorithm]{Metropolis-Hastings algorithm}
 %-----------------------------------------------------------------------------------------
-
 %-----------------------------------------------------------------------------------------
 
 
 \begin{frame}%[shrink=10]
-  \frametitle{Metropolis Monte Carlo (II)}
-  
-  The heat bath approach tries to essentially set the whole lattice state by iterating over the whole grid one site at a time. However, we can use the magic of the MCMC approach to try to do this much more efficiently. Instead, let's represent the \alertbf{entire lattice} at once and ask:
-  
-  \vspace{0.3cm}
-  
-  \begin{ucblock}{}
-    \alertbf{What is the probability that the whole system transitions from one state (i.e. set of spins) to another?}
-  \end{ucblock}
-  
-  \vspace{0.3cm}
-  
-  An $N$-state Ising model has $2^N$ states $\mathbb{S} = \{s_i\}$. A Markov chain for the Ising model has a transition rule, which at each step shifts the current state $\mathbb{S}$ to a state $\mathbb{S}^{\prime}$ with probability $P_{\mathbb{S}\Leftarrow\mathbb{S}^{\prime}}$.
-  
-  \vspace{0.3cm}
-  
-  For the heat-bath algorithm, $P_{\mathbb{S}\Leftarrow\mathbb{S}^{\prime}}$ is equal to zero unless $\mathbb{S}^{\prime}$ and $\mathbb{S}$ the same except for at most one spin flip.
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-
-\begin{frame}%[shrink=10]
-  \frametitle{Metropolis Monte Carlo (I)}
+  \frametitle{Metropolis Monte Carlo}
   
   ``Pseudocode'' for the Metropolis algorithm:
   
   \begin{enumerate}
     \item Choose initial configuration    \item For all spins:
     \begin{enumerate}
-      \item Trial flip ($+1 \ra -1$ or vice versa)      \item Compute change in energy      \item If $\delta = e^{\Delta E/\kB T} > r$ (where $r$ is a uniform deviate) flip the spin 
+      \item Trial flip ($+1 \ra -1$ or vice versa)      \item Compute change in energy      \item If $\delta = e^{- \Delta E/\kB T} > r$ (where $r$ is a uniform deviate) flip the spin 
     \end{enumerate}
   \end{enumerate}
   
-  But we can do even better! Next time!
-  
+    
 \end{frame}
 
 

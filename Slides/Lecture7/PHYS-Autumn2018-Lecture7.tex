@@ -1,0 +1,286 @@
+%----------------------------------------------------
+% Setup Beamer
+%----------------------------------------------------
+\documentclass[hyperref={colorlinks=true}]{beamer}
+
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\input{../packages.sty}
+
+%----------------------------------------------------
+% Setup Theme
+%----------------------------------------------------
+\input{../theme.sty}
+
+%----------------------------------------------------
+% Table of Contents at each section transition
+%----------------------------------------------------
+
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \setcounter{tocdepth}{2}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+%----------------------------------------------------
+% Colors
+%----------------------------------------------------
+\input{../mycolors.sty}
+
+%----------------------------------------------------
+% Style, formatting, and new commands
+%----------------------------------------------------
+\input{../../global.sty}
+\input{../newcommands.sty}
+\input{../EandMcommands.sty}
+
+%----------------------------------------------------
+% Set paths for plots and images
+%----------------------------------------------------
+\input{../paths.sty}
+
+
+%-----------------------------------------------------------------------------------------
+% Title: [Column]{Title}
+%-----------------------------------------------------------------------------------------
+\title[PHYS 250 (Autumn 2018) -- Lecture 7]{Ising model (cont'd)}
+
+%-----------------------------------------------------------------------------------------
+% SubTitle: [Column]{Subtitle}
+%-----------------------------------------------------------------------------------------
+\subtitle{PHYS 250 (Autumn 2018) -- Lecture 7}
+
+%-----------------------------------------------------------------------------------------
+% Author: [SubAuthor]{Author}
+%-----------------------------------------------------------------------------------------
+\author[D.W.~Miller]{David Miller}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\institute[EFI, Chicago] 
+{
+  Department of Physics and the Enrico Fermi Institute\\
+  University of Chicago
+}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\date[October 23, 2018]{October 23, 2018}
+
+\subject{PHYS 250 Lecture}
+
+\begin{document}
+
+%==========================================================================================
+% TITLE PAGE
+%==========================================================================================
+
+{
+\begin{frame}
+  \titlepage
+\end{frame}
+}
+
+%==========================================================================================
+\section[Reminders]{Reminders}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[How did we get here and where are we going?]{How did we get here and where are we going?}
+%-----------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Outline of the Ising model discussion}
+
+  We've already discussed a lot, and I want to remind you of those topics, their progression, and where we're going from here to make sure that we're all on the same page.
+  
+  \begin{itemize}
+    \item \bluebf{Lecture 5: the model iteself}
+    \begin{itemize}
+      \item The general concept of the model: lattice of spins
+      \item Basis in thermodynamics and quantum mechanics
+      \item Importance of simulations methods
+    \end{itemize}
+    \item \bluebf{Lecture 6: computational approaches}
+    \begin{itemize}
+      \item History of computational simulation methods: Monte Carlo
+      \item The Metropolis Monte Carlo algorithm and its assumptions (deeply related to thermodynamics)
+    \end{itemize}
+    \item \bluebf{Lecture 7 (Today): analytical and computational evaluation}
+    \begin{itemize}
+      \item Analytical Ising model and the key numerical results
+      \item Concept of equilibrium and how we can define it
+      \item Observables in the Ising model and their calculation
+    \end{itemize}
+    \item \bluebf{``Lecture 8'' (Tomorrow): Hands-on lab+lecture}
+    \begin{itemize}
+      \item Hands-on session in CSIL 2 for developing our Ising model simulation
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+%==========================================================================================
+\section[Analytical Ising model]{Analytical Ising model}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Reminder of statistical mechanics properties]{Reminder of statistical mechanics properties}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Recall our discussion of statistical mechanics}
+  
+  We discussed that the probability distribution of an observable such as the mean energy, $\mean{E}$, of a system in a particular microstate $\mu$ is given by
+%
+  \begin{equation}
+    \mean{E} = \frac{\sum_{\mu} E_{\mu} e^{-\beta E_{\mu}}}{{\sum_{\mu} e^{-\beta E_{\mu}}}} = \frac{{\sum_{\mu} e^{-\beta E_{\mu}}}}{Z}
+  \end{equation}
+%
+where $Z$ is the \bluebf{partition function} of the system. Focusing just on the numerator for a moment, this can be recast in terms of $Z$:
+%
+  \begin{equation}
+    \sum_{\mu} E_{\mu} e^{-\beta E_{\mu}} = -\sum_{\mu} \frac{\partial}{\partial\beta}\left( e^{-\beta E_{\mu}} \right) =  -\frac{\partial Z}{\partial\beta} 
+  \end{equation}
+%  
+  We can then rewrite the mean energy in a much simpler form:
+%  
+  \begin{equation}
+    \mean{E} = -\frac{1}{Z}\frac{\partial Z}{\partial\beta} = -\frac{\partial \ln Z}{\partial\beta}         
+  \end{equation} 
+% 
+ Similarly, the variance is given by:
+%
+  \begin{equation}
+    Var(E) = \mean{E^2} - \mean{E}^2 = -\frac{\partial \mean{E}}{\partial\beta} = \frac{\partial^2 \ln Z}{\partial\beta^2}           
+  \end{equation} 
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[1D Ising Model]{1D Ising Model}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Ising's analytical solution for a 1D spin lattice}
+
+    For a single dimension, and just $N=2$ spins (the smallest possible Ising chain model) we can use the analytic form on the previous slide to write down $Z$ exactly, and thus the mean energy (recall $E=-J\sum_{\mean{ij}}\spini \spinj$) and its variance. 
+
+  \begin{eqnarray}
+    Z_2 &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J\sum_{i=1}^{N-1} s_i s_{i+1} } \\
+        &=& e^{ -\beta E(s_1 = +1, s_2 =+1) } + e^{ -\beta E(s_1 = +1, s_2 =-1) } \nonumber \\
+        & & +\, e^{ -\beta E(s_1 = -1, s_2 =+1) } + e^{ -\beta E(s_1 = -1, s_2 =-1) } \\
+        &=& 2 e^{ \beta J } + 2 e^{ -\beta J } \\
+        &=& 4 \cosh \beta J
+  \end{eqnarray}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../Lecture5/Ising-spins-1D.pdf}
+  \end{figure}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Ising's analytical solution for a 1D spin lattice}
+
+    We can generalize this to $N$ spins, either by induction based on one more manual sum with $N=3$, or by direct proof (which I leave to you!)
+%
+  \begin{eqnarray}
+    Z_3 &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} \sum_{s_3 = \pm1} e^{ \beta J\sum_{i=1}^{N-1} s_i s_{i+1} } \\
+        &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} \sum_{s_3 = \pm1} e^{ \beta J s_1 s_2 + \beta J s_2 s_3 } \\
+        &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J s_1 s_2} \left[ e^{ \beta J s_2 } + e^{- \beta J s_2 } \right] \\
+        &=& 2 \cosh \beta J \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J s_1 s_2}  \\
+        &=& \left(2 \cosh \beta J\right) Z_2 \\
+    Z_N &=& \left(2 \cosh \beta J\right) Z_{N-1} \\
+        &=& 2 \left(2 \cosh \beta J\right)^{N-1}
+  \end{eqnarray}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[2D Ising Model]{2D Ising Model}
+%-----------------------------------------------------------------------------------------
+
+
+%==========================================================================================
+\section[Ising model observables and calculations]{Ising model observables and calculations}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Equilibrium]{Equilibrium}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Equilibrium}
+  
+
+So what do we do with our Monte Carlo program for the Ising model, once we have written it? we probably want to know the answer to some questions like ?What is the magnetization at such-and-such a temperature??, or ?How does the internal energy behave with temperature over such-and- such a range?? To answer these questions we have to do two things. First we have to run our simulation for a suitably long period of time until it has come to equilibrium at the temperature we are interested in. This period is called the equilibration time $\tau_{\mathrm{eq}}$. Then we have to measure the quantity we are interested in over another suitably long period of time and average it, to evaluate the estimator of that quantity. What exactly do we mean by ?allowing the system to come to equilibrium?? And how long is a ?suitably long? time for it to happen? How do we go about measuring our quantity of interest, and how long do we have to average over to get a result of a desired degree of accuracy? These are very general questions which we need to consider every time we do a Monte Carlo calculation. 
+
+?equilibrium? means that the average probability of finding our system in any particular state ? is proportional to the Boltzmann weight $e^{-\beta E_{\mu}}$ of that state.
+
+If we start our system off in a state such as the $T = 0$ (all spins aligned), and we want to perform a simulation at some finite non-zero temperature, it will take a little time before we reach equilibrium.
+
+A system at equilibrium spends the overwhelming majority of its time in a small subset of states in which its internal energy and other properties take a narrow range of values. This is what is ``mapped out'' by the temperature. To determine if the system has reached equilibrium, we could just ``look at it'' but this isn't very reliable. 
+
+A better way, which takes very little extra effort, is to plot a graph of some quantity of interest, like the magnetization per spin $m$ of the system or the energy of the system $E$, as a function of ``time'' (iterations or steps) from the start of the simulation. Up until equilibrium, the energy and the magnetization are changing, but after equilibrium is reached, they just fluctuate around a steady average value. This is what we should measure.
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Energy]{Energy}
+%-----------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------
+\subsection[Magnetization]{Magnetization}
+%-----------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------
+\subsection[Correlations]{Correlations}
+%-----------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------
+\subsection[Phase transition]{Phase transition}
+%-----------------------------------------------------------------------------------------
+
+
+%==========================================================================================
+\section[Metropolis Algorithm]{Metropolis Algorithm}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Recap]{Recap}
+%-----------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------
+\subsection[Disadvantages]{Disadvantages}
+%-----------------------------------------------------------------------------------------
+
+
+
+%%==========================================================================================
+%\section[Conclusions]{Conclusions}
+%==========================================================================================
+%
+%\begin{frame}%[shrink=1]
+%  \frametitle{Conclusions}
+%
+%  \begin{itemize}
+%    \item Something
+%  \end{itemize}
+%  
+%\end{frame}
+
+%==========================================================================================
+%==========================================================================================
+\end{document}

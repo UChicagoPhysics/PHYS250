@@ -145,19 +145,19 @@
     \mean{E} = \frac{\sum_{\mu} E_{\mu} e^{-\beta E_{\mu}}}{{\sum_{\mu} e^{-\beta E_{\mu}}}} = \frac{{\sum_{\mu} e^{-\beta E_{\mu}}}}{Z}
   \end{equation}
 %
-where $Z$ is the \bluebf{partition function} of the system. Focusing just on the numerator for a moment, this can be recast in terms of $Z$:
+where $Z$ is the \bluebf{partition function} of the system. \pause Focusing just on the numerator for a moment, this can be recast in terms of $Z$: 
 %
   \begin{equation}
     \sum_{\mu} E_{\mu} e^{-\beta E_{\mu}} = -\sum_{\mu} \frac{\partial}{\partial\beta}\left( e^{-\beta E_{\mu}} \right) =  -\frac{\partial Z}{\partial\beta} 
   \end{equation}
 %  
-  We can then rewrite the mean energy in a much simpler form:
+  \pause We can then rewrite the mean energy in a much simpler form:
 %  
   \begin{equation}
     \mean{E} = -\frac{1}{Z}\frac{\partial Z}{\partial\beta} = -\frac{\partial \ln Z}{\partial\beta}         
   \end{equation} 
 % 
- Similarly, the variance is given by:
+ \pause Similarly, the variance is given by:
 %
   \begin{equation}
     Var(E) = \mean{E^2} - \mean{E}^2 = -\frac{\partial \mean{E}}{\partial\beta} = \frac{\partial^2 \ln Z}{\partial\beta^2}           
@@ -170,15 +170,17 @@ where $Z$ is the \bluebf{partition function} of the system. Focusing just on the
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Ising's analytical solution for a 1D spin lattice}
+  \frametitle{Ising's analytic solution for a 1D spin lattice (I)}
 
-    For a single dimension, and just $N=2$ spins (the smallest possible Ising chain model) we can use the analytic form on the previous slide to write down $Z$ exactly, and thus the mean energy (recall $E=-J\sum_{\mean{ij}}\spini \spinj$) and its variance. 
+  % \setbeamercovered{transparent}
+
+    For a single dimension, and just $N=2$ spins (the smallest possible Ising chain model) we can use the analytic form on the previous slide to write down $Z$ exactly, and thus the mean energy (recall $E=-J\sum_{\mean{ij}}\spini \spinj$) and its variance. \pause
 
   \begin{eqnarray}
-    Z_2 &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J\sum_{i=1}^{N-1} s_i s_{i+1} } \\
-        &=& e^{ -\beta E(s_1 = +1, s_2 =+1) } + e^{ -\beta E(s_1 = +1, s_2 =-1) } \nonumber \\
-        & & +\, e^{ -\beta E(s_1 = -1, s_2 =+1) } + e^{ -\beta E(s_1 = -1, s_2 =-1) } \\
-        &=& 2 e^{ \beta J } + 2 e^{ -\beta J } \\
+    Z_2 &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J\sum_{i=1}^{N-1} s_i s_{i+1} }  \\ \pause
+        &=& e^{ -\beta E(s_1 = +1, s_2 =+1) } + e^{ -\beta E(s_1 = +1, s_2 =-1) } \nonumber  \\ 
+        & & +\, e^{ -\beta E(s_1 = -1, s_2 =+1) } + e^{ -\beta E(s_1 = -1, s_2 =-1) }  \\ \pause
+        &=& 2 e^{ \beta J } + 2 e^{ -\beta J }  \\ \pause
         &=& 4 \cosh \beta J
   \end{eqnarray}
 
@@ -192,19 +194,89 @@ where $Z$ is the \bluebf{partition function} of the system. Focusing just on the
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Ising's analytical solution for a 1D spin lattice}
+  \frametitle{Ising's analytic solution for a 1D spin lattice (II)}
 
     We can generalize this to $N$ spins, either by induction based on one more manual sum with $N=3$, or by direct proof (which I leave to you!)
 %
   \begin{eqnarray}
-    Z_3 &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} \sum_{s_3 = \pm1} e^{ \beta J\sum_{i=1}^{N-1} s_i s_{i+1} } \\
-        &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} \sum_{s_3 = \pm1} e^{ \beta J s_1 s_2 + \beta J s_2 s_3 } \\
-        &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J s_1 s_2} \left[ e^{ \beta J s_2 } + e^{- \beta J s_2 } \right] \\
-        &=& 2 \cosh \beta J \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J s_1 s_2}  \\
-        &=& \left(2 \cosh \beta J\right) Z_2 \\
-    Z_N &=& \left(2 \cosh \beta J\right) Z_{N-1} \\
-        &=& 2 \left(2 \cosh \beta J\right)^{N-1}
+    Z_3 &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} \sum_{s_3 = \pm1} e^{ \beta J\sum_{i=1}^{N-1} s_i s_{i+1} } \\ \pause
+        &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} \sum_{s_3 = \pm1} e^{ \beta J s_1 s_2 + \beta J s_2 s_3 } \\ \pause
+        &=& \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J s_1 s_2} \left[ e^{ \beta J s_2 } + e^{- \beta J s_2 } \right] \\ \pause
+        &=& 2 \cosh \beta J \sum_{s_1 = \pm1} \sum_{s_2 = \pm1} e^{ \beta J s_1 s_2}  \\ \pause
+        &=& \left(2 \cosh \beta J\right) Z_2 \\ \pause
+    Z_N &=& \left(2 \cosh \beta J\right) Z_{N-1} \\ \pause
+        &=& \left(2 \cosh \beta J\right)^{N}
   \end{eqnarray}
+  %
+  (Since $Z_1 = \sum_{s_1 = \pm1} 1 = 2$)
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Results using Ising's analytic model (I)}
+
+    With the expression for $Z$, we can calculate key properties of the system
+%
+  \begin{eqnarray}
+    \mean{E} &=& -\frac{1}{Z}\frac{\partial Z}{\partial\beta} = -\frac{\partial \ln Z}{\partial\beta} \\ \pause
+             &=& -\frac{1}{\left(2 \cosh \beta J\right)^{N}}\frac{\partial \left[\left(2 \cosh \beta J\right)^{N}\right]}{\partial\beta} \\ \pause
+             &=& -N\frac{\left(2 \cosh \beta J\right)^{N-1}}{\left(2 \cosh \beta J\right)^{N}}\left(2J \sinh \beta J\right) \\ \pause
+             &=& -NJ\tanh \beta J 
+  \end{eqnarray}
+  %
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Results using Ising's analytic model (II)}
+
+    Without completing a more thorough derivation, here are three more key properties of the system:
+    \begin{itemize}
+      \item \bluebf{$F$:  Helmholtz free energy}, measures the useful work obtainable from a closed thermodynamic system at a constant $T$ and volume. Analogous to Gibbs free energy, which does the same at constant pressure.
+      \item \bluebf{$C$: Heat capacity}, measures the system's response to changes in $T$
+      \item \bluebf{$M$: Magnetization}, measures the amount of aligned spins in the system
+    \end{itemize}
+%
+  \begin{eqnarray}
+           F &=& -\frac{1}{\beta} \ln Z = -\frac{N}{\beta} \ln (2 \cosh \beta J) \\    
+           C &=& \frac{\partial \mean{E}}{\partial T} = \frac{N (\beta J)^2}{\cosh^2 \beta J} \\   
+           M &=& -\frac{\partial F}{\partial H} = \frac{N \sinh \beta H}{\sqrt{\sinh^2 \beta H + e^{-4 \beta J}}} 
+  \end{eqnarray}
+  %
+  \textit{Note: at constant $T$, Helmholtz free energy ($F$) is minimized at equilibrium.}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{(lack of) Phase transition for 1D model}
+
+  The last expression for magnetization $M$, or magnetization per unit particle, $m=M/N$ shows a very important property
+  %
+  \begin{eqnarray}
+           M &=& -\frac{\partial F}{\partial H} = \frac{N \sinh \beta H}{\sqrt{\sinh^2 \beta H + e^{-4 \beta J}}} 
+  \end{eqnarray}
+  %
+  \begin{itemize}
+    \item $M=0$ for $H=0$ because $\sinh x \approx x$ for small $x$
+    \item For $H=0$, $\sinh \beta H = 0$ and thus $M = 0$
+    \item 1D Ising model becomes a ferromagnet only at $T =0$ where $e^{-4 \beta J} \ra 0$, and thus $|M| \ra 1$ at $T =0$.
+  \end{itemize}
+  
+  \pause
+  
+  \centering \bluebf{There is no state above $T=0$ for which the mean magnetization is non-zero, while at $T=0$, we see that $M\ra 1$ and the system exhibits a \alertbf{phase transition} (we will come back to this).} \pause
+  %
+  \begin{figure}
+    \center 
+    \frame{\includegraphics[width=\textwidth]{NonFerromagneticStatement.pdf}}
+    \href{https://journals.aps.org/pr/abstract/10.1103/PhysRev.60.252}{Kramers \& Wannier, 1941}
+  \end{figure}
   
 \end{frame}
 
@@ -212,6 +284,15 @@ where $Z$ is the \bluebf{partition function} of the system. Focusing just on the
 \subsection[2D Ising Model]{2D Ising Model}
 %-----------------------------------------------------------------------------------------
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Properties of the 2D Ising model}
+
+  
+  
+  
+\end{frame}
 
 %==========================================================================================
 \section[Ising model observables and calculations]{Ising model observables and calculations}

@@ -145,13 +145,13 @@
     \mean{E} = \frac{\sum_{\mu} E_{\mu} e^{-\beta E_{\mu}}}{{\sum_{\mu} e^{-\beta E_{\mu}}}} = \frac{{\sum_{\mu} e^{-\beta E_{\mu}}}}{Z}
   \end{equation}
 %
-where $Z$ is the \bluebf{partition function} of the system. \pause Focusing just on the numerator for a moment, this can be recast in terms of $Z$: 
+where $Z$ is the \bluebf{partition function} of the system ($\beta=(\kB T)^{-1}$). \pause Focusing just on the numerator for a moment, this can be \alertbf{recast in terms of $Z$}: 
 %
   \begin{equation}
     \sum_{\mu} E_{\mu} e^{-\beta E_{\mu}} = -\sum_{\mu} \frac{\partial}{\partial\beta}\left( e^{-\beta E_{\mu}} \right) =  -\frac{\partial Z}{\partial\beta} 
   \end{equation}
 %  
-  \pause We can then rewrite the mean energy in a much simpler form:
+  \pause We can then rewrite the \bluebf{mean energy in a much simpler form}:
 %  
   \begin{equation}
     \mean{E} = -\frac{1}{Z}\frac{\partial Z}{\partial\beta} = -\frac{\partial \ln Z}{\partial\beta}         
@@ -236,16 +236,18 @@ where $Z$ is the \bluebf{partition function} of the system. \pause Focusing just
 
     Without completing a more thorough derivation, here are three more key properties of the system:
     \begin{itemize}
-      \item \bluebf{$F$:  Helmholtz free energy}, measures the useful work obtainable from a closed thermodynamic system at a constant $T$ and volume. Analogous to Gibbs free energy, which does the same at constant pressure.
-      \item \bluebf{$C$: Heat capacity}, measures the system's response to changes in $T$
-      \item \bluebf{$M$: Magnetization}, measures the amount of aligned spins in the system
+      \item<1-> \bluebf{$F$:  Helmholtz free energy}, measures the useful work obtainable from a closed thermodynamic system at a constant $T$ and volume. Analogous to Gibbs free energy, which does the same at constant pressure.
+      \item<2-> \bluebf{$C$: Heat capacity}, measures the system's response to changes in $T$
+      \item<4-> \bluebf{$M$: Magnetization}, measures the amount of aligned spins in the system
     \end{itemize}
 %
   \begin{eqnarray}
-           F &=& -\frac{1}{\beta} \ln Z = -\frac{N}{\beta} \ln (2 \cosh \beta J) \\    
-           C &=& \frac{\partial \mean{E}}{\partial T} = \frac{N (\beta J)^2}{\cosh^2 \beta J} \\   
-           M &=& -\frac{\partial F}{\partial H} = \frac{N \sinh \beta H}{\sqrt{\sinh^2 \beta H + e^{-4 \beta J}}} 
-  \end{eqnarray}
+           F &=& -\frac{1}{\beta} \ln Z = -\frac{N}{\beta} \ln (2 \cosh \beta J) \\ \pause   
+           C &=& \frac{\partial \mean{E}}{\partial T} = -\kB \beta^2 \frac{\partial^2 \ln Z}{\partial \beta^2} = \frac{N (\beta J)^2}{\cosh^2 \beta J} \pause \textcolor{red}{\left(= \kB \beta^2 Var(E) \right)} \label{eq:specificheat} \\  \pause 
+           M &=& -\frac{\partial F}{\partial H} = \frac{N \sinh \beta H}{\sqrt{\sinh^2 \beta H + e^{-4 \beta J}}}  \pause \textcolor{red}{\left(= \sum_i \spini \right)}  \label{eq:magnetization}
+  \end{eqnarray} 
+  %
+  \pause
   %
   \textit{Note: at constant $T$, Helmholtz free energy ($F$) is minimized at equilibrium.}
   
@@ -270,7 +272,11 @@ where $Z$ is the \bluebf{partition function} of the system. \pause Focusing just
   
   \pause
   
-  \centering \bluebf{There is no state above $T=0$ for which the mean magnetization is non-zero, while at $T=0$, we see that $M\ra 1$ and the system exhibits a \alertbf{phase transition} (we will come back to this).} \pause
+  \begin{ucblock}{}
+  \centering \bluebf{There is no state above $T=0$ for which the mean magnetization is non-zero, while at $T=0$, we see that $M\ra 1$ and the system exhibits a \alertbf{phase transition} (we will come back to this).} 
+  \end{ucblock}
+  %
+  \pause
   %
   \begin{figure}
     \center 
@@ -288,11 +294,65 @@ where $Z$ is the \bluebf{partition function} of the system. \pause Focusing just
 
 \begin{frame}%[shrink=10]
   \frametitle{Properties of the 2D Ising model}
+  \framesubtitle{\href{https://journals.aps.org/pr/abstract/10.1103/PhysRev.65.117}{Lars Onsager, Phys. Rev. 65, 117 -- Published 1 February 1944}}
 
+  Onsager showed in 1943 that one can solve the 2D Ising model analytically.
   
+  %\vspace{-0.4cm}
   
+  \begin{columns}
+  
+    \column{0.55\textwidth}
+    
+      Solution for $\ln {Z/2} = -\beta F - \ln 2$ (and allowing different $J$ in each dimension)
+      
+      \begin{figure}
+        \frame{\includegraphics[width=0.9\columnwidth]{OnsagersSolutionFreeEnergy.pdf}}
+      \end{figure}
+      
+      This leads to a relationship for the magnetization which \alert{does allow for $M\neq0$ at $T\neq0$, namely $T=T_c$}:
+      
+      \begin{equation}
+        \sinh \left( \frac{2 J_1}{\kB T_c} \right) \sinh \left( \frac{2 J_2}{\kB T_c} \right) = 1
+      \end{equation}
+      
+      
+      
+    \column{0.45\textwidth}
+    
+      \begin{figure}
+        \centering
+        \includegraphics[width=\columnwidth]{OnsagersIsingModel2.pdf}
+      \end{figure}
+    
+      \pause
+    
+      Which corresponds to
+      
+      \begin{eqnarray}
+         \frac{\kB T_{c}}{J} &=& {\frac {2}{\ln(1+{\sqrt {2}})}} \\
+                             &=& 2.2692
+      \end{eqnarray}
+  
+  \end{columns}  
   
 \end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Simulation vs. calculations for the 2D Ising model}
+
+
+  \begin{figure}
+    \includegraphics[width=0.47\columnwidth]{2DIsing-Simulation-MagnetizationSpecificHeat.pdf}
+    \includegraphics[width=0.47\columnwidth]{2DIsing-Simulation-Magnetization.pdf}
+  \end{figure}
+
+  These results come from \alertbf{two simulations (points)}, a $5\times 5$ lattice (left) and a $100\times 100$ lattice (right). These are compared to \bluebf{analytic calculations (solid lines)}. For each simulation, a large number of Monte Carlo steps per site are run (e.g. 20,000 for the $5\times5=25$ \ra 500000 steps), and averaged over the last 18000 of these to measure the magnetization and the energy. $m=M/N$ and $c=C/N$ are obtained from Eqs~\ref{eq:specificheat},\ref{eq:magnetization}, and $J=\kB=1$. 
+
+\end{frame}
+
 
 %==========================================================================================
 \section[Ising model observables and calculations]{Ising model observables and calculations}
@@ -303,19 +363,82 @@ where $Z$ is the \bluebf{partition function} of the system. \pause Focusing just
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Equilibrium}
+  \frametitle{Equilibration time}
   
+  In the previous slide, we stated that we needed to wait until \alertbf{``the last 18000 of these to measure the magnetization''}...why is that?
+  
+  \pause
+  
+  \vspace{0.3cm}
+  
+  \begin{ucblock}{}
+    \centering \LARGE Equilibrium
+  \end{ucblock}
+  
+  \vspace{0.3cm}
+  
+  \pause
+  
+  In order to measure properties of the system using a simulation, we have to run our simulation for a suitably long period of time until it has come to equilibrium at the temperature we are interested in. This period is called the equilibration time $\tau_{\mathrm{eq}}$. 
+  
+  \vspace{0.3cm}
+  
+  Only then can we obtain a reliable measurement of the quantity we are interested in. And then, in order to measure it's average values we must wait another suitably long period of time and average it, to evaluate the estimator of that quantity. 
+  
+\end{frame}
 
-So what do we do with our Monte Carlo program for the Ising model, once we have written it? we probably want to know the answer to some questions like ?What is the magnetization at such-and-such a temperature??, or ?How does the internal energy behave with temperature over such-and- such a range?? To answer these questions we have to do two things. First we have to run our simulation for a suitably long period of time until it has come to equilibrium at the temperature we are interested in. This period is called the equilibration time $\tau_{\mathrm{eq}}$. Then we have to measure the quantity we are interested in over another suitably long period of time and average it, to evaluate the estimator of that quantity. What exactly do we mean by ?allowing the system to come to equilibrium?? And how long is a ?suitably long? time for it to happen? How do we go about measuring our quantity of interest, and how long do we have to average over to get a result of a desired degree of accuracy? These are very general questions which we need to consider every time we do a Monte Carlo calculation. 
+%-----------------------------------------------------------------------------------------
 
-?equilibrium? means that the average probability of finding our system in any particular state ? is proportional to the Boltzmann weight $e^{-\beta E_{\mu}}$ of that state.
+\begin{frame}%[shrink=10]
+  \frametitle{So many questions!}
+  
+  \begin{ucblock}{Questions you should ask yourself}
+    \begin{itemize}
+      \item What exactly do we mean by ``allowing the system to come to equilibrium''? 
+      \item How long is a ``suitably long time'' for it to happen? 
+      \item How do we go about measuring our quantity of interest once that happens?
+      \item How long do we have to average over to get a result of a desired degree of accuracy?
+    \end{itemize}
+  \end{ucblock}
+  
+  \vspace{0.3cm}
+  
+  \centering \bluebf{These are very general questions which we need to consider every time we do a Monte Carlo simulation. }
 
-If we start our system off in a state such as the $T = 0$ (all spins aligned), and we want to perform a simulation at some finite non-zero temperature, it will take a little time before we reach equilibrium.
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Discussion of equilibrium}
+ 
+  \bluebf{``Equilibrium'}' means that the average probability of finding our system in any particular state $\mu$ is proportional to the Boltzmann weight $e^{-\beta E_{\mu}}$ of that state.
+  
+  \vspace{0.3cm}
+
+  If we start our system off in a state such as with $T = 0$ (e.g. all spins aligned), and we want to perform a simulation at some finite non-zero temperature, $T\neq0$, it will take a little time before we reach equilibrium.
+  
+  \vspace{0.3cm}
 
 A system at equilibrium spends the overwhelming majority of its time in a small subset of states in which its internal energy and other properties take a narrow range of values. This is what is ``mapped out'' by the temperature. To determine if the system has reached equilibrium, we could just ``look at it'' but this isn't very reliable. 
 
-A better way, which takes very little extra effort, is to plot a graph of some quantity of interest, like the magnetization per spin $m$ of the system or the energy of the system $E$, as a function of ``time'' (iterations or steps) from the start of the simulation. Up until equilibrium, the energy and the magnetization are changing, but after equilibrium is reached, they just fluctuate around a steady average value. This is what we should measure.
+\end{frame}
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Equilibrium in simulations}
+ 
+  A standard approach is to plot a graph of some quantity of interest, like the magnetization per spin $m=M/N$ of the system or the energy of the system $E$, as a function of ``time'' (iterations or steps) from the start of the simulation. 
+  
+  \vspace{0.3cm}
+  
+  Up until equilibrium, the energy and the magnetization are changing, but after equilibrium is reached, they just fluctuate around a steady average value. This is what we should measure.
+  
+  \begin{figure}
+    \includegraphics[width=0.6\columnwidth]{MagnetizationVsTime.pdf}
+  \end{figure}
+ 
 \end{frame}
 
 %-----------------------------------------------------------------------------------------

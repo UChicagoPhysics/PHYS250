@@ -338,22 +338,6 @@ where $Z$ is the \bluebf{partition function} of the system ($\beta=(\kB T)^{-1}$
   
 \end{frame}
 
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Simulation vs. calculations for the 2D Ising model}
-
-
-  \begin{figure}
-    \includegraphics[width=0.47\columnwidth]{2DIsing-Simulation-MagnetizationSpecificHeat.pdf}
-    \includegraphics[width=0.47\columnwidth]{2DIsing-Simulation-Magnetization.pdf}
-  \end{figure}
-
-  These results come from \alertbf{two simulations (points)}, a $5\times 5$ lattice (left) and a $100\times 100$ lattice (right). These are compared to \bluebf{analytic calculations (solid lines)}. For each simulation, a large number of Monte Carlo steps per site are run (e.g. 20,000 for the $5\times5=25$ \ra 500000 steps), and averaged over the last 18000 of these to measure the magnetization and the energy. $m=M/N$ and $c=C/N$ are obtained from Eqs~\ref{eq:specificheat},\ref{eq:magnetization}, and $J=\kB=1$. 
-
-\end{frame}
-
-
 %==========================================================================================
 \section[Ising model observables and calculations]{Ising model observables and calculations}
 %==========================================================================================
@@ -365,7 +349,7 @@ where $Z$ is the \bluebf{partition function} of the system ($\beta=(\kB T)^{-1}$
 \begin{frame}%[shrink=10]
   \frametitle{Equilibration time}
   
-  In the previous slide, we stated that we needed to wait until \alertbf{``the last 18000 of these to measure the magnetization''}...why is that?
+  Before we can \alertbf{``reliably''} measure something about a simulated system, we have to wait for the system to reach a sort of ``steady state''...why is that?
   
   \pause
   
@@ -379,7 +363,7 @@ where $Z$ is the \bluebf{partition function} of the system ($\beta=(\kB T)^{-1}$
   
   \pause
   
-  In order to measure properties of the system using a simulation, we have to run our simulation for a suitably long period of time until it has come to equilibrium at the temperature we are interested in. This period is called the equilibration time $\tau_{\mathrm{eq}}$. 
+  In order to measure properties of the system using a simulation, we have to run our simulation for a suitably long period of time until it has come to equilibrium at the temperature (or whatever state-related property) we are interested in. This period is called the equilibration time $\tau_{\mathrm{eq}}$. 
   
   \vspace{0.3cm}
   
@@ -425,9 +409,11 @@ A system at equilibrium spends the overwhelming majority of its time in a small 
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
+\subsection[Magnetization]{Magnetization}
+%-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Equilibrium in simulations}
+  \frametitle{Equilibrium in simulations: magnetization}
  
   A standard approach is to plot a graph of some quantity of interest, like the magnetization per spin $m=M/N$ of the system or the energy of the system $E$, as a function of ``time'' (iterations or steps) from the start of the simulation. 
   
@@ -441,36 +427,254 @@ A system at equilibrium spends the overwhelming majority of its time in a small 
  
 \end{frame}
 
+
 %-----------------------------------------------------------------------------------------
-\subsection[Energy]{Energy}
+
+\begin{frame}%[shrink=10]
+  \frametitle{Simulation vs. calculations for the 2D Ising model}
+
+  \begin{figure}
+    \includegraphics[width=0.47\columnwidth]{2DIsing-Simulation-MagnetizationSpecificHeat.pdf}
+    \includegraphics[width=0.47\columnwidth]{2DIsing-Simulation-Magnetization.pdf}
+  \end{figure}
+  %
+  \vspace{-0.5cm}
+  %
+  These results come from \alertbf{two simulations (markers)}, a $5\times 5$ lattice (left) and a $100\times 100$ lattice (right). These are compared to \bluebf{analytic calculations (solid lines)}. Many iterations are run for each simulation, and averaged after equilibrium is reached to measure the magnetization and the energy. $m=M/N$ and $c=C/N$ are obtained from Eqs~\ref{eq:specificheat},\ref{eq:magnetization}, and $J=\kB=1$. 
+  %
+  %\vspace{-0.5cm}
+  %
+  \begin{ucblock}{}
+    \centering The features at the Curie temperature $T_c$ are an indication of a \alertbf{phase transition}, for which the magnetization is the \alertbf{order parameter}
+  \end{ucblock}
+  
+\end{frame}
+
+
+%-----------------------------------------------------------------------------------------
+\subsection[Specific heat]{Specific heat}
 %-----------------------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------------------
-\subsection[Magnetization]{Magnetization}
-%-----------------------------------------------------------------------------------------
 
-%-----------------------------------------------------------------------------------------
-\subsection[Correlations]{Correlations}
-%-----------------------------------------------------------------------------------------
+\begin{frame}%[shrink=10]
+  \frametitle{Specific heat: a measure of the variance of the energy}
+ 
+  As we wrote down in Eq.~\ref{eq:specificheat}:
+  
+  \begin{equation}
+    C = \frac{\partial \mean{E}}{\partial T} = -\kB \beta^2 \frac{\partial^2 \ln Z}{\partial \beta^2} = \frac{N (\beta J)^2}{\cosh^2 \beta J}  \textcolor{red}{\, = \kB \beta^2 Var(E) }   
+  \end{equation}
+  %
+  we can calculate this in terms of the energies of the system.
+  %    
+  \begin{figure}
+    \includegraphics[width=0.6\columnwidth]{2DIsing-Simulation-SpecificHeat.pdf}
+  \end{figure}
+  %
+  \vspace{-0.2cm}
+  \begin{ucblock}{}
+    \centering The divergence at $T_c$ is another indication of a \alertbf{phase transition}
+  \end{ucblock}
+  
+\end{frame}
 
 %-----------------------------------------------------------------------------------------
 \subsection[Phase transition]{Phase transition}
 %-----------------------------------------------------------------------------------------
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Phase transitions}
+ 
+  \begin{columns}
+  
+  \column{0.55\textwidth}
+ 
+  We have all heard of, talked about, played with, and even tasted phase transitions since shortly after we were born:
+  
+  \vspace{0.5cm}
+  
+  \begin{ucblock}{Basic idea of a phase transition (Wikipedia)}
+    A phase of a thermodynamic system and the states of matter have uniform physical properties. During a phase transition of a given medium, certain properties of the medium change, often discontinuously, as a result of the change of some external condition, such as temperature, pressure, or others. 
+  \end{ucblock}
+  %
+  \column{0.45\textwidth}
+  
+  \begin{figure}
+    \includegraphics<1>[width=\columnwidth]{PhasesWater.png}
+    \includegraphics<2>[width=\columnwidth]{Phase-diag2.png}
+  \end{figure}
+  %
+  %
+  \end{columns}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{More exotic phase transitions}
+
+  \begin{columns}
+  
+  \column{0.55\textwidth}
+ 
+  What you have likely \alertbf{not heard of or talked about}, certainly have not \alertbf{``played with''}, and \alertbf{definitely have not tasted} \bluebf{phase transitions in the early universe (or at the LHC)}:
+  
+  \vspace{0.5cm}
+  
+  \column{0.45\textwidth}
+  
+  \begin{figure}
+    \includegraphics[width=\columnwidth]{LHCPhaseTransition.jpg}
+  \end{figure}
+  %
+  %
+  \end{columns}
+
+  \vspace{0.3cm}
+
+  In each case, the description of the system has gross characteristics that depend on certain parameters, and very often, some notion of \alertbf{temperature}.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Let's look at that plot of magnetization again}
+
+  \begin{columns}
+  
+  \column{0.35\textwidth}
+ 
+  Pretty clear that there is a phase transition occuring!
+  
+  \vspace{0.5cm}
+  
+  \column{0.65\textwidth}
+  
+  \begin{figure}
+    \includegraphics[width=\columnwidth]{2DIsing-Simulation-Magnetization.pdf}
+  \end{figure}
+  %
+  %
+  \end{columns}
+
+  
+\end{frame}
 
 %==========================================================================================
-\section[Metropolis Algorithm]{Metropolis Algorithm}
+\section[Hints for HW3]{Hints for HW3}
+%==========================================================================================
+
+\begin{frame}[fragile,shrink=15]
+  \frametitle{Some hints for HW3}
+
+  We'll work on this together tomorrow (remember, CSIL at 2:30pm!) but here are some hints in the mean time
+  
+  \vspace{0.3cm}
+  
+  \begin{ucblock}{Approach}
+    Make sure you have short snippets that allow you to test each function you write and make sure it's doing what you think it should be doing. 
+  \end{ucblock}
+  
+  \begin{ucpythonblock}{Spin sums}
+     # Can be used instead of my example code for 
+     # less readable, but much faster sums
+     np.roll(lattice) 
+  \end{ucpythonblock}
+  
+  \begin{ucpythonblock}{Energy variance}
+     # Useful for specific heat 
+     # Modularize your manipulations of the lattice!
+     np.var(energy_density/(T**2))
+  \end{ucpythonblock}
+  
+  \begin{ucblock}{Equilibrium}
+    Test the ``time'' required to reach equilibrium \alertbf{before} doing many simulations with many iterations each.
+  \end{ucblock}
+  
+\end{frame}
+
+%==========================================================================================
+\section[Final Project]{Final Project}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Recap]{Recap}
+\subsection[Concept]{Concept}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Final Project (I)}
+
+  As mentioned in the first lecture and in the syllabus, there will be a \alertbf{final project for the course} (no exams of any kind).
+  
+  \vspace{0.3cm}
+  
+  \begin{ucblock}{Final project  description}
+    \begin{itemize}
+      \item \bluebf{Individual project}
+      \item \bluebf{Focused on a specific physics question with a computational solution, model, calculation, and associated visualization}
+      \begin{itemize}
+        \item Does \alertbf{not} have to be one of the topics covered in the course
+        \item Needs to have a clear physics question and computational approach to its answer
+        \item Can be related to work outside of this class. 
+        \item I encourage \textit{connections} to other domains as well (statistics, mathematics, engineering, art, music, social science, finance)
+      \end{itemize}
+      \item \bluebf{Delivered in the form of a \alertbf{poster presentation}}
+      \begin{itemize}
+        \item E.g. \url{http://www.brian-amberg.de/uni/poster/}
+        \item \href{http://blogs.lse.ac.uk/impactofsocialsciences/2018/05/11/how-to-design-an-award-winning-conference-poster/}{``How to design an award-winning conference poster''}
+      \end{itemize}
+    \end{itemize}
+  \end{ucblock}
+
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Timing]{Timing}
 %-----------------------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------------------
-\subsection[Disadvantages]{Disadvantages}
-%-----------------------------------------------------------------------------------------
 
+\begin{frame}%[shrink=10]
+  \frametitle{Final Project (II)}
 
+  \begin{columns}
+  
+  \column{0.6\textwidth}
+    
+  \begin{ucblock}{Timeline}
+    \begin{itemize}
+      \item \bluebf{Week 6 -- Tues 6 November:} 1 paragraph project descriptions and sketch of poster due (conceptual design incl. figure ideas)
+      \item \bluebf{Week 8 -- Tues 20 November:} Progress report and updated outline of poster due
+      \item \bluebf{Week 11 -- Thur 13 November:} Official Final Exam date for the course
+      \begin{itemize}
+        \item However, I would like to propose that we have a much more \textit{relaxed} poster presentation in the \alertbf{afternoon/evening of \underline{Reading Period}, along with snacks and beverages, and invite the Department to participate}, but this is up to you if you agree!
+      \end{itemize}
+    \end{itemize}
+  \end{ucblock}
+  
+  \column{0.4\textwidth}
+  
+  \vspace{-1cm}
+  
+  \begin{figure}
+    \includegraphics[width=0.9\columnwidth]{PosterConcept.png}\\
+    \includegraphics[width=0.6\columnwidth]{/Users/fizisist/Work/ATLAS/Posters/NYU2009/NYUPoster_Miller_JVF_v2.pdf}\\
+  \end{figure}
+
+  
+  \end{columns}
+
+  
+\end{frame}
+
+%
+%For a $30\times30$ lattice with 20,000 time steps per simulation, I was seeing 2.5s/simulation or about 2-3 min to run 100 simulations at different temperatures
 
 %%==========================================================================================
 %\section[Conclusions]{Conclusions}

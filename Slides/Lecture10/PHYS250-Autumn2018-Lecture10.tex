@@ -48,7 +48,7 @@
 %----------------------------------------------------
 \newcommand{\lecnum }  {Lecture 10}
 \newcommand{\lecdate}  {November 6, 2018}
-\newcommand{\topic}    {Runge Kutta, Von Neumann, ODEs}
+\newcommand{\topic}    {From Newton to Runge Kutta to ODEs!}
 
 %-----------------------------------------------------------------------------------------
 % Title: [Column]{Title}
@@ -94,265 +94,527 @@
 }
 
 %==========================================================================================
-\section[Connection between minimization and solving differential equations]{Connection between minimization and solving differential equations}
+\section[Reminders]{Reminders}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Reminders from Lecture 8]{Reminders from Lecture 8}
+\subsection[Reminders from Lecture 9]{Reminders from Lecture 9}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
   \frametitle{Reminders from last time}
 
-  There are many examples of optimization in physics
+  Looked at two primary and exemplary methods for root finding, which is part of the foundation of optimization and differential equation solving.
   
   \vspace{0.3cm}
   
-  \begin{ucblock}{Examples of minimization}
+  \begin{ucblock}{Fundamental root finding methods}
     \begin{itemize}
-      \item \bluebf{Fitting a model to data:} minimize differences between a model and data
-      \item \bluebf{Second law of thermodynamics:} minimize changes in entropy for a system in thermodynamic equilibrium
-      \item \bluebf{Conservation of momentum:} establish mechanical equilibrium by minimizing changes in momentum, $\frac{d\vec{p}}{dt}=0$
-      \item \bluebf{Principle of least action:} obtain the equations of motion of a system by minimizing (or maximizing!) the variations of the action, $S$
-      \item \bluebf{Path integral formulation of quantum mechanics:} sort quantum mechanically possible trajectories by minimizing quantum action
-      \item \bluebf{Ising model:} minimization the energy of the spin configurations
+      \item \bluebf{Bisection method (aka ``incremental search''):} 
+      \begin{itemize}
+        \item \textbf{PROs:} exceptionally simple and requires no knowledge of the function whose roots are sought
+        \item \textbf{CONs:} doesn't use the potentially very useful knowledge of the roots that are sought
+      \end{itemize}
+      \item \bluebf{Newton's Method:} 
+      \begin{itemize}
+        \item \textbf{PROs:} converges much faster than bisection
+        \item \textbf{CONs:} requires a calculation or estimation of the first derivative of the function
+      \end{itemize}
     \end{itemize}
   \end{ucblock}
+  
+  Today, we will expand on these algorithms and go several steps further.
 
 \end{frame}
 
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Optimization and root finding}
-
-  Ultimately, I want to bring us to the point of discussing \bluebf{optimization in the context of modeling} (c.f. Lecture 1!). 
-  
-  \vspace{0.4cm}
-  
-  What that means, is that we want to have the computational tools to be able to \bluebf{model data and approximate complex functions computationally}, since it is often \alertbf{impossible to do so analytically}.
-  
-  \vspace{0.4cm}
-  
-  To achieve that, let's expand our tool kit beyond the analytically solvable example from last time (the 2D linear regression for $\chi^2$ minimization).
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Categories of problem]{Categories of problem}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=20]
-  \frametitle{Categorizing the problems}
-
-  As we discussed in Lecture 8, an \bluebf{optimization problem} quickly turns into an attempt to solve a first-order ordinary (ODE) or partial differential equation (PDE) in order to identify the value of the parameter $\alpha$ for which the function $F$ is stationary:
-  %
-  \begin{equation}
-    F^{\prime}(\alpha) = 0
-  \end{equation}
-  
-  The approaches used to do this are closely related to the methods used for finding zeroes or \alertbf{``roots''} of functions (since the derivative of a function is, of course, also a function!). But we need to differentiate the problems:
-  
-  \begin{ucblock}{Initial vs. boundary value problems}
-    Imagine you have the ODE
-    %
-    \begin{equation}
-      F^{\prime\prime} = -F
-    \end{equation}
-    %
-    \vspace{-0.5cm}
-    %
-    \begin{itemize}
-      \item \bluebf{Initial value problem:}  $F(0)=1, F^{\prime}(0)=0$
-      \item \bluebf{Boundary value problem:} $F(0)=1, F(\pi)=0$
-    \end{itemize} 
-    %
-    The latter is often much harder!
-  \end{ucblock}
-  
-  
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Specific example]{Specific example}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}[shrink=20]
-  \frametitle{Explicit root finding: square well potential}
-
-  \begin{columns}
-  
-  \column{0.55\textwidth}
-    
-  The Schrodinger equation  
-  %
-  \begin{equation}
-    \frac{\hbar^2}{2m}\psi^{\prime\prime}(x) + V(x)\psi(x) = E\psi(x)
-  \end{equation}
-  
-  tells us that for a finite square-well potential
-  %
-  \begin{equation}
-    V(x) = \begin{cases}  
-             -V_0 & 0 < x < L \\
-             0    & \mathrm{else}
-           \end{cases}
-  \end{equation}
-  %
-  and a bound state ($E=-f<0$, $f$ positive definite) in the region $x<0$, we must solve:
-  %
-  \begin{equation}
-    -\frac{\hbar^2}{2m}\psi^{\prime\prime}(x<0) = -f\psi(x<0)
-  \end{equation}
-  %
-  The solution for $x<0$ is
-  %
-  \begin{equation}
-    \psi(x<0) = A e^{\sqrt{z_0^2 - z^2}\, x}, \mathrm{where} \, z_0^2 - z^2 = \frac{2mf}{\hbar^2}
-  \end{equation}
-  
-  and $z_0^2 \equiv 2mV_0/\hbar^2$.
-  
-  \column{0.45\textwidth}
-  
-  \vspace{-0.5cm}
-  
-  \begin{figure}
-    \includegraphics[width=0.8\columnwidth]{Finite_Square_Potential_Well.png}
-  \end{figure}
-
-  In order to solve for the bound-state energies, we need to solve the following
-  %
-  \begin{equation}
-    \tan(za) = \frac{2 \sqrt{ \left( \frac{z_0}{z} \right)^2 - 1 } }{ 2 - \left( \frac{z_0}{z} \right)^2 }
-  \end{equation}
-  
-  This is transcendental, requires numerical approaches to finding the \alertbf{``root''} of
-  %
-  \begin{equation}
-    F(z) = \tan(za) - \frac{2 \sqrt{ \left( \frac{z_0}{z} \right)^2 - 1 } }{ 2 - \left( \frac{z_0}{z} \right)^2 }
-  \end{equation}
-  
-  
-  
-  \end{columns}
-
-\end{frame}
 
 %==========================================================================================
-\section[Finding roots]{Finding roots}
+\section[Newton's method and related issues]{Newton's method and related issues}
 %==========================================================================================
 
-
 %-----------------------------------------------------------------------------------------
-\subsection[Bisection method]{Bisection method}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Bisection method}
-
-  The bisection method is straightforward and reliable.
-  
-  \mysp 
-  
-  Start with an interval defined by its endpoints, $x_{\ell}$ and $x_{r}$ on the left and right of a starting point, such that
-  
-  \begin{equation}
-    F(x_{\ell})F(x_{r}) < 0
-  \end{equation}
-  
-  That is, the function $F(x)$ has at least one root somewhere between $x_{\ell}$ and $x_{r}$. Then split that interval in half
-  
-  \begin{equation}
-    x_m = \frac{1}{2}(x_{\ell} + x_{r})
-  \end{equation}
-  
-  If the product $F(x_{\ell})F(x_{m}) < 0$, then a root of $F(x)$ lies between $x_{\ell}$ and $x_{m}$, otherwise, it lies between $x_{m}$ and $x_{r}$. Repeat until some tolerance $\epsilon$ is reached such that
-  
-  \begin{equation}
-   | F(x_{m}) | \leq \epsilon
-  \end{equation}
-  
-\end{frame}
-
+\subsection[Follow-up discussion]{Follow-up discussion}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Bisection method}
+  \frametitle{Recall the description of Newton's method}
 
-  The bisection method is straightforward and reliable, \alertbf{but it can be slow if you don't have a good initial guess for the interval}.
-  
-  \mysp 
-  
-  If there is no root in the chosen interval, then it does not matter what you do.
-  
-  \mysp
-  
-  The method also uses no information whatsoever about the size of the step to take with each iteration. The overall time is determined \alertbf{only} by the size of the initial interval (i.e. how good your \alertbf{guess is}) and the tolerance, $\epsilon$.
-  
-  \mysp
-  
-  \pause
-  
-  \centering \bluebf{We can do better!}
-  
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Bisection method]{Bisection method}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Newton's method}
-
-  The fundamental form of the method alluded to in the last lecture is \bluebf{Newton's method}. The core of this approach is to use information about the function in order to inform how \bluebf{big} of a step size to take with each iteration.
-  
-  \mysp
-  
-  Suppose a function $F(x)$ has a root $ x = x_0$ and you are within $\delta$ of that root at $x = x_0 - \delta$. The question we want to answer is: 
-  
-  \mysp
-  
-  \begin{ucblock}{}
-    How far away from the root are we actually? What is the value of $\delta$?
-  \end{ucblock}
-  
-  \mysp
-  
-  Using a Taylor expansion (as Wah told us!) 
+  Recall that Newton's method uses the Taylor expansion
   
   \begin{equation}
-    F(x_0) = F(x+\delta) \approx F(x) + \delta F^{\prime}(x) + \mathcal(O)(\delta^2)
+    F(x_0) = F(x+\delta) \approx F(x) + \delta F^{\prime}(x) + \frac{1}{2}\delta^2 F^{\prime\prime}(x) + \mathcal{O}(\delta^3)
   \end{equation}
   
-  By setting $F(x_0)$ by assumption, we can make the linear approximate to $\delta \approx \Delta$ as
+  to inform the use of a linear approximation $\delta \approx \Delta$ where
   
   \begin{equation}
     \Delta = - \frac{F(x)}{F^{\prime}(x)}
   \end{equation}
   
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Newton's method (II)}
-
-  Therefore, we can choose a starting point $x_i$ and then update $x$ according to Newton
-  
-  \mysp
+  That gives way to an iterative approach that updates the estimate of the position of the root of $F(x)$ as being at $x_{i+1}$:
   
   \begin{equation}
-    x_{i+1} = x_{i} + \frac{F(x_i)}{F^{\prime}(x_i)}
+    x_{i+1} = x_{i} - \frac{F(x_i)}{F^{\prime}(x_i)}
   \end{equation}
   
   The iteration stops after $j$ iterations when 
   
   \begin{equation}
-   | F(x_{j}) | \leq \epsilon
+   | x - x_j | \leq \epsilon
   \end{equation}  
+
 \end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Precision of Newton's method}
+
+  \begin{columns}
+  
+    \column{0.5\textwidth}
+   
+      For any estimate $x_i$ of the method, the error, $E_i$ is the difference between the true root $x$ and the estimate:
+      
+      \begin{equation}
+        E_i = x - x_i
+      \end{equation}
+   
+      Merely by inspecting the design of Newton's method, you can see that the precision of the estimate for a subsequent iteration will be given by
+      %
+      \begin{eqnarray}
+        E_{i+1} &=& E_i + \frac{F(x)}{F^{\prime}(x)} \\
+                &=& -\frac{F^{\prime\prime}(x)}{2F^{\prime}(x)}E_i^2
+      \end{eqnarray}
+   
+    \column{0.5\textwidth}
+    
+      \begin{figure}
+        \centering
+        \includegraphics[width=\columnwidth]{NewtonsMethodExample-lnx.png}
+      \end{figure}
+    
+  \end{columns}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Convergence of Newton's method}
+
+  \begin{columns}
+  
+    \column{0.5\textwidth}
+   
+      Consequently, Newton's method \bluebf{converges quadratically}
+      \begin{itemize}
+        \item the error is the square of the error in the previous step)
+        \item the number of significant figures is roughly doubled in every iteration, provided that $x_i$ is \alertbf{sufficiently} close to the root.
+      \end{itemize} 
+         
+      However, a critical assumption is that $F^{\prime}(x) \neq 0$; for all $x \in I$, where $I$ is the interval $[x - r, x + r]$ for some $r \geq |x - x_0|$ and $x$ is the true root and $x_0$ was the starting point.
+         
+    \column{0.5\textwidth}
+    
+      \begin{figure}
+        \includegraphics[width=\columnwidth]{NewtonsMethodExample-lnx.png}
+      \end{figure}
+    
+  \end{columns}
+
+\end{frame}
+
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Pathologies and divergent scenarios}
+
+  \setbeamercovered{transparent}
+
+  \begin{columns}
+  
+    \column{0.5\textwidth}
+   
+      That is definitely not always the case. Let's look at a pathological example. Here is a fun mystery function that I cooked up (since you need to do something similar on your homework):
+      
+      \begin{itemize}[<+->]
+         \item $x_0 = 2.000$, \bluebf{7 iterations}
+         \item $x_0 = -2.000$, \bluebf{2 iterations}
+         \item $x_0 = 3.000$, \bluebf{2 iterations}
+         \item $x_0 = -1.214$, \bluebf{4 iterations}
+         \item Slight modification: $x_0 = -1.213$, \alertbf{no convergence}
+         \item Slight modification: $x_0 = 3.000$, \alertbf{no convergence}
+      \end{itemize}  
+         
+    \column{0.5\textwidth}
+      
+      \begin{figure}
+        \centering
+        \foreach \n in {1,...,6}%
+          {\includegraphics<\n>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology\n.png}}
+      \end{figure}
+    
+  \end{columns}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Backtracking}
+
+  In the last examples above we have a case where the search falls into the pathology of a situation where the initial guess was not \alertbf{sufficiently close} to the root. an ``infinite'' loop without ever getting there. 
+  
+  \mysp
+  
+  A solution to this problem is called \alertbf{backtracking}. 
+  
+  \mysp
+  
+  \begin{ucblock}{Backtracking}
+    In cases where the new guess $x_0 + \Delta x$ leads to an increase in the magnitude of the function, $|f(x_0 + \Delta x)|^{2} > |f(x_0)|^{2}$, you should backtrack somewhat and try a smaller guess, say, $x_0 + \Delta x/2$. If the magnitude of $f$ still increases, then you just need to backtrack some more, say, by trying $x_0 + \Delta x/4$ as your next guess, and so forth.
+  \end{ucblock}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Pathological case fixed with backtracking}
+
+  \setbeamercovered{transparent}
+
+  \begin{columns}
+  
+    \column{0.5\textwidth}
+   
+      Fixing the pathological example with backtracking:
+      
+      \begin{itemize}[<+->]
+         \item $x_0 = -1.213$, \alertbf{no convergence}
+         \item $x_0 = 3.000$, \alertbf{no convergence}
+         \item $x_0 = 1.500$, \bluebf{3 iterations}
+      \end{itemize}  
+         
+    \column{0.5\textwidth}
+      
+      \begin{figure}
+        \centering
+        \includegraphics<1>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology5.png}
+        \includegraphics<2>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology6.png}
+        \includegraphics<3>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology7.png}
+      \end{figure}
+    
+  \end{columns}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[System of equations]{System of equations}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Multidimensional problems}
+
+  Up to this point, we have confined our attention to solving the single equation $F(x) = 0$. Let us now consider the $n$-dimensional version of the same problem, namely
+  
+  \begin{equation}
+    \vec{F}(\vec{x}) = 0
+  \end{equation}
+
+  where we allow for a vector of functions $\vec{F} = \{f_1(\vec{x}), f_2(\vec{x}), ..., f_n(\vec{x})\}$, and $\vec{x} = \{ x_1, x_2, ..., x_{n} \}$.
+  
+  \mysp
+  
+  The solution of $n$ simultaneous, nonlinear equations is a much more formidable task than finding the root of a single equation. The trouble is the lack of a reliable method for bracketing the solution vector $\vec{x}$. Therefore, we cannot always provide the solution algorithm with a good starting value of $x$, unless such a value is suggested by the physics of the problem.
+  
+  \mysp
+  
+  Newton's method is the workhorse here!
+  
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Reminder of the general problem}
+
+  Start by considering each one of the $n$ functions, $f_n(x)$ separately:
+
+  \begin{eqnarray}
+    f_i(\vec{x}) &=& f_i(\vec{a} )+ \sum_j^n \frac{\partial f_i}{\partial x_j}|_{\vec{x}} \Delta x_j + \frac{1}{2!} \sum_j^n \sum_k^n \frac{\partial^2 f_i}{\partial_j \partial_k}|_{\vec{x}} \Delta x_j \Delta x_k \\
+                 &=& f_i(\vec {a} )+ (\vec{x} - \vec{a})^{\mathrm {T} }  \nabla f(\vec{a}) + \frac{1}{2!}(\vec{x} - \vec{a})^{\mathrm {T} }\mathbf {H} (\vec{a})(\vec{x} - \vec{a})
+  \end{eqnarray}
+  
+  where $\mathbf {H}$ is the \bluebf{Hessian matrix}, describing the \alertbf{curvature} of $f(\vec{x})$ by
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Jacobian matrix}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Examples}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Comments on matrix computing and manipulations}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+
+
+%-----------------------------------------------------------------------------------------
+\subsection[Numerical differentiation]{Numerical differentiation}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Finite difference approximation}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Derivatives by Interpolation}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%==========================================================================================
+\section[Initial value problems in ODEs]{Initial value problems in ODEs}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Statement of the problem]{Statement of the problem}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Initial vs. boundary values}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Taylor series method]{Taylor series method}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Recall the Taylor series approach generally}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Runge-Kutta methods]{Runge-Kutta methods}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Avoiding repeated differentiation: Runge?Kutta}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Precision}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Higher order calculations: \texttt{rk4}}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%==========================================================================================
+\section[Boundary value problems in ODEs]{Boundary value problems in ODEs}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Statement of the problem]{Statement of the problem}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{The issue}
+
+  In an initial value problem we were able to start at the point where the initial values were given and march the solution forward as far as needed. This technique does not work for boundary value problems, because there are not enough starting conditions available at either endpoint to produce a unique solution.
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Shooting method]{Shooting method}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Recall the Taylor series approach generally}
+
+  Something
+  
+  \vspace{0.3cm}
+  
+  \begin{itemize}
+    \item Something
+    \begin{itemize}
+      \item Something else 
+    \end{itemize}
+  \end{itemize}
+  
+  Lastly
+
+\end{frame}
+
 
 %==========================================================================================
 %==========================================================================================

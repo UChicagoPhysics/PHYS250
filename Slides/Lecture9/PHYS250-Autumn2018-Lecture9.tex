@@ -300,11 +300,11 @@
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
-\subsection[Bisection method]{Bisection method}
+\subsection[Newton's method]{Newton's method}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Newton's method}
+  \frametitle{Newton's method (I)}
 
   The fundamental form of the method alluded to in the last lecture is \bluebf{Newton's method}. The core of this approach is to use information about the function in order to inform how \bluebf{big} of a step size to take with each iteration.
   
@@ -323,7 +323,7 @@
   Using a Taylor expansion (as Wah told us!) 
   
   \begin{equation}
-    F(x_0) = F(x+\delta) \approx F(x) + \delta F^{\prime}(x) + \mathcal(O)(\delta^2)
+    F(x_0) = F(x+\delta) \approx F(x) + \delta F^{\prime}(x) + \mathcal{O}(\delta^2)
   \end{equation}
   
   By setting $F(x_0)$ by assumption, we can make the linear approximate to $\delta \approx \Delta$ as
@@ -344,13 +344,13 @@
   \mysp
   
   \begin{equation}
-    x_{i+1} = x_{i} + \frac{F(x_i)}{F^{\prime}(x_i)}
+    x_{i+1} = x_{i} - \frac{F(x_i)}{F^{\prime}(x_i)}
   \end{equation}
   
   The iteration stops after $j$ iterations when 
   
   \begin{equation}
-   | F(x_{j}) | \leq \epsilon
+   | x - x_j | \leq \epsilon
   \end{equation}  
 \end{frame}
 

@@ -98,32 +98,34 @@
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Reminders from Lecture 9]{Reminders from Lecture 9}
+\subsection[Reminders from Lecture 10]{Reminders from Lecture 10}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
   \frametitle{Reminders from last time}
 
-  Looked at two primary and exemplary methods for root finding, which is part of the foundation of optimization and differential equation solving.
+  We discussed the concepts that grew out of (or built upon) root finding -- manipulation of Taylor series approximations -- in order to expand our computational toolkit
   
   \vspace{0.3cm}
   
-  \begin{ucblock}{Fundamental root finding methods}
+  \begin{ucblock}{Application of root finding and numerical differentiation}
     \begin{itemize}
-      \item \bluebf{Bisection method (aka ``incremental search''):} 
+      \item \bluebf{Newton's method:} 
       \begin{itemize}
-        \item \textbf{PROs:} exceptionally simple and requires no knowledge of the function whose roots are sought
-        \item \textbf{CONs:} doesn't use the potentially very useful knowledge of the roots that are sought
+        \item Pathologies associated with the naive implementation, as well as simple modifications that can mitigate issues (\alertbf{backtracking})
+        \item Multidimensional applications in matrix form and systems of equations
       \end{itemize}
-      \item \bluebf{Newton's Method:} 
+      \item \bluebf{Ordinary differential equations:} 
       \begin{itemize}
-        \item \textbf{PROs:} converges much faster than bisection
-        \item \textbf{CONs:} requires a calculation or estimation of the first derivative of the function
+        \item Obtained and discussed the Runge-Kutta algorithm(s)
+        \item Differentiated between \bluebf{initial} and \alertbf{boundary} value problems   
       \end{itemize}
     \end{itemize}
   \end{ucblock}
   
-  Today, we will expand on these algorithms and go several steps further.
+  \mysp
+  
+  Today we will take the next steps with ODEs and transition to PDEs!
 
 \end{frame}
 
@@ -191,7 +193,7 @@
     
       \begin{figure}
         \centering
-        \includegraphics[width=\columnwidth]{NewtonsMethodExample-lnx.png}
+        \includegraphics[width=\columnwidth]{../Lecture10/NewtonsMethodExample-lnx.png}
       \end{figure}
     
   \end{columns}
@@ -218,7 +220,7 @@
     \column{0.5\textwidth}
     
       \begin{figure}
-        \includegraphics[width=\columnwidth]{NewtonsMethodExample-lnx.png}
+        \includegraphics[width=\columnwidth]{../Lecture10/NewtonsMethodExample-lnx.png}
       \end{figure}
     
   \end{columns}
@@ -253,7 +255,7 @@
       \begin{figure}
         \centering
         \foreach \n in {1,...,6}%
-          {\includegraphics<\n>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology\n.png}}
+          {\includegraphics<\n>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology\n.png}}
       \end{figure}
     
   \end{columns}
@@ -302,9 +304,9 @@
       
       \begin{figure}
         \centering
-        \includegraphics<1>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology5.png}
-        \includegraphics<2>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology6.png}
-        \includegraphics<3>[width=0.95\columnwidth]{NewtonsMethodExample-Pathology7.png}
+        \includegraphics<1>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology5.png}
+        \includegraphics<2>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology6.png}
+        \includegraphics<3>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology7.png}
       \end{figure}
     
   \end{columns}
@@ -375,7 +377,7 @@
     
   \begin{figure}
     \centering
-    \includegraphics[width=0.65\columnwidth]{Function1-checkerboard.pdf}
+    \includegraphics[width=0.65\columnwidth]{../Lecture10/Function1-checkerboard.pdf}
   \end{figure}
 
 \end{frame}
@@ -422,7 +424,7 @@
 
   \begin{figure}
     \centering
-    \includegraphics[width=0.85\columnwidth]{Function1-plane.png}
+    \includegraphics[width=0.85\columnwidth]{../Lecture10/Function1-plane.png}
   \end{figure}
 
 \end{frame}
@@ -532,7 +534,7 @@
 
   \begin{figure}
     \centering
-    \includegraphics[width=0.85\columnwidth]{WeightsStrings.pdf}
+    \includegraphics[width=0.85\columnwidth]{../Lecture10/WeightsStrings.pdf}
   \end{figure}
   
   Two weights $(W_1, W_2) = (10, 20)$ are hung from three pieces of string with lengths $(L_1, L_2, L_3) = (3, 4, 4)$ and a horizontal bar of length $L = 8$. 

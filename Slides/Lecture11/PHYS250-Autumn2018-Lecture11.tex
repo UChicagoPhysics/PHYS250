@@ -135,7 +135,7 @@
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Follow-up discussion]{Follow-up discussion}
+\subsection[Reminders]{Reminders}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
@@ -162,6 +162,8 @@
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
+\subsection[Code up the algorithm]{Code up the algorithm}
+%-----------------------------------------------------------------------------------------
 
 \begin{frame}[fragile]
   \frametitle{Code up the algorithm!}
@@ -183,6 +185,8 @@
 
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
+\subsection[Test the accuracy of the methods]{Test the accuracy of the methods}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}[fragile,shrink=15]
@@ -245,179 +249,6 @@ terms:
 
 \end{frame}
 
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Precision of Newton's method}
-
-  \begin{columns}
-  
-    \column{0.5\textwidth}
-   
-      For any estimate $x_i$ of the method, the error, $E_i$ is the difference between the true root $x$ and the estimate:
-      
-      \begin{equation}
-        E_i = x - x_i
-      \end{equation}
-   
-      Merely by inspecting the design of Newton's method, you can see that the precision of the estimate for a subsequent iteration will be given by
-      %
-      \begin{eqnarray}
-        E_{i+1} &=& E_i + \frac{F(x)}{F^{\prime}(x)} \\
-                &=& -\frac{F^{\prime\prime}(x)}{2F^{\prime}(x)}E_i^2
-      \end{eqnarray}
-   
-    \column{0.5\textwidth}
-    
-      \begin{figure}
-        \centering
-        \includegraphics[width=\columnwidth]{../Lecture10/NewtonsMethodExample-lnx.png}
-      \end{figure}
-    
-  \end{columns}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Convergence of Newton's method}
-
-  \begin{columns}
-  
-    \column{0.5\textwidth}
-   
-      Consequently, Newton's method \bluebf{converges quadratically}
-      \begin{itemize}
-        \item the error is the square of the error in the previous step)
-        \item the number of significant figures is roughly doubled in every iteration, provided that $x_i$ is \alertbf{sufficiently} close to the root.
-      \end{itemize} 
-         
-      However, a critical assumption is that $F^{\prime}(x) \neq 0$; for all $x \in I$, where $I$ is the interval $[x - r, x + r]$ for some $r \geq |x - x_0|$ and $x$ is the true root and $x_0$ was the starting point.
-         
-    \column{0.5\textwidth}
-    
-      \begin{figure}
-        \includegraphics[width=\columnwidth]{../Lecture10/NewtonsMethodExample-lnx.png}
-      \end{figure}
-    
-  \end{columns}
-
-\end{frame}
-
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Pathologies and divergent scenarios}
-
-  \setbeamercovered{transparent}
-
-  \begin{columns}
-  
-    \column{0.5\textwidth}
-   
-      That is definitely not always the case. Let's look at a pathological example. Here is a fun mystery function that I cooked up (since you need to do something similar on your homework):
-      
-      \begin{itemize}[<+->]
-         \item $x_0 = 2.000$, \bluebf{7 iterations}
-         \item $x_0 = -2.000$, \bluebf{2 iterations}
-         \item $x_0 = 3.000$, \bluebf{2 iterations}
-         \item $x_0 = -1.214$, \bluebf{4 iterations}
-         \item Slight modification: $x_0 = -1.213$, \alertbf{no convergence}
-         \item Slight modification: $x_0 = 3.000$, \alertbf{no convergence}
-      \end{itemize}  
-         
-    \column{0.5\textwidth}
-      
-      \begin{figure}
-        \centering
-        \foreach \n in {1,...,6}%
-          {\includegraphics<\n>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology\n.png}}
-      \end{figure}
-    
-  \end{columns}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Backtracking}
-
-  In the last examples above we have a case where the search falls into the pathology of a situation where the initial guess was not \alertbf{sufficiently close} to the root. an ``infinite'' loop without ever getting there. 
-  
-  \mysp
-  
-  A solution to this problem is called \alertbf{backtracking}. 
-  
-  \mysp
-  
-  \begin{ucblock}{Backtracking}
-    In cases where the new guess $x_0 + \Delta x$ leads to an increase in the magnitude of the function, $|f(x_0 + \Delta x)|^{2} > |f(x_0)|^{2}$, you should backtrack somewhat and try a smaller guess, say, $x_0 + \Delta x/2$. If the magnitude of $f$ still increases, then you just need to backtrack some more, say, by trying $x_0 + \Delta x/4$ as your next guess, and so forth.
-  \end{ucblock}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Pathological case fixed with backtracking}
-
-  \setbeamercovered{transparent}
-
-  \begin{columns}
-  
-    \column{0.5\textwidth}
-   
-      Fixing the pathological example with backtracking:
-      
-      \begin{itemize}[<+->]
-         \item $x_0 = -1.213$, \alertbf{no convergence}
-         \item $x_0 = 3.000$, \alertbf{no convergence}
-         \item $x_0 = 1.500$, \bluebf{3 iterations}
-      \end{itemize}  
-         
-    \column{0.5\textwidth}
-      
-      \begin{figure}
-        \centering
-        \includegraphics<1>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology5.png}
-        \includegraphics<2>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology6.png}
-        \includegraphics<3>[width=0.95\columnwidth]{../Lecture10/NewtonsMethodExample-Pathology7.png}
-      \end{figure}
-    
-  \end{columns}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[System of equations]{System of equations}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Multidimensional problems}
-
-  Up to this point, we have confined our attention to solving the single equation $F(x) = 0$. Let us now consider the $n$-dimensional version of the same problem, namely
-  
-  \begin{equation}
-    \vec{F}(\vec{x}) = 0
-  \end{equation}
-
-  where we allow for a vector of functions $\vec{F} = \{f_1(\vec{x}), f_2(\vec{x}), ..., f_n(\vec{x})\}$, and $\vec{x} = \{ x_1, x_2, ..., x_{n} \}$.
-  
-  \mysp
-  
-  The solution of $n$ simultaneous, nonlinear equations is a much more formidable task than finding the root of a single equation. The trouble is the lack of a reliable method for bracketing the solution vector $\vec{x}$. Therefore, we cannot always provide the solution algorithm with a good starting value of $x$, unless such a value is suggested by the physics of the problem.
-  
-  \mysp
-  
-  Newton's method is the workhorse here!
-  
-
-\end{frame}
-
-
 %==========================================================================================
 \section[Partial Differential Equations]{Partial Differential Equations}
 %==========================================================================================
@@ -427,260 +258,111 @@ terms:
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{General form and structure of ODEs}
+  \frametitle{What's so different about PDEs?}
 
-  \begin{equation}
-    \Del^{2} V = 0.
-  \end{equation}
+  Physical quantities such as temperature, pressure, gravitational and electromagnetic forces, and more, may vary continuously in both space and time. 
+  
+  \mysp
+  
+  As such, the functions or \bluebf{fields, $U(x,y,z,t)$} that describe these quantities must contain \alertbf{independent space and time variations}.
+  
+  \mysp
+  
+  As time evolves, the changes in $U (x, y, z, t)$ at any one position affect the field at neighboring points. 
+  
+  \mysp
+  
+  This means that the dynamic equations describing the dependence of $U$ on four independent variables must be written in terms of partial derivatives, and therefore the equations must be \alertbf{partial differential equations (PDEs)}, in contrast to ordinary differential equations (ODEs).
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Classes and boundary conditions for PDEs]{Classes and boundary conditions for PDEs}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{General form of PDEs}
+
+  The most general form for a two-independent variable PDE is
+  \begin{figure}
+    \includegraphics[width=0.8\textwidth]{GeneralPDE.pdf}
+  \end{figure}
+  where $A, B, C,$ and $F$ are arbitrary functions of the variables $x$ and $y$. 
+ 
+  \pause
+  
+  These typically fall into three categories based on the structure of the derivatives in the expression:
+  
+  \begin{figure}
+    \includegraphics[width=0.9\textwidth]{PDEClasses.pdf}
+  \end{figure}
+  
+
 
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Initial vs. boundary value problems}
+  \frametitle{Boundary conditions for PDE classes}
 
-  The solution now requires the knowledge of $n$ conditions to fully specify. If these conditions are specified at \bluebf{the same value of $x$}, the problem is \bluebf{an initial value problem}. Then the \bluebf{initial conditions}, have the form:
-  %
-  \begin{eqnarray}
-    y_0(a) &=& \alpha_0 \nonumber\\
-    y_1(a) &=& \alpha_1 \nonumber\\
-    \vdots \nonumber \\
-    y_{n-1}(a) &=& \alpha_{n-1} \nonumber
-  \end{eqnarray}
-  %
-  On the other hand, if $y_i$ are specified \alertbf{at different values of $x$}\alertbf, the problem is a \alertbf{boundary value problem}.
-  %
-  \begin{eqnarray}
-    y^{\prime\prime} &=& -y \nonumber\\
-    y(0)   &=& 1 \nonumber\\
-    y(\pi) &=& 0 \nonumber
-  \end{eqnarray}
-  %
+  Separately, the boundary conditions will place specific constraints on the relationships between each of the terms, and often dictate whether the problem is even solvable.
+  
+  \begin{figure}
+    \includegraphics[width=0.8\textwidth]{BoundaryConditions.pdf}
+  \end{figure}
+  
+  \begin{itemize}
+    \item \bluebf{Dirichlet:} value of $U$ on a surface
+    \item \bluebf{Neumann:} value of the normal derivative of $U$ on a surface
+    \item \bluebf{Cauchy:} value of both $U$ and $U^{\prime}$ on a surface 
+  \end{itemize}
+
 
 \end{frame}
 
-%-----------------------------------------------------------------------------------------
-\subsection[Taylor series method]{Taylor series method}
-%-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
-  \frametitle{Recall the Taylor series approach generally}
-
-  Writing the conditions for the initial value problem from the previous slides as
-  %
-  \begin{equation}
-    \vec{y}^{\prime} = \vec{F}(x, \vec{y}), \qquad \vec{y}(a) = \vec{\alpha}
-  \end{equation}
-  %
-  where 
-  %
-  \begin{equation}
-           F(x,\vec{y}) = \left[\begin{array}{c}
-                             y_1 \\
-                             y_2 \\
-                             \vdots \\
-                             f(x,\vec{y})
-                           \end{array}\right],                      
-  \end{equation}
-
-  
-  We can sort of ``brute force'' our way through it by repeatedly computing derivatives numerically using Newton's method. That's perfectly valid, but there are also better ways to go about it.
-
-\end{frame}
 
 %-----------------------------------------------------------------------------------------
-\subsection[Runge-Kutta methods]{Runge-Kutta methods}
+\subsection[Example: electrostatic potentials]{Example: electrostatic potentials}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Avoiding repeated differentiation: Runge-Kutta}
+  \frametitle{Example from your courses: Laplace in E\&M}
 
-  The aim of Runge-Kutta methods is to eliminate the need for repeated differentiation of the differential equations. Because no such differentiation is involved in the \alertbf{first-order Taylor series} expression:
-  %
-  \begin{equation}
-    \vec{y}(x + h) = \vec{y}(x) + \vec{y}^{\prime}(x)h = \vec{y}(x) + \vec{F}(x, \vec{y})h
-  \end{equation}
-  
-  This first-order version is referred to as \bluebf{Euler's method (aka Euler's Rule)}.
-  
-  \mysp
-  
-  Effectively, what this is doing is to start with the known initial value of the dependent variable, $y_0 \equiv y(x = 0)$, and then use the derivative function $f(x,y)$ to find an approximate value for $y$ at a small step $x = h$ forward in time; that is, $y(x = h) \equiv y_1$. 
-  
-  \mysp
-  
-  We know from our discussion of differentiation that the error in the forward-difference algorithm is $\mathcal{O}(h)$, and so this too is the error in Euler's rule.
+  The Laplace equation is of fundamental importance in physics, and is most often first encountered in electrodynamics.
 
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Second-order Runge-Kutta algorithm} 
-
-  The Runge-Kutta algorithms for integrating a differential equation are based upon the formal (exact) integral of our differential equation:
-  %
   \begin{equation}
-    \frac{dy}{dx} = f(x,y) \Rightarrow y(x) = \int f(x,y) dx
-  \end{equation}
-  %
-  And therefore
-  %
-  \begin{equation}
-    y_{n+1} = y_{n} + \int_{x_n}^{x_{n+1}} f(x,y) dx
-  \end{equation}
-  %
-  The key insight is to expand $f(x,y)$ in a Taylor series about the \alertbf{midpoint of the integration interval} and retain two
-terms:
-  %
-  \begin{equation}
-    f(x,y) \simeq f(x_{n+1/2} , y_{n+1/2}) + (x - x_{n+1/2}) \frac{df}{dx}(x_{n+1/2}) + \mathcal{O}(h^2)
-  \end{equation}
-  %
-  As you recall from the \alertbf{finite central difference} algorithm, only \alertbf{odd powers} of $h$ remain, and thus when used inside the integral above, the terms with $(x - x_{n+1/2})^{n\in\mathrm{odd}}$ vanish. We are left with
-  %
-  \begin{equation}
-    y_{n+1} \simeq y_{n} + h f(x_{n+1/2} , y_{n+1/2}) + \mathcal{O}(h^3) 
+    \nabla^{2} V = 0.
   \end{equation}
 
-\end{frame}
+  In E\&M, we often taught the solution to Laplace's equation in two dimensions, $V(x,y)$, which can be found by evaluating:
 
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Difficulty with the second-order Runge-Kutta algorithm} 
-
-  The price for improved precision is having to evaluate the derivative function and $y$ at the middle of the interval, $x = x_n + h/2$.
-  
-  \mysp
-  
-  And there's the rub: we don't know the value of $y_{n+1/2}$ and cannot use this algorithm to determine it.
-  
-  \mysp
-  
-  The way out of this issue is to use Euler's algorithm for $y_{n+1/2}$:
-  %
   \begin{equation}
-    y(x + h/2) = y_n + \frac{1}{2}h\vec{y}^{\prime} = y_n + \frac{1}{2}hf(x_n,y_n)
+    V(x,y) = \frac{1}{2\pi R} \oint_{\rm circle} V dl
   \end{equation}
-  %
-  In this way, the known derivative function $f$ is evaluated at the ends and the midpoint of the interval, but that only the (known) initial value of the dependent variable $y$ is required. This makes the algorithm self-starting.
-  %
-  \begin{equation}
-    y_{n+1} \simeq y_n + k_2 
-  \end{equation}
-  %
-  where
-  %
-  \begin{equation}
-    k_2=h\vec{f}(x_n + \frac{h}{2}, \vec{y}_{n} + \frac{k_1}{2}), \qquad k_1 = h\vec{f}(x_n, y_n)  
-  \end{equation}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Precision}
-
-  As discussed, the second order Runge-Kutta only achieves an $\mathcal{O}(h^3)$ precision. That precision is quickly insufficient for many applications.
   
-  \mysp
-  
-  The fourth-order Runge-Kutta method achieves an $\mathcal{O}(h^4)$ precision by approximating $y$ as a Taylor series up to $h^2$ (a parabola) at the midpoint of the interval.
-  
-  \mysp
-  
-  This approximation provides an excellent balance of power, precision, and programming simplicity. There are now four gradient terms to evaluate with four subroutine calls needed to provide a better approximation to $f(x,y)$ near the midpoint.
+  due to the lack of sources. In fact, even in common textbooks (e.g. Griffiths) you are taught that you can solve this iteratively, by evaluating this integral until a change in $V(x,y)$ on successive evaluations of the expression is smaller than some tolerance. 
   
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Higher order calculations: \texttt{rk4}}
+  \frametitle{Method of relaxation}
 
-  Without deriving anything, I simply write out the definition and then we'll elaborate on the implications
-  %
-  \begin{equation}
-    y_{n+1} \simeq y_n + \frac{1}{6}\left( k_1 + 2k_2 + 2k_3 + k_4 \right) 
-  \end{equation}
-  %
-  where
-  %
-  \begin{eqnarray}
-    k_1 &=& h\vec{f}(x_n, y_n)\\
-    k_2 &=& h\vec{f}\left( x_n + \frac{h}{2}, y_n + \frac{k_1}{2} \right)\\
-    k_3 &=& h\vec{f}\left( x_n + \frac{h}{2}, y_n + \frac{k_2}{2} \right)\\
-    k_4 &=& h\vec{f}\left( x_n + h          , y_n + k_3           \right)    
-  \end{eqnarray}
-  %
-  The benefit of the calculation of the additional terms is a $\mathcal{O}(h^4)$ precision on the final results.
+  To solve our 2D PDE numerically, we divide space up into a lattice (recall: \texttt{meshgrid}!) and solve for $V$ at each site on the lattice. Since we will express derivatives in terms of the finite differences in the values of $V$ at the lattice sites, this is called....\pause \bluebf{a finite-difference method}!
   
-\end{frame}
-
-%==========================================================================================
-\section[Boundary value problems in ODEs]{Boundary value problems in ODEs}
-%==========================================================================================
-
-%-----------------------------------------------------------------------------------------
-\subsection[Statement of the problem]{Statement of the problem}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{The issue with boundary value problems}
-
-  In an initial value problem we were able to start at the point where the initial values were given and march the solution forward as far as needed. 
+  \pause
   
   \mysp
   
-  This technique does not work for boundary value problems, because there are not enough starting conditions available at either endpoint to produce a unique solution.
+  To derive the finite-difference algorithm for the numeric solution of this PDE, we would follow the same path taken before, and add the two Taylor expansions of the potential to the right and left of $(x, y)$ and above and below $(x, y)$ and so on.  
   
   \mysp
   
-  The simplest two-point boundary value problem is a second-order differential equation with one condition specified at $x = a$ and another one at $x = b$. Here is an example of such a problem:
-  %
-  \begin{equation}
-    y^{\prime\prime} = f(x,y,y^{\prime}), \qquad y(a)=\alpha, \qquad y(b)=\beta
-  \end{equation}
-  %
-  The whole point is to attempt to turn these equations \alert{into the initial value problem} such that
-  %
-  \begin{equation}
-    y^{\prime\prime} = f(x,y,y^{\prime}), \qquad y(a)=\alpha, \qquad y^{\prime}=u
-  \end{equation}
-  %
-  and the  key to success is finding the correct value of $u$. 
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Root finding}
-
-  Really, this is just a matter of \bluebf{root finding}!! Which, of course, you now know very well how to do!
-  %
-  \mysp
+  At this point, I think it's just worth ``writing'' some code...
   
-  The solution of the initial value problem depends on $u$, the computed value of $y(b)$ is a function of $u$; that is,
-  %
-  \begin{equation}
-    y(b) = \theta(u)
-  \end{equation}
-  
-  And hence, $u$ is a root of the expression:
-  %
-  \begin{equation}
-    r (u) = \theta (u) - \beta = 0
-  \end{equation}
-  %
-  where $r (u)$ is the boundary residual (difference between the computed and specified boundary value at $x = b$)
-  
-  \mysp
-  
-  \centering \bluebf{This is the essence of the shooting method, which we will discuss next time}
 \end{frame}
 
 %==========================================================================================

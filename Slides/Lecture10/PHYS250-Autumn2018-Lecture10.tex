@@ -493,7 +493,10 @@
   The following steps constitute Newton's method for simultaneous, nonlinear equations:
   
   \begin{enumerate}
-    \item Estimate the solution vector $\vec{x}$    \item Evaluate $\vec{f}(\vec{x})$    \item Compute the Jacobian matrix $\mathbf{J}$ ($J_{ij}$)    \item Setup the simultaneous equations $\mathbf{J}(\vec{x}) \vec{\Delta x} = - \vec{f}(\vec{x})$  and solve for $\vec{x}$
+    \item Estimate the solution vector $\vec{x}$
+    \item Evaluate $\vec{f}(\vec{x})$
+    \item Compute the Jacobian matrix $\mathbf{J}$ ($J_{ij}$)
+    \item Setup the simultaneous equations $\mathbf{J}(\vec{x}) \vec{\Delta x} = - \vec{f}(\vec{x})$  and solve for $\vec{x}$
     \item Let $\vec{x}\leftarrow \vec{x} + \vec{\Delta x}$ and repeat steps 2-5
   \end{enumerate}
 
@@ -575,7 +578,8 @@
     T_2 \cos\theta_2 - T_3 \cos\theta_3                    &=& 0  
   \end{eqnarray}
 
-  Here $W_i$ is the weight of mass $i$ and $T_i$ is the tension in string $i$. Note that since we do not havea rigid structure, we cannot assume the equilibrium of torques.
+  Here $W_i$ is the weight of mass $i$ and $T_i$ is the tension in string $i$. Note that since we do not have
+a rigid structure, we cannot assume the equilibrium of torques.
   
   \mysp
   
@@ -748,7 +752,7 @@
     f(x+2h) - f(x-2h) &=& 4hf^{\prime}(x) + \frac{8h^3}{3}f^{\prime\prime\prime}(x) + \cdots \nonumber
   \end{eqnarray}
   %
-  Note that the sums contain only even derivatives, whereas the differences retain just the odd derivatives, and \alertbf{the error is at most $\mathcal{O}(h^2)$, and is $\mathcal{O}(h^3)$ for odd powers (i.e. differences)}.
+  Note that the sums contain only even derivatives, whereas the differences retain just the odd derivatives, and \alertbf{the local error is at most $\mathcal{O}(h^2)$, and is $\mathcal{O}(h^3)$ for odd powers (i.e. differences)}.
   
   \mysp
   
@@ -895,7 +899,8 @@
     y_{n+1} = y_{n} + \int_{x_n}^{x_{n+1}} f(x,y) dx
   \end{equation}
   %
-  The key insight is to expand $f(x,y)$ in a Taylor series about the \alertbf{midpoint of the integration interval} and retain twoterms:
+  The key insight is to expand $f(x,y)$ in a Taylor series about the \alertbf{midpoint of the integration interval} and retain two
+terms:
   %
   \begin{equation}
     f(x,y) \simeq f(x_{n+1/2} , y_{n+1/2}) + (x - x_{n+1/2}) \frac{df}{dx}(x_{n+1/2}) + \mathcal{O}(h^2)
@@ -904,7 +909,7 @@
   As you recall from the \alertbf{finite central difference} algorithm, only \alertbf{odd powers} of $h$ remain, and thus when used inside the integral above, the terms with $(x - x_{n+1/2})^{n\in\mathrm{odd}}$ vanish. We are left with
   %
   \begin{equation}
-    y_{n+1} \simeq y_{n} + h f(x_{n+1/2} , y_{n+1/2}) + \mathcal{O}(h^3) 
+    y_{n+1} \simeq y_{n} + h f(x_{n+1/2} , y_{n+1/2}) + \mathcal{O}(h^2) 
   \end{equation}
 
 \end{frame}
@@ -947,7 +952,7 @@
 \begin{frame}%[shrink=10]
   \frametitle{Precision}
 
-  As discussed, the second order Runge-Kutta only achieves an $\mathcal{O}(h^3)$ precision. That precision is quickly insufficient for many applications.
+  As discussed, the second order Runge-Kutta only achieves an $\mathcal{O}(h^2)$ precision. That precision is quickly insufficient for many applications.
   
   \mysp
   
@@ -1013,7 +1018,8 @@
   \begin{equation}
     y^{\prime\prime} = f(x,y,y^{\prime}), \qquad y(a)=\alpha, \qquad y^{\prime}=u
   \end{equation}
-  %  and the  key to success is finding the correct value of $u$. 
+  %
+  and the  key to success is finding the correct value of $u$. 
 
 \end{frame}
 

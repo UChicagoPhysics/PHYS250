@@ -98,34 +98,34 @@
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Reminders from Lecture 10]{Reminders from Lecture 10}
+\subsection[Reminders from Lecture 11]{Reminders from Lecture 11}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
   \frametitle{Reminders from last time}
 
-  We discussed the concepts that grew out of (or built upon) root finding -- manipulation of Taylor series approximations -- in order to expand our computational toolkit
+  We took the simple examples that we had derived in Lecture 10 for extending Newton's methods to higher orders and then had a little hands on session for both ODEs and subsequent PDEs.
   
   \vspace{0.3cm}
   
-  \begin{ucblock}{Application of root finding and numerical differentiation}
+  \begin{ucblock}{Extension of Newton's methods to high-order Runge-Kutta and then PDEs}
     \begin{itemize}
-      \item \bluebf{Newton's method:} 
+      \item \bluebf{Runge-Kutta:} 
       \begin{itemize}
-        \item Pathologies associated with the naive implementation, as well as simple modifications that can mitigate issues (\alertbf{backtracking})
-        \item Multidimensional applications in matrix form and systems of equations
+        \item We tested the prediction that we would see $\mathcal{O}(h^2)$ and $\mathcal{O}(h^4)$ scaling for the higher order (\textit{success!})
+        \item We implemented the pendulum simulation and looked at the departure from the simple solution at long times
       \end{itemize}
-      \item \bluebf{Ordinary differential equations:} 
+      \item \bluebf{Partial differential equations:} 
       \begin{itemize}
-        \item Obtained and discussed the Runge-Kutta algorithm(s)
-        \item Differentiated between \bluebf{initial} and \alertbf{boundary} value problems   
+        \item Started discussing the concepts and families of PDEs (elliptic, hyperbolic, parabolic)
+        \item Looked at a simple example of an elliptic equation: Laplace
       \end{itemize}
     \end{itemize}
   \end{ucblock}
   
   \mysp
   
-  Today we will take the next steps with ODEs and transition to PDEs!
+  Today we will follow-up with PDEs and then look at Fourier Transforms, but using the ODE example of a pendulum!
 
 \end{frame}
 

@@ -94,321 +94,191 @@
 }
 
 %==========================================================================================
-\section[Introduction to Neural Networks]{Introduction to Neural Networks}
+\section[Reminders]{Reminders}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Context of Machine Learning]{Context of Machine Learning}
+\subsection[Reminders from Lecture 15]{Reminders from Lecture 15}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Machine learning generally}
+  \frametitle{Reminders from last time}
 
-  Machine learning is an area of study based broadly on developments in computer science over the past 50 years that aims to use \bluebf{algorithmic approaches to discovering, identifying, and analyzing, patterns of interest in datasets}.
+  We embarked on a whirlwind introduction to neural networks.
   
-  \begin{itemize}
-    \item Key phrase here is \bluebf{algorithmic}
-    \item We want \bluebf{models} that tell us something about a dataset
-  \end{itemize}
-   
-  \begin{center} \Large \alertbf{Sounds like something we'd be interested in!} \end{center}
+  \vspace{0.3cm}
   
-  \ra\ Definitely, but much broader concept here than just what we've been discussing so far in the course.
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Machine learning applications}
-
-  \setbeamercovered{transparent}
-
-  What are we using these algorithms to \textit{do}?
-  
-  \mysp
-  
-  \begin{itemize}[<+->]
-    \item \textbf{Supervised learning:} \bluebf{machine is presented examples of multiple classes and learns to differentiate} (\textit{discover known patterns on unknown data})
+  \begin{ucblock}{Neural networks and machine learning}
     \begin{itemize}
-      \item \alertbf{Classification:} identify categories of variables; e.g. signal vs. background
-      \item \alertbf{Regression:} estimate relationships among variables; e.g. calibration
-      \item \alertbf{Generation:} generate a set of variables from a category (e.g. image)
+      \item \bluebf{Context and perspective} 
+      \begin{itemize}
+        \item We discussed the general issue of training computers to \textbf{discover, identify, and analyze patterns} of interest in datasets
+        \item Categorized tasks that make use of this idea: \textbf{classification, regression, generation, clustering, anomaly detection}
+      \end{itemize}
+      \item \bluebf{Neural networks as a tool} 
+      \begin{itemize}
+        \item Introduced both the \textbf{modeling} perspective as well as the \textbf{biological} perspective on what a neural network achieves 
+        \item Described the \textbf{structure and function} of a neuron
+        \item Began discussing the \textbf{mathematical properties} of a neural network
+      \end{itemize}
     \end{itemize}
-    \item \textbf{Unsupervised learning:} \bluebf{machine is presented data and asked to provide multiple classes} (\textit{discover unknown patterns on known data})
-    \begin{itemize}
-      \item \alertbf{Clustering:} grouping set of objects in a dataset; e.g. jets of hadrons
-      \item \alertbf{Anomaly detection:} identifying rare events or observations; e.g. errors
-    \end{itemize}
-  \end{itemize}
-  
-  \begin{figure}
-    \centering
-    \includegraphics<1-2>[width=0.4\textwidth]{Classification.png}
-    \includegraphics<3>[width=0.4\textwidth]{Regression.png}
-    \includegraphics<4>[width=0.4\textwidth]{Generation.jpg}
-    \includegraphics<5-6>[width=0.4\textwidth]{Clustering.png}
-    \includegraphics<7>[width=0.3\textwidth]{Anomaly.png}
-  \end{figure}
-
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Where do neural networks fit in?}
-
-  There are many \bluebf{tools} that we can use to \alertbf{learn} how to perform these tasks. 
-  
-  \mysp
-
-  \begin{ucblock}{Neural networks}
-  Neural networks provide a framework for non-linear fitting and parameter estimation with limited input data but for cases in which the input data are understood and the categories (for example) are known.  
   \end{ucblock}
   
   \mysp
-    
-  \begin{center} \bluebf{Neural networks are \underline{proven} to be ``universal approximators''} \end{center}
   
-  See \href{https://doi.org/10.1016/0893-6080(91)90009-T}{Kurt Hornik, ``Approximation Capabilities of Multilayer Feedforward Networks'', Neural Networks, 4, 251-257 (1991)}.
-  
-  \mysp
-  
-  One straightforward way to think of this is as a composition of functions $f(\mathbb{A}\mathbf{x}+\mathbf{b})$ for inputs $\mathbf{x}$ (features) matrix $\mathbb{A}$ (weights), bias $\mathbf{b}$, non-linearity $f$. Given some data, the algorithm should tell us which of a pre-defined set of categories the data fall into, even if it's a complicated non-linear function that describes the boundary between these categories.
+  Today we will build our own networks! But first, I just wanted to follow-up on some points and questions from last time.
 
-  
 \end{frame}
-  
+
+%==========================================================================================
+\section[Historical perspective]{Historical perspective}
+%==========================================================================================
+
 %-----------------------------------------------------------------------------------------
-\subsection[Motivations from the perspective of modeling]{Motivations from the perspective of modeling}
+\subsection[Brief History of Machine Learning Generally]{Brief History of Machine Learning Generally}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Motivations for neural networks}
+  \frametitle{Brief history of machine learning}
 
-  If we can use a neural network to approximate any (incl. non-linear) function, then this is strong motivation for using it to learn complicated functions that describe classes of objects, potentially in high-dimensional spaces.
-
+  Taken from \href{http://innovationobservatory.com/node/243}{Harry Ide on InnovationLaboratory.com (18 May 2018)}:
+  
   \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{SimpleNeuralNetwork.pdf}
+    \includegraphics[width=\textwidth]{MLBreakthroughs-Timeline-to-2017.png}
   \end{figure}
   
-  
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Very, very naive strawman example}
-
-  Suppose the ``function'' we want to learn is to map kilometers\ra\ miles. 
-  
-  \mysp
-  
-  Given a \alertbf{``training dataset''} of input and output pairs, we can test a simple function with a parameter the defines the conversion, and then \bluebf{iteratively update} the parameters based on how far from the \alertbf{``true''} value we end up.
-
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.7\textwidth]{km-to-mi-1.png}%
-    \includegraphics<2>[width=0.8\textwidth]{km-to-mi-2.png}%
-    \includegraphics<3>[width=0.8\textwidth]{km-to-mi-3.png}%
-    \includegraphics<4>[width=0.8\textwidth]{km-to-mi-4.png}%
-    \includegraphics<5>[width=0.8\textwidth]{km-to-mi-5.png}%
-\end{figure}
-  
-  Obviously, we want to extend this to non-linear cases.
-  
+  \only<2>{
+    \begin{textblock}{12}(1.5,-8)
+    \begin{ucblock}{Quote from Harry Ide on ``AI''}
+      \textit{``The cutting edge might not be as sharp as many believe. AI has a nearly 70-year long history with some surprising backtracks and re-emergences among it.''}
+    \end{ucblock}
+    \end{textblock}
+  }
 \end{frame}
 
 
 %-----------------------------------------------------------------------------------------
-\subsection[Motivations from the perspective of biology]{Motivations from the perspective of biology}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{The biological model}
-
-  The way brains work is by establishing connections between various neurons.
-  
-  \mysp
-  
-  Once connections are made, initial stimuli give similar (though not always identical) results
-  
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.95\textwidth]{NeuronModel.pdf}%
-\end{figure}
-    
-\end{frame}
-
+\subsection[Brief History of Neural Networks]{Brief History of Neural Networks}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Artificial neuron model}
+  \frametitle{Brief history of neural networks}
 
-  McCulloch and Pitts (1943) model of a single neuron. Rosenblatt (1958) then developed the \bluebf{ perceptron} based on this, the oldest neural network still in use today; provided an algorithm to train the perceptron network, built it in electronics, and proved convergence in linearly separable case.
+  Taken from \href{https://www.slideshare.net/deview/251-implementing-deep-learning-using-cu-dnn/4}{this talk on SlideShare}:
   
-  \mysp
-    
   \begin{figure}
     \centering
-    \includegraphics[width=0.45\textwidth]{The-McCulloch-and-Pitts-1943-model-of-a-single-neuron-Source-Adapted-from-Franck.png}%
-    \includegraphics[width=0.45\textwidth]{PittsModel.pdf}%
-\end{figure}
-    
-\end{frame}
+    \includegraphics[width=\textwidth]{NN_Timeline.jpg}
+  \end{figure}
 
-
-
-%-----------------------------------------------------------------------------------------
-\subsection[Discussion of applications]{Discussion of applications}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Neural networks are, maybe literally, everywhere}
-
-    
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.95\textwidth]{NNs-1.png}%
-    \includegraphics<2>[width=0.95\textwidth]{NNs-2.png}%
-    \includegraphics<3>[width=0.95\textwidth]{NNs-3.png}%
-    \includegraphics<4>[width=0.95\textwidth]{QuarksGluons.pdf}%
-\end{figure}
-    
 \end{frame}
 
 
 %==========================================================================================
-\section[Foundations of Neural Networks]{Foundations of Neural Networks}
+\section[Structure of Neural Networks]{Structure of Neural Networks}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Activation functions]{Activation functions}
+\subsection[Single layer perceptron]{Single layer perceptron}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Activation functions}
+  \frametitle{Single layer perceptron}
 
-  We need a network that can effectively learn a complex function by weighting the individual outputs of each node.  
-    
   \begin{figure}
-    \centering
-    \includegraphics[width=0.75\textwidth]{NN-2layer.png}%
+    \centering 
+    \resizebox {0.7\columnwidth} {!} {
+      \input{singlelayer_perceptron.tex}
+    }
   \end{figure}
-    
-\end{frame}
-
-
-
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Non-linearity functions for learning}
-
-  This is the function that defines the output of a node. Typically, we want to map the resulting values into a range between $[0, 1]$, or  $[-1,1]$
-    
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.85\textwidth]{NonLinearFunction.pdf}%
-    \includegraphics<2>[width=0.85\textwidth]{NonLinearFunction-2.pdf}%
-  \end{figure}
-    
-\end{frame}
-
-
-%-----------------------------------------------------------------------------------------
-\subsection[Training]{Training}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Training a neural network}
-
-  The \bluebf{``objective function''} is minimized using \alertbf{``stochastic gradient decent''}:
+  
   \begin{itemize}
-    \item iterative method for optimizing the ``loss'' or the error that we are trying to minimize 
+    \item \bluebf{$\vec{x} = (x_1, x_2, \cdots, x_n)$ is an input feature vector of length $n$}
+    \begin{itemize}
+      i.e. the attributes of the data, e.g. voltages
+    \end{itemize}
+    \item \bluebf{$\vec{w} = (w_1, w_2, \cdots, w_n)$ is the weight vector with $w_0$ reserved as a \textbf{bias}}
+    \begin{itemize}
+      \item becomes a matrix for multiple layers
+    \end{itemize}
+    \item \bluebf{$\Sigma$ indicates summation (or matrix mult.): $z = \sum w_i x_i$ ($x_0 = 1$)}
+    \item \bluebf{$f$ is the activation function, or non-linearity: $f(z)$}
+    \item \alertbf{$y = f(z)$ is the output}
+  \end{itemize}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Sigmoid as activation function}
+
+  As we discussed, a typical function for a \alertbf{single layer perceptron} is the \textbf{sigmoid}. 
+
+  \begin{figure}
+    \centering 
+    \resizebox {0.8\columnwidth} {!} {
+      \input{sigmoid-derivative.tex}
+    }
+  \end{figure}
+  
+  Here, we plot both the function itself, as well as its derivative, since that will be important when evaluating the \bluebf{backpropagation} of weights in order to update the neural network.
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Training a single layer perceptron]{Training a single layer perceptron}
+%-----------------------------------------------------------------------------------------
+
+
+\begin{frame}%[shrink=10]
+  \frametitle{Training a single layer perceptron}
+
+  \begin{figure}
+    \centering 
+    \resizebox {0.7\columnwidth} {!} {
+      \input{singlelayer_perceptron.tex}
+    }
+  \end{figure}
+  
+  Given $j$ objects $\vec{x}_j$ in dataset, each with \alertbf{known values of $f$}, $d_j$
+  \begin{itemize}
+    \item \bluebf{Calculate the output:} $y_j = f(\vec{w}\cdot\vec{x}_j)$
+    \item \bluebf{Determine the error:} $\epsilon_j = d_j - y_j$
+    \item \bluebf{Update the weights:} $w^{\mathrm{new}}_i = w_i + r ( \epsilon_j \cdot \vec{x}_j )_{i}$
+  \end{itemize}
+  
+  Choosing the learning rate $r$ is where the derivative is used. It's not important for the single-layer perceptron, but is \alertbf{essential} for a network.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Training a Multi-Layer Perceptron (MLP)]{Training a Multi-Layer Perceptron (MLP)}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=20]
+  \frametitle{Multi-layer perceptron (MLP)}
+
+  \vspace{-0.8cm}
+
+  \begin{figure}
+    \centering 
+    \resizebox {\columnwidth} {!} {
+      \input{multilayer_perceptron.tex}
+    }
+  \end{figure}
+  
+  Given $j$ objects $\vec{I}_j$ in dataset, each with features $\vec{I} = (I_1, I_2, \cdots, I_n)$ and \alertbf{known outputs $\vec{d}_j$ at each output node $o$}, $\vec{d} = (d_1, d_2, \cdots, d_o)$
+  \begin{itemize}
+    \item \bluebf{Calculate the $h$ outputs of hidden layer:} $v_h = f(\sum_i w_{ih} I_i)$
+    \item \bluebf{Calculate the $o$ outputs of output layer:} $y_o = f(\sum_h w_{ho} v_h)$
+    \item \bluebf{Determine the error at output each node $o$:} $\epsilon_o = d_o - y_o$
+    \item \bluebf{Determine the total error for data object $j$:} $\mathcal{E}_j = \frac{1}{2} \sum_o \epsilon_o^{2}$
+    \item \bluebf{Determine change in weights for output neuron $y_o$:} $\Delta w_{oh}=-\eta {\frac {\partial {\mathcal{E}}}{\partial z_{o}}}v_{h} = \eta \epsilon_o \, f^{\prime}(z_{o})$
   \end{itemize}
     
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.75\textwidth]{Training.pdf} \\
-  \end{figure}
-    
 \end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Back-propagation}
-
-  For the matrix that defines the \alertbf{weights} we want to update those weights based on 
-    
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.85\textwidth]{Learning.pdf} 
-  \end{figure}
-    
-  Here, \bluebf{back-propagation} is shorthand for ``the backward propagation of errors'' since an error is computed at the output and distributed backwards throughout the network's layers.
-  
-  \mysp
-  
-  Really, \bluebf{back-propagation} is \textbf{just a special case of computational differentiation!}. 
-    
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[fragile, shrink=20]
-  \frametitle{Back-propagation}
-
-  Phase 1: propagation
-  \begin{itemize}
-    \item Propagation forward through the network to generate the output value(s)
-    \item Calculation of the cost (error term)
-    \item Propagation of the output activations back through the network using the training pattern target to generate the deltas (the difference between the targeted and actual output values) of all output and hidden neurons.
-  \end{itemize}
-
-  Phase 2: weight update
-
-  \begin{itemize}
-    \item The weight's output delta and input activation are multiplied to find the gradient of the weight.
-    \item A ratio (percentage) of the weight's gradient is subtracted from the weight.
-  \end{itemize}
-
-This ratio (percentage) influences the speed and quality of learning; it is called the learning rate ($\eta$ on the previous slide). The greater the ratio, the faster the neuron trains, but the lower the ratio, the more accurate the training is. The sign of the gradient of a weight indicates whether the error varies directly with, or inversely to, the weight. Therefore, the weight must be updated in the opposite direction, ``descending'' the gradient. 
-
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.99\textwidth]{Pseudocode.png} 
-  \end{figure}
- 
-  
-    
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[fragile, shrink=20]
-  \frametitle{Training and validation}
-
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.99\textwidth]{Validation.pdf} 
-  \end{figure}
- 
-  
-    
-\end{frame}
-
-
 
   
 %==========================================================================================

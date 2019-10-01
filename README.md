@@ -3,7 +3,7 @@ Welcome to the University of Chicago PHYS 250 Computational Physics repository!
 
 This repository will hold the Syllabus, Learning Goals, Code Examples, and Lecture Notes for the course. Periodically, some of these materials will be moved to the Canvas page for the course, which for the Autumn 2018 Academic Quarter is located here:
 
-https://canvas.uchicago.edu/courses/16987
+https://canvas.uchicago.edu/courses/23299
 
 ## Programming Languages, Software, and Platforms for the course
 We will primarily be using Python for this course as it is a common, powerful, and high-levle language that is used across much of academia and industry in one form or another.
@@ -93,13 +93,7 @@ These will be *private repositories* and there will be one private repository pe
 
 #### 2. Completing assignments
 
-You must then follow these steps for each assignment:
-
-1. To start, [**fork** the repository][forking].
-1. [**Clone**][ref-clone] the repository to your computer.
-1. Modify the files and [**commit**][ref-commit] changes to complete your solution.
-1. [**Push**][ref-push]/sync the changes up to GitHub.
-1. [Create a **pull request**][pull-request] on the original repository to turn in the assignment.
+Homework assignments will be distributed via [GitHub Classroom](https://classroom.github.com). 
 
 #### 3. Reviewing assignments
 

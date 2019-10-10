@@ -95,16 +95,60 @@
 \subsection[Recall: random walks]{Recall: random walks}
 %-----------------------------------------------------------------------------------------
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Random diffusion (I)}
+  
+  Consider a general, uncorrelated random walk where at each time step $\Delta t$ the particle's position $x$ changes by a step $\ell$:
+  
+  \begin{equation}
+    x(t + \Delta t) = x(t) + \ell(t).
+  \end{equation}
+  
+  Let the probability distribution for each step be $\chi(\ell)$, which in our case is a discrete probability (e.g. for the 2D random walk, $\chi(\ell) = \delta (|\ell| - L)$ with equal probability in $\pm x, \pm y$). We will assume that $\chi$ has mean zero and standard deviation $a$. The first few moments of $\chi$ are therefore:
+  %
+  \begin{eqnarray}
+    \int \chi(z) dz     &=& 1   \\
+    \int z \chi(z) dz   &=& 0   \\
+    \int z^2 \chi(z) dz &=& a^2  
+  \end{eqnarray}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Random diffusion (II)}
+  
+  For the particle to go from $x^{\prime}$ at time $t$ to $x$ at time $t+\Delta t$, the step $\ell(t)$ must be $x - x^{\prime}$. This happens with probability $\chi(x - x^{\prime})$ times the probability density $\rho(x^{\prime} , t)$ that it started at $x^{\prime}$. Integrating over original positions $x^{\prime}$, we have:
+  %
+  \begin{eqnarray}
+    \rho(x, t + \Delta t) &=& \int_{-\infty}^{+\infty} \rho(x^{\prime}, t) \chi(x - x^{\prime}) dx^{\prime} \\
+                          &=& \int_{-\infty}^{+\infty} \rho(x - z, t) \chi(z) dz
+  \end{eqnarray}
+
+  where we have changed variables $x^{\prime} \ra z = x - x^{\prime}$. Now, perform a Taylor expansion in $z$:
+  %
+  \begin{eqnarray}
+    \rho(x, t + \Delta t) &\approx& \rho(x,t) + \frac{1}{2} \partialxsq{\rho} \int z^2 \chi(z) dz \\
+                          &\approx& \rho(x,t) + \frac{a^2}{2} \partialxsq{\rho}
+  \end{eqnarray}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
 \begin{frame}%[shrink=10]
   \frametitle{Slow random diffusion}
   
-  Last time, we determined that if the diffusion (i.e. walking speed) is also slow, such that the time derivative of the position probability distribution function, $\rho$, is approximately linear with respect to time and $\rho(x, t + \Delta t) - \rho(x, t) \approx (\partialt{\rho}) \Delta t$, then
+  If the diffusion is also slow, such that the time derivative of $\rho$ is approximately linear with respect to time and $\rho(x, t + \Delta t) - \rho(x, t) \approx (\partialt{\rho}) \Delta t$, then
   %
   \begin{eqnarray}
     \partialt{\rho} = \frac{a^2}{2 \Delta t} \partialxsq{\rho}.
   \end{eqnarray}
 
-  We observed that this \textbf{is} the diffusion equation Eq.~\ref{eq:diffusion} with $D=\frac{a^2}{2 \Delta t}$.
+  This is the diffusion equation Eq.~\ref{eq:diffusion} with $D=\frac{a^2}{2 \Delta t}$.
   
   \vspace{0.3cm}
   

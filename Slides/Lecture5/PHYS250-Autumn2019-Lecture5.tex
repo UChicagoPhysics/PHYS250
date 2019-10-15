@@ -88,8 +88,54 @@
 }
 
 %==========================================================================================
+\section[Plan for the Ising model]{Plan for the Ising model}
+%==========================================================================================
+
+
+%-----------------------------------------------------------------------------------------
+\subsection[Next 3 lectures]{Next 3 lectures}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=10]
+  \frametitle{Outline of the Ising model discussion}
+
+  This is a big topic, so I want you to have some guide for where we are going.
+  
+  \begin{itemize}
+    \item \bluebf{Lecture 5 (Today): the model itself}
+    \begin{itemize}
+      \item The general concept of the Ising model: lattice of spins
+      \item Basis in thermodynamics and quantum mechanics
+      \item Importance of simulations methods
+      \item \greenbf{Hands-on session in class: building a functional form to use for simulations}
+    \end{itemize}
+    \item \bluebf{Lecture 6: computational approaches}
+    \begin{itemize}
+      \item Continuing whatever is not covered on the model discussion from Lecture 5
+      \item History of computational simulation methods: Monte Carlo
+      \item The Metropolis Monte Carlo algorithm and its assumptions (deeply related to thermodynamics)
+      \item \greenbf{Hands-on session in class: The Metropolis-Hastings method}
+    \end{itemize}
+    \item \bluebf{Lecture 7: analytical and computational evaluation}
+    \begin{itemize}
+      \item Analytical Ising model and the key numerical results
+      \item Concept of equilibrium and how we can define it
+      \item Observables in the Ising model and their calculation
+      \item \greenbf{Hands-on session in class: Hands-on with Ising model simulations}
+    \end{itemize}
+    \item \bluebf{Hands-on lab session: Wed Oct 23rd afternoon}
+    \begin{itemize}
+      \item Hands-on session in CSIL 1\&2 for developing our Ising model simulation
+    \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+
+%==========================================================================================
 \section[Ising model]{Ising model}
 %==========================================================================================
+
 
 %-----------------------------------------------------------------------------------------
 \subsection[Statement of the problem]{Statement of the problem}
@@ -284,12 +330,18 @@
   
   \column{0.45\textwidth}
   
+    \pause
+  
     \begin{figure}
       \centering
       \frame{\includegraphics[width=\columnwidth]{Boltzmann.png}}
     \end{figure}
   
   \end{columns}
+
+  \pause 
+  
+  \centering \alertbf{Hand's on with the \texttt{MaxwellBoltzmann.ipynb} notebook!}
 
 \end{frame}
 
@@ -487,93 +539,93 @@
    
 \end{frame}
 
-%==========================================================================================
-\section[Simulation methods]{Simulation methods}
-%==========================================================================================
-
-%-----------------------------------------------------------------------------------------
-\subsection[Monte Carlo Methods]{Monte Carlo Methods}
-%-----------------------------------------------------------------------------------------
-
-
-\begin{frame}%[shrink=10]
-  \frametitle{Heat-bath Monte Carlo}
-  
-  One of the simplest approaches would be ``brute force:''
-  
-  \begin{enumerate}
-    \item Pick a site $i = (x,y)$ at random. 
-    \item Check how many neighbor spins are pointing up:
-    \begin{equation}
-      m_i = \sum _{j:\mean{ij}} s_j = \begin{cases}
-               +4  (\mathrm{4\, neighbors\, up}),\\
-               +2  (\mathrm{3\, neighbors\, up}),\\
-                0  (\mathrm{2\, neighbors\, up}),\\
-               -2 (\mathrm{1\, neighbors\, up}),\\
-               -4 (\mathrm{0\, neighbors\, up}),\\
-            \end{cases}
-    \end{equation}
-    \item Calculate $E_{+} = - J m_i - H$ and $E_{-} = +J m_i + H$, the energy for spin $i$ to be $+1$ or $-1$ given its current environment.
-    \item Set spin $i$ up with probability $P_{\mathrm{up}} = e^{-\beta E_{+}} / (e^{-\beta E_{+}} + e^{-\beta E_{-}})$ and down with probability $P_{\mathrm{down}} = e^{-\beta E_{-}} / (e^{-\beta E_{+}} + e^{-\beta E_{-}})$.
-    \item Repeat.
-  \end{enumerate}
-
-\end{frame}
-%-----------------------------------------------------------------------------------------
-%\subsection[Accept-reject algorithms]{Accept-reject algorithms}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-\subsection[Metropolis-Hastings algorithm]{Metropolis-Hastings algorithm}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-
-\begin{frame}%[shrink=10]
-  \frametitle{Metropolis Monte Carlo (II)}
-  
-  The heat bath approach tries to essentially set the whole lattice state by iterating over the whole grid one site at a time. However, we can use the magic of the MCMC approach to try to do this much more efficiently. Instead, let's represent the \alertbf{entire lattice} at once and ask:
-  
-  \vspace{0.3cm}
-  
-  \begin{ucblock}{}
-    \alertbf{What is the probability that the whole system transitions from one state (i.e. set of spins) to another?}
-  \end{ucblock}
-  
-  \vspace{0.3cm}
-  
-  An $N$-state Ising model has $2^N$ states $\mathbb{S} = \{s_i\}$. A Markov chain for the Ising model has a transition rule, which at each step shifts the current state $\mathbb{S}$ to a state $\mathbb{S}^{\prime}$ with probability $P_{\mathbb{S}\Leftarrow\mathbb{S}^{\prime}}$.
-  
-  \vspace{0.3cm}
-  
-  For the heat-bath algorithm, $P_{\mathbb{S}\Leftarrow\mathbb{S}^{\prime}}$ is equal to zero unless $\mathbb{S}^{\prime}$ and $\mathbb{S}$ the same except for at most one spin flip.
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-
-\begin{frame}%[shrink=10]
-  \frametitle{Metropolis Monte Carlo (I)}
-  
-  ``Pseudocode'' for the Metropolis algorithm:
-  
-  \begin{enumerate}
-    \item Choose initial configuration
-    \item For all spins:
-    \begin{enumerate}
-      \item Trial flip ($+1 \ra -1$ or vice versa)
-      \item Compute change in energy
-      \item If $\delta = e^{\Delta E/\kB T} > r$ (where $r$ is a uniform deviate) flip the spin 
-    \end{enumerate}
-  \end{enumerate}
-  
-  But we can do even better! Next time!
-  
-\end{frame}
-
-
+%%==========================================================================================
+%\section[Simulation methods]{Simulation methods}
+%%==========================================================================================
+%
+%%-----------------------------------------------------------------------------------------
+%\subsection[Monte Carlo Methods]{Monte Carlo Methods}
+%%-----------------------------------------------------------------------------------------
+%
+%
+%\begin{frame}%[shrink=10]
+%  \frametitle{Heat-bath Monte Carlo}
+%  
+%  One of the simplest approaches would be ``brute force:''
+%  
+%  \begin{enumerate}
+%    \item Pick a site $i = (x,y)$ at random. 
+%    \item Check how many neighbor spins are pointing up:
+%    \begin{equation}
+%      m_i = \sum _{j:\mean{ij}} s_j = \begin{cases}
+%               +4  (\mathrm{4\, neighbors\, up}),\\
+%               +2  (\mathrm{3\, neighbors\, up}),\\
+%                0  (\mathrm{2\, neighbors\, up}),\\
+%               -2 (\mathrm{1\, neighbors\, up}),\\
+%               -4 (\mathrm{0\, neighbors\, up}),\\
+%            \end{cases}
+%    \end{equation}
+%    \item Calculate $E_{+} = - J m_i - H$ and $E_{-} = +J m_i + H$, the energy for spin $i$ to be $+1$ or $-1$ given its current environment.
+%    \item Set spin $i$ up with probability $P_{\mathrm{up}} = e^{-\beta E_{+}} / (e^{-\beta E_{+}} + e^{-\beta E_{-}})$ and down with probability $P_{\mathrm{down}} = e^{-\beta E_{-}} / (e^{-\beta E_{+}} + e^{-\beta E_{-}})$.
+%    \item Repeat.
+%  \end{enumerate}
+%
+%\end{frame}
+%%-----------------------------------------------------------------------------------------
+%%\subsection[Accept-reject algorithms]{Accept-reject algorithms}
+%%-----------------------------------------------------------------------------------------
+%
+%%-----------------------------------------------------------------------------------------
+%\subsection[Metropolis-Hastings algorithm]{Metropolis-Hastings algorithm}
+%%-----------------------------------------------------------------------------------------
+%
+%%-----------------------------------------------------------------------------------------
+%
+%
+%\begin{frame}%[shrink=10]
+%  \frametitle{Metropolis Monte Carlo (II)}
+%  
+%  The heat bath approach tries to essentially set the whole lattice state by iterating over the whole grid one site at a time. However, we can use the magic of the MCMC approach to try to do this much more efficiently. Instead, let's represent the \alertbf{entire lattice} at once and ask:
+%  
+%  \vspace{0.3cm}
+%  
+%  \begin{ucblock}{}
+%    \alertbf{What is the probability that the whole system transitions from one state (i.e. set of spins) to another?}
+%  \end{ucblock}
+%  
+%  \vspace{0.3cm}
+%  
+%  An $N$-state Ising model has $2^N$ states $\mathbb{S} = \{s_i\}$. A Markov chain for the Ising model has a transition rule, which at each step shifts the current state $\mathbb{S}$ to a state $\mathbb{S}^{\prime}$ with probability $P_{\mathbb{S}\Leftarrow\mathbb{S}^{\prime}}$.
+%  
+%  \vspace{0.3cm}
+%  
+%  For the heat-bath algorithm, $P_{\mathbb{S}\Leftarrow\mathbb{S}^{\prime}}$ is equal to zero unless $\mathbb{S}^{\prime}$ and $\mathbb{S}$ the same except for at most one spin flip.
+%
+%\end{frame}
+%
+%%-----------------------------------------------------------------------------------------
+%
+%
+%\begin{frame}%[shrink=10]
+%  \frametitle{Metropolis Monte Carlo (I)}
+%  
+%  ``Pseudocode'' for the Metropolis algorithm:
+%  
+%  \begin{enumerate}
+%    \item Choose initial configuration
+%    \item For all spins:
+%    \begin{enumerate}
+%      \item Trial flip ($+1 \ra -1$ or vice versa)
+%      \item Compute change in energy
+%      \item If $\delta = e^{\Delta E/\kB T} > r$ (where $r$ is a uniform deviate) flip the spin 
+%    \end{enumerate}
+%  \end{enumerate}
+%  
+%  But we can do even better! Next time!
+%  
+%\end{frame}
+%
+%
 
 
 

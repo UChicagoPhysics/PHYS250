@@ -47,12 +47,12 @@
 %-----------------------------------------------------------------------------------------
 % Title: [Column]{Title}
 %-----------------------------------------------------------------------------------------
-\title[PHYS 250 (Autumn 2018) -- Lecture 5]{Ising model}
+\title[PHYS 250 (Autumn 2019) -- Lecture 5]{Ising model}
 
 %-----------------------------------------------------------------------------------------
 % SubTitle: [Column]{Subtitle}
 %-----------------------------------------------------------------------------------------
-\subtitle{PHYS 250 (Autumn 2018) -- Lecture 5}
+\subtitle{PHYS 250 (Autumn 2019) -- Lecture 5}
 
 %-----------------------------------------------------------------------------------------
 % Author: [SubAuthor]{Author}
@@ -71,7 +71,7 @@
 %----------------------------------------------------
 % Institute: [SubInst]{Institute}
 %----------------------------------------------------
-\date[October 16, 2018]{October 16, 2018}
+\date[October 15, 2019]{October 16, 2019}
 
 \subject{PHYS 250 Lecture}
 
@@ -97,6 +97,8 @@
 
 \begin{frame}%[shrink=10]
   \frametitle{Ising model}
+  
+  \setbeamercovered{transparent}
   
   In seeking to explain a particular phenomenon in physics, namely the onset of ferromagnetism, Wilhelm Lenz proposed in 1924 that his PhD student, Ernst Ising should solve a puzzling 1-dimensional model of  [\href{https://arxiv.org/abs/1706.01764}{arXiv:1706.01764}]. 
   
@@ -126,6 +128,8 @@
 \begin{frame}%[shrink=10]
   \frametitle{Thermodynamics of the problem}
   
+  \setbeamercovered{transparent}
+  
   Before we go too far, let's ask the question:
   
   \begin{center}
@@ -134,6 +138,8 @@
   
   What we want, actually, is a rather \textit{typical} thermodynamic description: 
   
+  \pause
+  
   \vspace{0.3cm}
   
   \begin{ucblock}{}
@@ -141,6 +147,8 @@
   \end{ucblock}
 
   For the case at hand, this becomes the specific question:
+  
+  \pause
   
   \vspace{0.3cm}
   
@@ -155,7 +163,11 @@
 \begin{frame}%[shrink=10]
   \frametitle{Thermodynamics \ra statistical mechanics}
   
+  \setbeamercovered{transparent}
+  
   Since the microscopic properties are often (and certainly in this case) critical to understanding the answer to this question, we must -- and Ising did -- reformulate it in a statistical mechanical manner:
+  
+  \pause
   
   \vspace{0.1cm}
   
@@ -165,9 +177,11 @@
   
   \vspace{0.1cm}
   
+  \pause
+  
   To answer this question, we have to understand several things:
   
-  \begin{itemize}
+  \begin{itemize}[<+->]
     \item \textit{How do we even talk about the microscopic state of a system like this?}
     \item \textit{What properties matter?}
     \item \textit{What causes the system to evolve?}
@@ -182,6 +196,8 @@
 
 \begin{frame}%[shrink=10]
   \frametitle{What properties and states are we interested in? (Energy!)}
+
+  \setbeamercovered{transparent}
 
   As you've probably seen in so many of your courses by now, the energy of the system is a critical piece of understanding its evolution.
   
@@ -201,12 +217,18 @@
 
 \begin{frame}%[shrink=10]
   \frametitle{What drives the evolution of the system?}
+  
+  \setbeamercovered{transparent}
 
   What causes a system to \bluebf{evolve} is the tendency towards an equilibrium state. This is effectively embodied in the second law of thermodynamics which states:
+  
+  \pause
   
   \begin{ucblock}{Second law of thermodynamics}
     The total entropy of an isolated system can never decrease over time. In all spontaneous processes, the total entropy increases and the process is irreversible. 
   \end{ucblock}
+  
+  \pause
   
   Ultimately, this means that when a system starts from an equilibrium state, is then \textit{perturbed} by a thermodynamic operation (e.g. bringing two components of the system of different temperatures into contact), it will spontaneously (given some relaxtion time) reach its own new state of internal thermodynamic equilibrium.
   
@@ -224,15 +246,19 @@
 
   Part of our task is therefore to count the various energy configurations based on the possible \textit{microscopic states} (or \textit{microstates}) of the system in order to determine the \alertbf{partition function}, which tells us how the states are distributed given their energies:
   
+  \pause
+  
   \begin{equation}
     Z = \sum_i e^{-\beta \Ham_i}
   \end{equation}
 
-  where $\beta$ is the inverse ``temperature'' of the system, $\beta = (\kB T)^{-1}$ and \Ham is the Hamiltonian of the system, the expectation value of which is the energy, $E_i$, of that microstate, $i$. The configuration probability of an ensemble of microstates 
+  where $\beta$ is the inverse ``temperature'' of the system, $\beta = (\kB T)^{-1}$ and \Ham is the Hamiltonian of the system, the expectation value of which is the energy, $E_i$, of that microstate, $i$. \pause The configuration probability of an ensemble of microstates 
   
   \begin{equation}
     P = \frac{e^{-\beta \Ham_i}}{Z}
   \end{equation}
+
+  \pause
 
   Since the total probability to find the system in some microstate must be equal to 1, the partition function serves as the normalization constant. In \textit{classical} systems, we'd merely obtain the expectation value by taking an integral over the appropriate volume in order to turn the exponential into a sum over energy states.
 
@@ -251,6 +277,8 @@
   \begin{equation}
     e^{-\beta E_i}
   \end{equation} 
+
+  \pause
 
   This comes from the basic idea that \bluebf{the number of states decreases exponentially for high energies when the temperature is fixed}. This again is a very basic idea, but is crucial to understand the physics. An ensemble of micro states (e.g. particles) that follow this distribution is referred to as the \bluebf{canonical ensemble}. 
   
@@ -532,9 +560,12 @@
   ``Pseudocode'' for the Metropolis algorithm:
   
   \begin{enumerate}
-    \item Choose initial configuration    \item For all spins:
+    \item Choose initial configuration
+    \item For all spins:
     \begin{enumerate}
-      \item Trial flip ($+1 \ra -1$ or vice versa)      \item Compute change in energy      \item If $\delta = e^{\Delta E/\kB T} > r$ (where $r$ is a uniform deviate) flip the spin 
+      \item Trial flip ($+1 \ra -1$ or vice versa)
+      \item Compute change in energy
+      \item If $\delta = e^{\Delta E/\kB T} > r$ (where $r$ is a uniform deviate) flip the spin 
     \end{enumerate}
   \end{enumerate}
   

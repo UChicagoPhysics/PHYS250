@@ -47,18 +47,18 @@
 % SETTINGS FOR THIS LECTURE
 %----------------------------------------------------
 \newcommand{\lecnum }  {Lecture 8}
-\newcommand{\lecdate}  {October 30, 2018}
+\newcommand{\lecdate}  {October 24, 2019}
 \newcommand{\topic}    {Minimization}
 
 %-----------------------------------------------------------------------------------------
 % Title: [Column]{Title}
 %-----------------------------------------------------------------------------------------
-\title[PHYS 250 (Autumn 2018) -- \lecnum]{\topic}
+\title[PHYS 250 (Autumn 2019) -- \lecnum]{\topic}
 
 %-----------------------------------------------------------------------------------------
 % SubTitle: [Column]{Subtitle}
 %-----------------------------------------------------------------------------------------
-\subtitle{PHYS 250 (Autumn 2018) -- \lecnum}
+\subtitle{PHYS 250 (Autumn 2019) -- \lecnum}
 
 %-----------------------------------------------------------------------------------------
 % Author: [SubAuthor]{Author}
@@ -257,7 +257,7 @@
     \chi^2 = \sum_{i=1}^N w_i \left[y_i - \left(ax_i+b\right)\right]^2.
   \end{equation}
     
-The analytical solutions for the best-fit parameters that minimize $\chi^2$ are those that satisfy $\frac{\partial (\chi^2)}{\partial a}$ (and similarly for $b$).
+The analytical solutions for the best-fit parameters that minimize $\chi^2$ are those that satisfy $\frac{\partial (\chi^2)}{\partial a}=0$ (and similarly for $b$).
   
 \end{frame}
 
@@ -298,9 +298,9 @@ All of the sums in the four previous equations are over $i$ from 1 to $N$.
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Final Project (I)}
+  \frametitle{Final Project Concept}
 
-  As mentioned in the first lecture and in the syllabus, there will be a \alertbf{final project for the course} (no exams of any kind).
+  As we discussed in Lecture 3 (\& the syllabus), there will be a \alertbf{final project for the course} (no exams of any kind).
   
   \vspace{0.3cm}
   
@@ -316,11 +316,45 @@ All of the sums in the four previous equations are over $i$ from 1 to $N$.
       \end{itemize}
       \item \bluebf{Delivered in the form of a \alertbf{poster presentation}}
       \begin{itemize}
-        \item E.g. \url{http://www.brian-amberg.de/uni/poster/}
         \item \href{http://blogs.lse.ac.uk/impactofsocialsciences/2018/05/11/how-to-design-an-award-winning-conference-poster/}{``How to design an award-winning conference poster''}
+        \item \href{https://raw.githubusercontent.com/rafaelbailo/betterposter-latex-template/master/example.png}{``Better'' poster design}
       \end{itemize}
     \end{itemize}
   \end{ucblock}
+
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Final Project Ideas and Suggestions}
+
+  A few seeds of an idea for a poster project:
+
+    \begin{itemize}
+      \item \bluebf{Randomness and emergent phenomena}
+      \begin{itemize}
+        \item Develop your own cellular automata simulation (e.g. the Game of Life)
+        \item 3D Ising Model
+        \item Spin glass model
+      \end{itemize}
+      \item \bluebf{Numerical Differential equations}
+      \begin{itemize}
+        \item Solutions of time-dependent Schroedinger equation for two particles
+        \item Projectile motion including air resistance / solar wind on satellite motion
+      \end{itemize}
+      \item \bluebf{Fourier Transforms}
+      \begin{itemize}
+        \item Sound/image filtering using the FFT and eigenvector pruning
+        \item Analysis of similarities between artists, genres, songs using Fourier analysis
+      \end{itemize}
+      \item \bluebf{Chaotic systems}
+      \begin{itemize}
+        \item Interactive plots and animations for realistic double pendulum
+        \item Dripping faucet
+      \end{itemize}
+    \end{itemize}
 
   
 \end{frame}
@@ -332,20 +366,20 @@ All of the sums in the four previous equations are over $i$ from 1 to $N$.
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Final Project (II)}
+  \frametitle{Final Project Timeline}
 
   \begin{columns}
   
   \column{0.6\textwidth}
     
+    \alertbf{Project Ideas Due this coming Tuesday!}
+    
   \begin{ucblock}{Timeline}
     \begin{itemize}
-      \item \bluebf{Week 6 -- Tues 6 November:} 1 paragraph project descriptions and sketch of poster due (conceptual design incl. figure ideas)
-      \item \bluebf{Week 8 -- Tues 20 November:} Progress report and updated outline of poster due
-      \item \bluebf{Week 11 -- Thur 13 November:} Official Final Exam date for the course
-      \begin{itemize}
-        \item However, I would like to propose that we have a much more \textit{relaxed} poster presentation in the \alertbf{afternoon/evening of \underline{Reading Period}, along with snacks and beverages, and invite the Department to participate}, but this is up to you if you agree!
-      \end{itemize}
+      \item \bluebf{Week 5 -- Tues 29 October:} 1 paragraph project descriptions and sketch of poster due (conceptual design incl. figure ideas)
+      \item \bluebf{Week 7 -- Tues 12 November:} Progress report and updated outline of poster due
+      \item \bluebf{Week 10 -- Tues 3 December:} Poster due for printing
+      \item \bluebf{Week 10 -- Thur 5 December:} Poster session
     \end{itemize}
   \end{ucblock}
   
@@ -354,8 +388,8 @@ All of the sums in the four previous equations are over $i$ from 1 to $N$.
   \vspace{-1cm}
   
   \begin{figure}
-    \includegraphics[width=0.9\columnwidth]{../Lecture7/PosterConcept.png}\\
-    \includegraphics[width=0.6\columnwidth]{/Users/fizisist/Work/ATLAS/Posters/NYU2009/NYUPoster_Miller_JVF_v2.pdf}\\
+    \includegraphics[width=0.9\columnwidth]{../Lecture3/PosterConcept.png}\\
+    \includegraphics[width=0.6\columnwidth]{/Users/fizisist/Documents/UChicago/Teaching/ComputationalPhysics/PHYS250/PHYS250-Autumn2019/FinalProjects/FinalPosterComputationalPhysics.pdf}\\
   \end{figure}
 
   
@@ -364,6 +398,16 @@ All of the sums in the four previous equations are over $i$ from 1 to $N$.
   
 \end{frame}
 
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Poster project example}
+  
+  \begin{figure}
+    \includegraphics[width=0.90\columnwidth]{/Users/fizisist/Documents/UChicago/Teaching/ComputationalPhysics/PHYS250/PHYS250-Autumn2019/FinalProjects/FinalPosterComputationalPhysics.pdf}
+  \end{figure}
+  
+\end{frame}
 %
 %For a $30\times30$ lattice with 20,000 time steps per simulation, I was seeing 2.5s/simulation or about 2-3 min to run 100 simulations at different temperatures
 

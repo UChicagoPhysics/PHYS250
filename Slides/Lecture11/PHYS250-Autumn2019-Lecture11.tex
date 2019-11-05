@@ -47,8 +47,8 @@
 % SETTINGS FOR THIS LECTURE
 %----------------------------------------------------
 \newcommand{\lecnum }  {Lecture 11}
-\newcommand{\lecdate}  {November 8, 2019}
-\newcommand{\topic}    {ODEs and start on PDEs}
+\newcommand{\lecdate}  {November 5, 2019}
+\newcommand{\topic}    {Fourier Transforms!}
 
 %-----------------------------------------------------------------------------------------
 % Title: [Column]{Title}
@@ -94,274 +94,274 @@
 }
 
 %==========================================================================================
-\section[Reminders]{Reminders}
+\section[Plan going forward]{Plan going forward}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Reminders from Lecture 10]{Reminders from Lecture 10}
+\subsection[Data analysis tools]{Data analysis tools}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Reminders from last time}
+  \frametitle{Moving towards physics data analysis}
 
-  We discussed the concepts that grew out of (or built upon) root finding -- manipulation of Taylor series approximations -- in order to expand our computational toolkit
+  As we discussed last time, I would like to take the direction of this quarter more towards practical physics data analysis and algorithms. We will start with \textbf{Fourier Transforms} and \textbf{Neural Networks} and then analyze data from the Large Hadron Collider.
   
   \vspace{0.3cm}
   
-  \begin{ucblock}{Application of root finding and numerical differentiation}
+  \begin{ucblock}{Fourier Analysis and Neural Networks}
     \begin{itemize}
-      \item \bluebf{Newton's method:} 
+      \item \bluebf{Fourier Series and Analysis:} 
       \begin{itemize}
-        \item Pathologies associated with the naive implementation, as well as simple modifications that can mitigate issues (\alertbf{backtracking})
-        \item Multidimensional applications in matrix form and systems of equations
+        \item Discussing the basics of Fourier Series 
+        \item Evaluate, computationally, the coefficients of a simple series for both a square and sawtooth wave
+        \item Extend discussion to the \alertbf{Fast Fourier Transform}
       \end{itemize}
-      \item \bluebf{Ordinary differential equations:} 
+      \item \bluebf{Neural Networks:} 
       \begin{itemize}
-        \item Obtained and discussed the Runge-Kutta algorithm(s)
-        \item Differentiated between \bluebf{initial} and \alertbf{boundary} value problems   
+        \item Training computers to discover, identify, and analyze patterns of interest in datasets 
+        \item Modeling perspective on what a neural network achieves
+        \item Structure and function of a neuron
+        \item Mathematical properties of a neural network
       \end{itemize}
     \end{itemize}
   \end{ucblock}
   
   \mysp
   
-  Today we will take the next steps with ODEs and transition to PDEs!
+  This will be a mixture of Python Notebooks and Lecture Slides
 
 \end{frame}
 
 
 %==========================================================================================
-\section[Hands on with the Runge-Kutta family of methods]{Hands on with the Runge-Kutta family of methods}
+\section[The Square Wave]{The Square Wave}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Reminders]{Reminders}
+\subsection[Square Wave]{Square Wave}
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Runge-Kutta family of algorithms}
+  \frametitle{Square Wave}
 
-  The aim of Runge-Kutta methods is to eliminate the need for repeated differentiation of the differential equations. Because no such differentiation is involved in the \alertbf{first-order Taylor series} expression:
-  %
+  Let's start with the Fourier Series for the \alertbf{square wave} function.
+  
+  \mysp
+  
+  As you may have heard in a variety of contexts (e.g. PHYS 133!) we can decompose any periodic function or periodic signal into the weighted sum of a (possibly infinite) set of simple oscillating functions, namely sines and cosines (or, equivalently, complex exponentials). 
+
   \begin{equation}
-    \vec{y}(x + h) = \vec{y}(x) + \vec{y}^{\prime}(x)h = \vec{y}(x) + \vec{F}(x, \vec{y})h
+    f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(nx) + b_n \sin(nx)
   \end{equation}
-  
-  This first-order version is referred to as \bluebf{Euler's method (aka Euler's Rule)}.
-  
+
+This is possible because the trigonometric functions for a \alertbf{set of complete, orthogonal basis vectors} that span the space.
+
   \mysp
-  
-  Effectively, what this is doing is to start with the known initial value of the dependent variable, $y_0 \equiv y(x = 0)$, and then use the derivative function $f(x,y)$ to find an approximate value for $y$ at a small step $x = h$ forward in time; that is, $y(x = h) \equiv y_1$. 
-  
-  \mysp
-  
-  We know from our discussion of differentiation that the error in the forward-difference algorithm is $\mathcal{O}(h)$, and so this too is the error in Euler's rule.
-  
-    \centering \Large \alertbf{How can we test this?}
+
+  \centering \bluebf{Now open up the \texttt{Fourier-Series.ipynb} jupyter notebook and we will discuss this more deeply!}
+
 
 \end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Code up the algorithm]{Code up the algorithm}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}[fragile]
-  \frametitle{Code up the algorithm!}
-
-  \begin{ucpythonblock}{ExplicitEuler}
-    for i, x_i in enumerate(x[:-1]): 
-
-        h = x[i+1] - x_i                        
-        y[i+1] = y[i] + h*func(x_i, y[i], args) 
-
-    return y    
-  \end{ucpythonblock}
   
-  \pause
-  
-  \begin{figure}
-    \includegraphics[width=0.5\textwidth]{ExplictEulerVsAnalytic.png}
-  \end{figure}
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Test the accuracy of the methods]{Test the accuracy of the methods}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}[fragile,shrink=15]
-  \frametitle{Improve the accuracy}
-
-  We know that the accuracy depends on $h$ so make that smaller?
-
-  \begin{ucpythonblock}{ExplicitEuler}
-for N in [5, 10, 20, 40]:
-    x = np.linspace(0., x_max, N+1) # Time steps
-    y = ExplicitEuler(exp, y_0, x, solve_args)
-    plt.plot(x, y, '-o', label='%d steps'%N) 
-    
-plt.plot(x,np.exp(solve_args['a']*x),'k--',label='Known')
-plt.xlabel(r'$x$'), plt.ylabel(r'$y$')
-plt.legend(loc=2)   
-  \end{ucpythonblock}
-  
-  \pause
-  
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{ExplictEulerSteps.png}
-  \end{figure}
-
-\end{frame}
-
 %-----------------------------------------------------------------------------------------
 
 \begin{frame}
-  \frametitle{Error of the method}
-
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.75\textwidth]{ExplictEulerAccuracyVsh.png}
-  \end{figure}
-
-\end{frame}
-
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Second order Runge-Kutta family of algorithms} 
-
-  Recall that the key insight was to expand $f(x,y)$ in a Taylor series about the \bluebf{midpoint of the integration interval} and retain two
-terms:
-  %
+  \frametitle{Fourier series for a square wave}
+    
+  We may determine the coefficients of a sine and cosine expansion to be:
+  
   \begin{equation}
-    f(x,y) \simeq f(x_{n+1/2} , y_{n+1/2}) + (x - x_{n+1/2}) \frac{df}{dx}(x_{n+1/2}) + \mathcal{O}(h^2)
-  \end{equation}
-  %
-  As you recall from the \bluebf{finite central difference} algorithm, only \bluebf{odd powers} of $h$ remain, and thus when used inside the integral above, the terms with $(x - x_{n+1/2})^{n\in\mathrm{odd}}$ vanish. We are left with
-  %
-  \begin{equation}
-    y_{n+1} \simeq y_{n} + h f(x_{n+1/2} , y_{n+1/2}) + \mathcal{O}(h^2) 
+    a_n =\frac{2}{n\pi}\sin \left(n \omega_0 \frac{\pi}{2} \right)
   \end{equation}
   
-  \centering \Large \alertbf{How can we test this?}
+  which yields a discrete function:
+  
+  \begin{equation}
+    f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} a_n \cos(nx) 
+  \end{equation}
+  
+  \centering \bluebf{Now open up the \texttt{Fourier-Transforms-Analysis.ipynb} jupyter notebook so that we can look at this in more detail!}
 
 \end{frame}
 
 %==========================================================================================
-\section[Partial Differential Equations]{Partial Differential Equations}
+\section[Extension to the Fourier Transform]{Extension to the Fourier Transform}
 %==========================================================================================
 
 %-----------------------------------------------------------------------------------------
-\subsection[Statement of the problem]{Statement of the problem}
+\subsection[Euler's Formula]{Euler's Formula}
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
-  \frametitle{What's so different about PDEs?}
 
-  Physical quantities such as temperature, pressure, gravitational and electromagnetic forces, and more, may vary continuously in both space and time. 
+\begin{frame}%[fragile]
+  \frametitle{Euler's Formula}
+
+  We can generalize this by making use of Euler's Formula.
   
-  \mysp
+  \begin{columns}
   
-  As such, the functions or \bluebf{fields, $U(x,y,z,t)$} that describe these quantities must contain \alertbf{independent space and time variations}.
+  \column{0.5\textwidth}
   
-  \mysp
+  Euler's formula states that for any real number $\phi$: 
   
-  As time evolves, the changes in $U (x, y, z, t)$ at any one position affect the field at neighboring points. 
-  
-  \mysp
-  
-  This means that the dynamic equations describing the dependence of $U$ on four independent variables must be written in terms of partial derivatives, and therefore the equations must be \alertbf{partial differential equations (PDEs)}, in contrast to ordinary differential equations (ODEs).
-  
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-\subsection[Classes and boundary conditions for PDEs]{Classes and boundary conditions for PDEs}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{General form of PDEs}
-
-  The most general form for a two-independent variable PDE is
-  \begin{figure}
-    \includegraphics[width=0.8\textwidth]{GeneralPDE.pdf}
-  \end{figure}
-  where $A, B, C,$ and $F$ are arbitrary functions of the variables $x$ and $y$. 
- 
-  \pause
-  
-  These typically fall into three categories based on the structure of the derivatives in the expression:
-  
-  \begin{figure}
-    \includegraphics[width=0.9\textwidth]{PDEClasses.pdf}
-  \end{figure}
-  
-
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Boundary conditions for PDE classes}
-
-  Separately, the boundary conditions will place specific constraints on the relationships between each of the terms, and often dictate whether the problem is even solvable.
-  
-  \begin{figure}
-    \includegraphics[width=0.8\textwidth]{BoundaryConditions.pdf}
-  \end{figure}
-  
-  \begin{itemize}
-    \item \bluebf{Dirichlet:} value of $U$ on a surface
-    \item \bluebf{Neumann:} value of the normal derivative of $U$ on a surface
-    \item \bluebf{Cauchy:} value of both $U$ and $U^{\prime}$ on a surface 
-  \end{itemize}
-
-
-\end{frame}
-
-
-
-%-----------------------------------------------------------------------------------------
-\subsection[Example: electrostatic potentials]{Example: electrostatic potentials}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Example from your courses: Laplace in E\&M}
-
-  The Laplace equation is of fundamental importance in physics, and is most often first encountered in electrodynamics.
-
   \begin{equation}
-    \nabla^{2} V = 0.
-  \end{equation}
-
-  In E\&M, we often taught the solution to Laplace's equation in two dimensions, $V(x,y)$, which can be found by evaluating:
-
-  \begin{equation}
-    V(x,y) = \frac{1}{2\pi R} \oint_{\rm circle} V dl
+    e^{i\phi} = \cos(\phi) + i\sin(\phi)
   \end{equation}
   
-  due to the lack of sources. In fact, even in common textbooks (e.g. Griffiths) you are taught that you can solve this iteratively, by evaluating this integral until a change in $V(x,y)$ on successive evaluations of the expression is smaller than some tolerance. 
+  When $\phi=\pi$, Euler's formula evaluates to 
+  
+  \begin{equation}
+    e^{i\pi }+1=0,
+  \end{equation} 
+  
+  which is known as Euler's identity. 
+  
+  \column{0.5\textwidth}
+  
+  \begin{figure}
+    \includegraphics[width=0.9\columnwidth]{Eulers_formula.png}
+  \end{figure}
+  
+  \end{columns}
+  
+  The implication is that it is possible to recover the amplitude of each wave in a Fourier series using an integral, which has many useful properties (in particular, that it's then continuous).
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Fourier Transforms]{Fourier Transforms}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Fourier Transforms (I)}
+
+  I will use the following definitions for the Fourier transform $\hat{f}(\xi)$ of a function $f(x)$, where $x$ typically represents either a \bluebf{spatial or time domain}, and $\xi$ typically represents a corresponding inverse notion of \alertbf{spatial or time frequency}.
+
+  \begin{equation}
+    \hat{f}(\xi)=\int_{-\infty}^{\infty} f(x) e^{-2\pi i \xi x } dx
+  \end{equation}
+  
+  The \alertbf{inverse transform} is then obtained via
+  
+  \begin{equation}
+    f(x)=\int_{-\infty}^{\infty} \hat{f}(\xi) e^{2\pi i \xi x } d\xi 
+  \end{equation}
+
+  In the case of spatial coordinates, $x$ denotes length and $\xi$ denotes inverse wavelength: $\xi = \frac{1}{\lambda}$. In the time domain, $x$ denotes time and $\xi$ denotes frequency. In the case that $x=t$ is in seconds, but $\xi$ is \alertbf{angular} frequency $\omega$ then a factor of $2\pi$ appears to get the normalization correct.
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Fourier Transforms (II)}
+
+  In the case of spatial coordinates, $x$ denotes length and $\xi$ denotes inverse wavelength: $\xi = \frac{1}{\lambda}$. In the time domain, $x$ denotes time and $\xi$ denotes frequency. In the case that $x=t$ is in seconds, but $\xi$ is \alertbf{angular} frequency $\omega$ then a factor of $2\pi$ appears to get the normalization correct.
+  
+  \begin{eqnarray}
+    \hat{f}(\omega) &=& \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(t) e^{-i\omega t} dt \\
+    f(t)            &=& \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \hat{f}(\omega) e^{i \omega t } d\omega
+  \end{eqnarray}
+
+  Since $\omega = 2\pi \xi = \frac{2\pi}{\lambda}$.
+  
+  \mysp
+  
+  The $\frac{1}{\sqrt{2\pi}}$ factor in both these integrals is a common normalization in quantum mechanics but maybe not in engineering where only a single $\frac{1}{2\pi}$ factor is often used.
   
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
-  \frametitle{Method of relaxation}
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Discrete Fourier Transforms (I)}
 
-  To solve our 2D PDE numerically, we divide space up into a lattice (recall: \texttt{meshgrid}!) and solve for $V$ at each site on the lattice. Since we will express derivatives in terms of the finite differences in the values of $V$ at the lattice sites, this is called....\pause \bluebf{a finite-difference method}!
+  If $\hat{f}(\omega)$ or $f(t)$ are known analytically or numerically, the Fourier transform integrals can be evaluated using the integration techniques studied earlier. 
+  
+  \mysp \pause
+  
+  In practice, the signal $f(t)$  is measured, or \alertbf{sampled} at just a finite number $N$ of times $t$, and these are what we must use to approximate the transform. 
+  
+  \mysp \pause
+  
+  The resultant \alertbf{discrete Fourier transform (DFT)} is an approximation both because the signal is not known for all times and because we integrate numerically.
+  
+  \mysp \pause
+  
+  Once we have a discrete set of transforms, they can be used to reconstruct the signal for any value of the time. 
+  
+  \mysp \pause
+  
+  In this way the \bluebf{DFT can be thought of as a technique for interpolating, compressing, and extrapolating data}.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Discussion}
+
+  \centering \Large \bluebf{Do you see any issues with this ``sampling''? }
   
   \pause
   
-  \mysp
+  \begin{figure}
+    \includegraphics[width=0.9\columnwidth]{Aliasing.pdf}
+  \end{figure}
   
-  To derive the finite-difference algorithm for the numeric solution of this PDE, we would follow the same path taken before, and add the two Taylor expansions of the potential to the right and left of $(x, y)$ and above and below $(x, y)$ and so on.  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Discrete Fourier Transforms (II)}
+
+  The DFT algorithm results from evaluating the integral not from $1$ to $+1$ but rather from time $0$ to time $T$ over which the signal is measured, and from approximating the integration of the integral by computing a discrete sum:
   
-  \mysp
+  \begin{eqnarray}
+    \hat{f}(\omega_n) &=& \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(t)   e^{-i\omega_n t}   dt \\
+                 &\simeq& \frac{1}{\sqrt{2\pi}} \int_{0}^{T}            f(t)   e^{-i\omega_n t}   dt \\
+                 &\simeq& \frac{1}{\sqrt{2\pi}} \sum_{k=1}^{N}        h f(t_k) e^{-i\omega_n t_k} \qquad (h\equiv\mathrm{stepsize}) \\
+                 &\simeq& \frac{h}{\sqrt{2\pi}} \sum_{k=1}^{N}          f_k    e^{-2\pi i k n/N}     \\
+    \hat{f}_n \equiv \frac{\hat{f}(\omega_n)}{h} &=& \frac{1}{\sqrt{2\pi}} \sum_{k=1}^{N}  f_k  e^{-2\pi i k n/N}  
+  \end{eqnarray}
   
-  At this point, I think it's just worth ``writing'' some code...
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Discrete Fourier Transforms (III)}
+
+  We then need the inverse as well, which we can obtain with $d\omega \rightarrow 2\pi/Nh $ we invert the $\hat{f}_n $
+      
+  \begin{eqnarray}
+    f_k &=& \frac{1}{\sqrt{2\pi}} \sum_{n=1}^{N} \frac{2\pi}{Nh}  \hat{f}_n  e^{i\omega_n t}  
+  \end{eqnarray}
+  
+  Once we know the $N$ values of the transform $\hat{f}_n$, we can use this expression to evaluate $f(t)$ for any time $t$. The frequencies $\omega n$ are determined by the number of samples taken and by the total sampling time $T = N h$ as
+  
+  \begin{equation}
+    \omega_n = n\frac{2\pi}{Nh}
+  \end{equation}
+  
+  Clearly, the larger we make the time $T = Nh$ over which we sample the function, the smaller will be the frequency steps or resolution. Accordingly,if you want a smooth frequency spectrum, you need to have a small frequency step $2\pi/T$.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[fragile,shrink=15]
+  \frametitle{Discrete Fourier Transforms (IV)}
+
+  Lastly, we can simplify this expression to yield a clear computational approach:
+      
+  \begin{eqnarray}
+    f_k       &=& \frac{\sqrt{2\pi}}{N} \sum_{n=1}^{N} Z^{-nk}\hat{f}_{n} \qquad (Z=e^{-2\pi i/N}) \\
+    \hat{f}_n &=& \frac{1}{\sqrt{2\pi}} \sum_{k=1}^{N} Z^{nk} f_k \qquad (n=0,1,\cdots,N) 
+  \end{eqnarray}
+  
+  With this formulation, the computer needs to compute only powers of $Z$.
   
 \end{frame}
 

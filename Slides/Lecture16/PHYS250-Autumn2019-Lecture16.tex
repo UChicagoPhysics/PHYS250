@@ -1,0 +1,319 @@
+%----------------------------------------------------
+% Setup Beamer
+%----------------------------------------------------
+\documentclass[hyperref={colorlinks=true}]{beamer}
+
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\input{../packages.sty}
+
+%\usetikzlibrary{external}
+%\tikzexternalize % activate!
+
+%----------------------------------------------------
+% Setup Theme
+%----------------------------------------------------
+\input{../theme.sty}
+
+%----------------------------------------------------
+% Table of Contents at each section transition
+%----------------------------------------------------
+
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \setcounter{tocdepth}{2}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+%----------------------------------------------------
+% Colors
+%----------------------------------------------------
+\input{../mycolors.sty}
+
+%----------------------------------------------------
+% Style, formatting, and new commands
+%----------------------------------------------------
+\input{../../global.sty}
+\input{../newcommands.sty}
+\input{../EandMcommands.sty}
+
+%----------------------------------------------------
+% Set paths for plots and images
+%----------------------------------------------------
+\input{../paths.sty}
+
+%----------------------------------------------------
+% SETTINGS FOR THIS LECTURE
+%----------------------------------------------------
+\newcommand{\lecnum }  {Lecture 16}
+\newcommand{\lecdate}  {November 29, 2019}
+\newcommand{\topic}    {Neural Networks -- Part II}
+
+%-----------------------------------------------------------------------------------------
+% Title: [Column]{Title}
+%-----------------------------------------------------------------------------------------
+\title[PHYS 250 (Autumn 2019) -- \lecnum]{\topic}
+
+%-----------------------------------------------------------------------------------------
+% SubTitle: [Column]{Subtitle}
+%-----------------------------------------------------------------------------------------
+\subtitle{PHYS 250 (Autumn 2019) -- \lecnum}
+
+%-----------------------------------------------------------------------------------------
+% Author: [SubAuthor]{Author}
+%-----------------------------------------------------------------------------------------
+\author[D.W.~Miller]{David Miller}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\institute[EFI, Chicago] 
+{
+  Department of Physics and the Enrico Fermi Institute\\
+  University of Chicago
+}
+
+%----------------------------------------------------
+% Institute: [SubInst]{Institute}
+%----------------------------------------------------
+\date[\lecdate]{\lecdate}
+
+\subject{PHYS 250 Lecture}
+
+\begin{document}
+
+%==========================================================================================
+% TITLE PAGE
+%==========================================================================================
+
+{
+\begin{frame}
+  \titlepage
+\end{frame}
+}
+
+%==========================================================================================
+\section[Reminders]{Reminders}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Reminders from Lecture 15]{Reminders from Lecture 15}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Reminders from last time}
+
+  We embarked on a whirlwind introduction to neural networks.
+  
+  \vspace{0.3cm}
+  
+  \begin{ucblock}{Neural networks and machine learning}
+    \begin{itemize}
+      \item \bluebf{Context and perspective} 
+      \begin{itemize}
+        \item We discussed the general issue of training computers to \textbf{discover, identify, and analyze patterns} of interest in datasets
+        \item Categorized tasks that make use of this idea: \textbf{classification, regression, generation, clustering, anomaly detection}
+      \end{itemize}
+      \item \bluebf{Neural networks as a tool} 
+      \begin{itemize}
+        \item Introduced both the \textbf{modeling} perspective as well as the \textbf{biological} perspective on what a neural network achieves 
+        \item Described the \textbf{structure and function} of a neuron
+        \item Began discussing the \textbf{mathematical properties} of a neural network
+      \end{itemize}
+    \end{itemize}
+  \end{ucblock}
+  
+  \mysp
+  
+  Today we will build our own networks! But first, I just wanted to follow-up on some points and questions from last time.
+
+\end{frame}
+
+%==========================================================================================
+\section[Historical perspective]{Historical perspective}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Brief History of Machine Learning Generally]{Brief History of Machine Learning Generally}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Brief history of machine learning}
+
+  Taken from \href{http://innovationobservatory.com/node/243}{Harry Ide on InnovationLaboratory.com (18 May 2018)}:
+  
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{MLBreakthroughs-Timeline-to-2017.png}
+  \end{figure}
+  
+  \only<2>{
+    \begin{textblock}{12}(1.5,-8)
+    \begin{ucblock}{Quote from Harry Ide on ``AI''}
+      \textit{``The cutting edge might not be as sharp as many believe. AI has a nearly 70-year long history with some surprising backtracks and re-emergences among it.''}
+    \end{ucblock}
+    \end{textblock}
+  }
+\end{frame}
+
+
+%-----------------------------------------------------------------------------------------
+\subsection[Brief History of Neural Networks]{Brief History of Neural Networks}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Brief history of neural networks}
+
+  Taken from \href{https://www.slideshare.net/deview/251-implementing-deep-learning-using-cu-dnn/4}{this talk on SlideShare}:
+  
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{NN_Timeline.jpg}
+  \end{figure}
+
+\end{frame}
+
+
+%==========================================================================================
+\section[Structure of Neural Networks]{Structure of Neural Networks}
+%==========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Single layer perceptron]{Single layer perceptron}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Single layer perceptron}
+
+  \begin{figure}
+    \centering 
+    \resizebox {0.7\columnwidth} {!} {
+      \input{singlelayer_perceptron.tex}
+    }
+  \end{figure}
+  
+  \begin{itemize}
+    \item \bluebf{$\vec{x} = (x_1, x_2, \cdots, x_n)$ is an input feature vector of length $n$}
+    \begin{itemize}
+      i.e. the attributes of the data, e.g. voltages
+    \end{itemize}
+    \item \bluebf{$\vec{w} = (w_1, w_2, \cdots, w_n)$ is the weight vector with $w_0$ reserved as a \textbf{bias}}
+    \begin{itemize}
+      \item becomes a matrix for multiple layers
+    \end{itemize}
+    \item \bluebf{$\Sigma$ indicates summation (or matrix mult.): $z = \sum w_i x_i$ ($x_0 = 1$)}
+    \item \bluebf{$f$ is the activation function, or non-linearity: $f(z)$}
+    \item \alertbf{$y = f(z)$ is the output}
+  \end{itemize}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=10]
+  \frametitle{Sigmoid as activation function}
+
+  As we discussed, a typical function for a \alertbf{single layer perceptron} is the \textbf{sigmoid}. 
+
+  \begin{figure}
+    \centering 
+    \resizebox {0.8\columnwidth} {!} {
+      \input{sigmoid-derivative.tex}
+    }
+  \end{figure}
+  
+  Here, we plot both the function itself, as well as its derivative, since that will be important when evaluating the \bluebf{backpropagation} of weights in order to update the neural network.
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Training a single layer perceptron]{Training a single layer perceptron}
+%-----------------------------------------------------------------------------------------
+
+
+\begin{frame}%[shrink=10]
+  \frametitle{Training a single layer perceptron}
+
+  \begin{figure}
+    \centering 
+    \resizebox {0.7\columnwidth} {!} {
+      \input{singlelayer_perceptron.tex}
+    }
+  \end{figure}
+  
+  Given $j$ objects $\vec{x}_j$ in dataset, each with \alertbf{known values of $f$}, $d_j$
+  \begin{itemize}
+    \item \bluebf{Calculate the output:} $y_j = f(\vec{w}\cdot\vec{x}_j)$
+    \item \bluebf{Determine the error:} $\epsilon_j = d_j - y_j$
+    \item \bluebf{Update the weights:} $w^{\mathrm{new}}_i = w_i + r ( \epsilon_j \cdot \vec{x}_j )_{i}$
+  \end{itemize}
+  
+  Choosing the learning rate $r$ is where the derivative is used. It's not important for the single-layer perceptron, but is \alertbf{essential} for a network.
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Training a Multi-Layer Perceptron (MLP)]{Training a Multi-Layer Perceptron (MLP)}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=20]
+  \frametitle{Multi-layer perceptron (MLP)}
+
+  \vspace{-0.8cm}
+
+  \begin{figure}
+    \centering 
+    \resizebox {\columnwidth} {!} {
+      \input{multilayer_perceptron.tex}
+    }
+  \end{figure}
+  
+  Given $j$ objects $\vec{I}_j$ in dataset, each with features $\vec{I} = (I_1, I_2, \cdots, I_n)$ and \alertbf{known outputs $\vec{d}_j$ at each output node $o$}, $\vec{d} = (d_1, d_2, \cdots, d_o)$
+  \begin{itemize}
+    \item \bluebf{Calculate the $h$ outputs of hidden layer:} $v_h = f(\sum_i w_{ih} I_i)$
+    \item \bluebf{Calculate the $o$ outputs of output layer:} $y_o = f(\sum_h w_{ho} v_h)$
+    \item \bluebf{Determine the error at output each node $o$:} $\epsilon_o = d_o - y_o$
+    \item \bluebf{Determine the total error for data object $j$:} $\mathcal{E}_j = \frac{1}{2} \sum_o \epsilon_o^{2}$
+    \item \bluebf{Determine change in weights for output neuron $y_o$:} $\Delta w_{oh}=-\eta {\frac {\partial {\mathcal{E}}}{\partial z_{o}}}v_{h} = \eta \epsilon_o \, f^{\prime}(z_{o})$
+  \end{itemize}
+    
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=20]
+  \frametitle{LeCun, Bengio, Hinton, ``Deep learning''}
+  \framesubtitle{\href{https://www.nature.com/articles/nature14539\#f1}{Nature volume 521, pages 436-444 (28 May 2015)} }
+
+  \vspace{-0.3cm}
+
+  \begin{figure}
+    \centering 
+    \includegraphics[width=\textwidth]{BackPropagation-LeCun-Nature.jpg}
+  \end{figure}
+  
+
+    
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+%\begin{frame}%[shrink=20]
+%
+%  \begin{figure}
+%    \centering 
+%    \resizebox {0.7\columnwidth} {!} {
+%      \input{singlelayer_perceptron_3.tex}
+%    }
+%  \end{figure}
+%
+%\end{frame}
+
+  
+%==========================================================================================
+%==========================================================================================
+\end{document}

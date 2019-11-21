@@ -1,5 +1,6 @@
 # Generic files to ignore
 *checkpoints*
+*.h5
 *.pyg
 *.aux
 *.bcf

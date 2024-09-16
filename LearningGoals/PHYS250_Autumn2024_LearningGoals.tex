@@ -1,0 +1,71 @@
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{multirow}
+\usepackage{xspace}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=red,
+  urlcolor=blue
+}
+
+%----------------------------------------------------
+% Page Setup
+%----------------------------------------------------
+\usepackage{setspace}
+\usepackage[margin=0.90in]{geometry}
+\linespread{1.3}
+%\doublespacing
+%\addtolength{\hoffset}{-2.5cm}
+%\addtolength{\voffset}{-2.5cm}
+%\addtolength{\textwidth}{2.0cm}
+%\addtolength{\textheight}{4.0cm}
+
+%----------------------------------------------------
+% New commands
+%----------------------------------------------------
+\input{../Slides/newcommands.sty}
+
+%----------------------------------------------------
+% Header and Footer Information
+%----------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{PHYS 250, Autumn Quarter 2024}
+\rhead{\today, v0.1}
+
+%----------------------------------------------------
+% Course Number, Course Title, Prof Name, Location
+%----------------------------------------------------
+\title{\sc Physics 250: Computational Physics\\Learning Goals}
+\author{\textbf{Instructor:} David W. Miller, MCP 245, \\ 773-702-7671, \href{mailto:David.W.Miller@uchicago.edu}{David.W.Miller@uchicago.edu}}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{fancy}
+
+%----------------------------------------------------
+% Learning Goals
+%----------------------------------------------------
+
+\noindent This document differs from a syllabus in that it is not a list of nouns (topics covered), but a list of verbs that indicate what students are \textit{expected to be able \textbf{to do} after taking this course}.
+
+%--------------------------------
+\subsection*{Example}
+%--------------------------------
+
+\begin{itemize}
+  \item Goal 1
+  \item Goal 2
+\end{itemize}
+
+\end{document}

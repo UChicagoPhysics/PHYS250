@@ -1,9 +1,9 @@
 # PHYS 250: Computational Physics
 Welcome to the University of Chicago PHYS 250 Computational Physics repository!
 
-This repository will hold the Syllabus, Learning Goals, Code Examples, and Lecture Notes for the course. Periodically, some of these materials will be moved to the Canvas page for the course, which for the Autumn 2018 Academic Quarter is located here:
+This repository will hold the Syllabus, Learning Goals, Code Examples, and Lecture Notes for the course. Periodically, some of these materials will be moved to the Canvas page for the course, which for the Autumn 2024 Academic Quarter is located here:
 
-https://canvas.uchicago.edu/courses/23299
+https://canvas.uchicago.edu/courses/58627
 
 ## Programming Languages, Software, and Platforms for the course
 We will primarily be using Python for this course as it is a common, powerful, and high-levle language that is used across much of academia and industry in one form or another.

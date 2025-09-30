@@ -1,0 +1,153 @@
+%----------------------------------------------------
+% Packages to use
+%----------------------------------------------------
+\documentclass[12pt]{article}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{multirow}
+\usepackage{xspace}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=red,
+  urlcolor=blue
+}
+
+%----------------------------------------------------
+% Page Setup
+%----------------------------------------------------
+\usepackage{setspace}
+\usepackage[margin=0.90in]{geometry}
+\linespread{1.3}
+%\doublespacing
+%\addtolength{\hoffset}{-2.5cm}
+%\addtolength{\voffset}{-2.5cm}
+%\addtolength{\textwidth}{2.0cm}
+%\addtolength{\textheight}{4.0cm}
+
+%----------------------------------------------------
+% New commands
+%----------------------------------------------------
+\input{../Slides/newcommands.sty}
+
+%----------------------------------------------------
+% Header and Footer Information
+%----------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{PHYS 250, Autumn Quarter 2025}
+\rhead{\today, v0.1}
+
+%----------------------------------------------------
+% Course Number, Course Title, Prof Name, Location
+%----------------------------------------------------
+\title{\sc Physics 250: Computational Physics\\Responsible LLM use}
+\author{\textbf{Instructor:} David W. Miller, MCP 245, \\ 773-702-7671, \href{mailto:David.W.Miller@uchicago.edu}{David.W.Miller@uchicago.edu}}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{fancy}
+
+%----------------------------------------------------
+% Intro
+%----------------------------------------------------
+
+\subsection*{Introduction}
+
+Large Language Models (LLMs) such as ChatGPT, Copilot, and others are powerful new tools for coding, debugging, and learning. I use them in a number of ways -- as \textit{tools} -- to augment and improve my (long established) approaches to doing science. 
+
+
+The use of these tools does not run counter to the goals of this course (see the \textit{Learning Goals} companion document, and thus that are certainly not prohibited and you are welcome to use them. In fact, part of how this course is evolving is in trying to build in guidance for helping you \textit{learn} how to use them. Like any tool, and especially new ones, you must do so intentionally and responsibly. You are not here simply to write some code here and there, but rather to build your own ability to \textit{think computationally about physics}.
+
+To that end, I have written this document (with a bit of back and forth with ChatGPT...I certainly did not simply copy and paste) which outlines my guidance for how to use these new tools to your advantage, while not compromising your growth and evolution as a thinker and a scientist. To my mind, and as described in the slides and the \textit{Learning Goals}, Computational physics is about identifying the right set of (computational) tools for a problem (of which LLMs can be a member!), designing algorithms to solve those problems, establishing an understanding why a method works (or doesn’t) and connecting those computations back to physical insights.
+
+\textbf{An LLM can provide examples or guidance, but it cannot replace the reasoning skills that you must develop as a physicist.}
+
+%----------------------------------------------------
+% Guidelines
+%----------------------------------------------------
+
+\subsection*{Guidelines for responsible usage}
+
+  \begin{itemize}
+    
+    \item Think before you ask
+    \begin{itemize}
+      \item Write down your own plan, pseudocode, or approach before consulting an LLM.
+      \item Use the LLM to refine or stress-test your thinking, not to generate it from scratch.
+    \end{itemize}
+    
+    \item Interrogate, don’t copy/paste
+    \begin{itemize}
+      \item Treat LLM responses as suggestions.
+      \item Ask yourself \textit{``Does this make sense? Can I explain why? Would I have predicted this step?''}
+      \item Re-implement code in your own style rather than copying directly.
+    \end{itemize}
+    
+    \item Ask ``Why?'' and ``How?'' yourself
+    \begin{itemize}
+      \item Prioritize questions that deepen understanding
+      \begin{itemize}
+        \item ``Why is my Runge-Kutta solution unstable?''
+        \item ``What’s the trade-off between Euler and Verlet methods?''
+      \end{itemize}
+      \item Avoid \textit{``give me the code for X''} without context and guidance from your own thought process
+    \end{itemize}
+    
+    \item Document your LLM usage
+    \begin{itemize}
+      \item In your solutions, include a short note on \textit{how} you used an LLM.
+      \begin{itemize}
+        \item \textit{`I asked ChatGPT why my finite-difference solver produced oscillations. It suggested checking boundary conditions, which helped me identify a missing condition in my code.''}
+      \end{itemize} 
+    \end{itemize}
+    
+    \item Use LLMs as a critical ``reviewer''
+    \begin{itemize}
+      \item Try asking an LLM to critique your pseudocode or find potential bugs
+      \item Compare its output to your own implementation
+    \end{itemize}
+    
+    \item Maintain a Computational Logbook
+    \begin{itemize}
+      \item Keep track of your problem-solving steps, including when you used AI tools.
+      \item This will help you explain your reasoning later, and is also a valuable professional skill
+    \end{itemize}
+
+  \end{itemize}
+
+%----------------------------------------------------
+% What counts as your work
+%----------------------------------------------------
+
+\subsection*{What counts as your work}
+
+    \begin{itemize}
+      
+      \item Your grade will reflect your ability to explain and justify what you did. We will have in-class dialogues and explanations of approaches. This quarter you should expect to be asked to:
+
+      \item Annotate your algorithms with explanations
+
+      \item Walk through your code verbally or in writing
+
+      \item Be able to write your own pseudocode in quasi-real-time
+
+    \end{itemize}
+
+Copy-pasted LLM output without understanding is not acceptable and will not prepare you for research, or even your final project.
+
+%----------------------------------------------------
+% Conclusions
+%----------------------------------------------------
+
+\subsection*{Conclusions}
+
+LLMs can accelerate your learning, but only if you use them with awareness, intentionality, and openness. In this course, you are not being trained to be better at prompting; you are being trained to think computationally about physical problems. Use these tools to sharpen your skills, not to replace them.
+
+
+\end{document}

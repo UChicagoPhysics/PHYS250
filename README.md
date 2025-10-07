@@ -100,4 +100,4 @@ Homework assignments will be distributed via [GitHub Classroom](https://classroo
 We will then do code review with line-by-line feedback directly within the pull request. For assignments that allow for corrections, you can push fixes up to their forks, which will be reflected in the pull request that I (the professor) will receive.
 
 Since I don't want any solutions in the original assignment repository, I will leave the pull request unmerged. When I am finished giving feedback, I will close the pull request and leave a :+1: (`:+1:`) in a final comment.
-
+ WHats Going On

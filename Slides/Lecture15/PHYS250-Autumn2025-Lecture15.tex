@@ -47,8 +47,8 @@
 % SETTINGS FOR THIS LECTURE
 %----------------------------------------------------
 \newcommand{\lecnum }  {Lecture 15}
-\newcommand{\lecdate}  {November 27, 2024}
-\newcommand{\topic}    {Neural Networks -- Part I}
+\newcommand{\lecdate}  {November 20, 2025}
+\newcommand{\topic}    {LHC Data Analysis -- Part I}
 
 %-----------------------------------------------------------------------------------------
 % Title: [Column]{Title}
@@ -93,323 +93,576 @@
 \end{frame}
 }
 
-%==========================================================================================
-\section[Introduction to Neural Networks]{Introduction to Neural Networks}
-%==========================================================================================
+%=========================================================================================
+\section[Introduction]{Introduction}
+%=========================================================================================
 
-%-----------------------------------------------------------------------------------------
-\subsection[Context of Machine Learning]{Context of Machine Learning}
-%-----------------------------------------------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+\begin{frame}%[shrink=1]
+  %\frametitle{Patterns}
+
+  \begin{figure}
+    \includegraphics<1>[width=\textwidth]{\sciPath/Physics/CMB/cobe.pdf}
+    %\includegraphics<2>[width=\textwidth]{\sciPath/Physics/CMB/wmap.pdf}
+    \includegraphics<2>[width=\textwidth]{\sciPath/Physics/CMB/Planck_CMB_black_background_fullwidth.pdf}
+  \end{figure}
+	  
+  \vspace{-0.5cm}	  
+	  
+	%\only<1>{  
+	%\centering One of our jobs as physicists is to understand the patterns presented to us by Nature. Sometimes we predict that a pattern exists and seek to verify that prediction and its properties. Other times, Nature presents us with a pattern that changes the way that we view the universe forever.}
+	
+	%\only<2->{  
+	%\centering We construct experiments and advance the tools with which we seek to understand these patterns. In doing so, we often learn to build ever more predictable models and theories that describe the properties of the universe that we observe, new or old. Sometimes those tools reveal new patterns.} 
+	  
+\end{frame}
+}
+
+%---------------------------------------------------------------------------------------------
 
 \begin{frame}%[shrink=10]
-  \frametitle{Machine learning generally}
+  \frametitle{Uncovering new patterns in nature}
+    
+  \begin{textblock}{16}(-3.5,-6.0)
+	\begin{figure}%[!ht]
+      \centering
+      \includegraphics[width=0.6\textwidth]{\sciPath/General/PeriodicTableMeltingPoint.png}
+    \end{figure}
+  \end{textblock} 
+  
+  \begin{textblock}{5}(0,2)
+	\tiny \href{http://www.sciencenotes.org}{\texttt{sciencenotes.org}}
+  \end{textblock}   
 
-  Machine learning is an area of study based broadly on developments in computer science over the past 50 years that aims to use \bluebf{algorithmic approaches to discovering, identifying, and analyzing, patterns of interest in datasets}.
+  \only<2->{
+      \begin{textblock}{5}(7.5,1)
+    	\begin{rotate}{-30}
+    	  \raisebox{-.5\height}{\scalebox{4}{$\Leftarrow$}}
+    	\end{rotate}
+      \end{textblock}  
+      
+        
+      \begin{textblock}{7}(8.5,-2)
+	     \begin{tikzpicture}
+	        \centering
+            \node[anchor=south west,inner sep=0] at (0,0) {\includegraphics[width=\textwidth]{\physPath/Standard_Model_of_Elementary_Particles.pdf}};
+            \draw<4>[red,ultra thick,rounded corners] (0.6,2.6) rectangle (4.03,5.5);
+            \draw<4>[red,ultra thick,rounded corners] (4.03,2.6) rectangle (5.07,3.90);
+        \end{tikzpicture}
+	    %\begin{figure}%[!ht]
+        %  \centering
+        %  \includegraphics[width=0.6\textwidth]{\physPath/Standard_Model_of_Elementary_Particles.pdf}
+        %\end{figure}
+      \end{textblock}  
+      
+      \begin{textblock}{5}(12,8.1)
+    	\tiny \href{http://www.meta-synthesis.com}{\texttt{meta-synthesis.com}}
+      \end{textblock}    
+  }
+  
+  \only<3->{
+      \begin{textblock}{9}(0,4)
+        \begin{colorblock}{maroon}{lightmaroon}{Periodic Table of the Fundamental Particles}
+          Seeking to understand patterns has led us to our current understanding of the fundamental structure of matter....\textit{\textbf{but we know that pieces are still missing.}}
+        \end{colorblock} 
+      \end{textblock}
+  }
+  
+  \only<4->{
+      \begin{textblock}{5}(9.7,-6)
+        {\small
+        \begin{colorblock}{maroon}{lightmaroon}{Quarks \ra hadrons \ra \textbf{JETS}}
+          Much of what I do focuses on these particles and their visible signatures: \textbf{JETS}
+        \end{colorblock} 
+        }
+      \end{textblock}
+  }
+  
+  
+\end{frame}
+
+%meta-synthesis.com
+%sciencenotes.org
+
+%=========================================================================================
+\section[Introduction to Collider Physics]{Introduction to Collider Physics}
+%=========================================================================================
+
+
+%-----------------------------------------------------------------------------------------
+\subsection[Collider Principles]{Collider Principles}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{Particle Collider: General Principles}
+
+  \begin{figure}
+    \center
+    \includegraphics[width=0.82\textwidth]{\LHCPicPath/LHC_Proton_Parton_Particle.png}\\
+    \includegraphics[width=0.85\textwidth]{\LHCPicPath/collidingbeam.eps}
+  \end{figure}
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[The Large Hadron Collider]{The Large Hadron Collider}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{Particle Collider: The Large Hadron Collider}
+
+  \vspace{-1cm}
+
+  \begin{figure}
+    \center
+    \includegraphics[width=0.39\textwidth]{\LHCPicPath/CERN_crosssection_BBC.pdf}
+    \includegraphics[width=0.52\textwidth]{\LHCPicPath/LHC_MontBlanc_Labels.pdf}
+  \end{figure}
   
   \begin{itemize}
-    \item Key phrase here is \bluebf{algorithmic}
-    \item We want \bluebf{models} that tell us something about a dataset
+    \item Some key characteristics:
+    \begin{itemize}
+      \item 100 m underground, 17 miles (27 km) in circumference, 25ns bunch spacing, $10^{11}$ protons per bunch, 2808 bunches per ring
+    \end{itemize}
   \end{itemize}
-   
-  \begin{center} \Large \alertbf{Sounds like something we'd be interested in!} \end{center}
-  
-  \ra\ Definitely, but much broader concept here than just what we've been discussing so far in the course.
 
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
-  \frametitle{Machine learning applications}
+\begin{frame}%[shrink=1]
+  \frametitle{The LHC bunch structure and interaction region}
+
+  \vspace{-0.5cm}
+
+  \begin{figure}
+    \center
+    \includegraphics[width=0.80\textwidth]{\LHCPicPath/NominalRun2BunchStructure.png}\\
+    \includegraphics[width=0.75\textwidth]{\LHCPicPath/Run2Aperture.png}
+  \end{figure}
+  
+\end{frame}
+
+%=========================================================================================
+\section[Introduction to Collider Detectors]{Introduction to Collider Detectors}
+%=========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[The ATLAS Detector]{The ATLAS Detector}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=1]
+  \frametitle{The experimental tools at the LHC}
 
   \setbeamercovered{transparent}
 
-  What are we using these algorithms to \textit{do}?
+  \begin{columns}
   
-  \mysp
+  \column{6cm}
+  \includegraphics[width=6cm]{\ATLASGraphics/ATLAS.pdf}
   
+  \begin{itemize}
+    \item \textbf{Weight}: 7000 tons
+    \item \textbf{Length $\times$ height}:  46m $\times$ 25m
+    \item \textbf{$B$-field}: 4 T (2 T solenoid)
+    \item 100,000,000 electronic channels 
+    \item 3000 km of cables
+  \end{itemize}
+  
+  \column{6cm}
+  \includegraphics[width=6.5cm]{\DetPicPath/CMS_labels.pdf}
+  
+  \vspace{0.5cm}
+  
+  \begin{itemize}
+    \item \textbf{Weight}: 12500 tons
+    \item \textbf{Length $\times$ height}: 21.6m $\times$ 15m
+    \item \textbf{$B$-field}: 4 T
+    \item 100,000,000 electronic channels
+    \item 76,000,000 Si channels, 205 m$^{2}$ 
+  \end{itemize}
+  
+  \end{columns}
+  
+  \center \textbf{Each is a hugely complex \alert{single} detector built out of many}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}[shrink=15]
+  \frametitle{The experimental tools at the LHC}
+
+  \setbeamercovered{transparent}
+
+  \begin{columns}
+  
+  \column{6cm}
+  \includegraphics[width=5.5cm]{\ATLASGraphics/ATLAS_slice.pdf}
+  
+  \column{9cm}  
+  
+  Each \textcolor{blue}{``detector''} is comprised of several \textcolor{blue}{``sub-detectors''} with each devoted to a specific task
+  
+  \begin{itemize}
+    \item \textbf{Tracker:} use \alert{ionization} to \textcolor{blue}{track} charged particles
+    \item \textbf{$\mu$ Tracker:} use \alert{ionization} to \textcolor{blue}{track} $\mu$'s
+    \item \textbf{$B$-field:} \alert{bend} charged particles to measure \textcolor{blue}{$p$}
+    \item \textbf{Calorimeters:} use \alert{scintillation} and \alert{ionization} to measure \textcolor{blue}{energy}
+  \end{itemize}
+  
+  \end{columns}
+  
+  \begin{figure}
+  \center
+  \includegraphics[width=9cm]{\DetPicPath/CMS_slice.pdf}
+  \end{figure}
+  
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+\subsection[Tracking and vertexing]{Tracking and vertexing}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{The ATLAS Tracking and Vertexing System}
+
+  \setbeamercovered{transparent}
+
+  \begin{columns}
+  
+  \column{7cm}
+  \only<1-3>{
   \begin{itemize}[<+->]
-    \item \textbf{Supervised learning:} \bluebf{machine is presented examples of multiple classes and learns to differentiate} (\textit{discover known patterns on unknown data})
-    \begin{itemize}
-      \item \alertbf{Classification:} identify categories of variables; e.g. signal vs. background
-      \item \alertbf{Regression:} estimate relationships among variables; e.g. calibration
-      \item \alertbf{Generation:} generate a set of variables from a category (e.g. image)
-    \end{itemize}
-    \item \textbf{Unsupervised learning:} \bluebf{machine is presented data and asked to provide multiple classes} (\textit{discover unknown patterns on known data})
-    \begin{itemize}
-      \item \alertbf{Clustering:} grouping set of objects in a dataset; e.g. jets of hadrons
-      \item \alertbf{Anomaly detection:} identifying rare events or observations; e.g. errors
-    \end{itemize}
+    \item Silicon Pixel Detector
+    \item Silicon Strip Detector
+    \item Transition Radiation Detector
   \end{itemize}
+  }
   
   \begin{figure}
-    \centering
-    \includegraphics<1-2>[width=0.4\textwidth]{Classification.png}
-    \includegraphics<3>[width=0.4\textwidth]{Regression.png}
-    \includegraphics<4>[width=0.4\textwidth]{Generation.jpg}
-    \includegraphics<5-6>[width=0.4\textwidth]{Clustering.png}
-    \includegraphics<7>[width=0.3\textwidth]{Anomaly.png}
-  \end{figure}
-
-
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Where do neural networks fit in?}
-
-  There are many \bluebf{tools} that we can use to \alertbf{learn} how to perform these tasks. 
-  
-  \mysp
-
-  \begin{ucblock}{Neural networks}
-  Neural networks provide a framework for non-linear fitting and parameter estimation with limited input data but for cases in which the input data are understood and the categories (for example) are known.  
-  \end{ucblock}
-  
-  \mysp
-    
-  \begin{center} \bluebf{Neural networks are \underline{proven} to be ``universal approximators''} \end{center}
-  
-  See \href{https://doi.org/10.1016/0893-6080(91)90009-T}{Kurt Hornik, ``Approximation Capabilities of Multilayer Feedforward Networks'', Neural Networks, 4, 251-257 (1991)}.
-  
-  \mysp
-  
-  One straightforward way to think of this is as a composition of functions $f(\mathbb{A}\mathbf{x}+\mathbf{b})$ for inputs $\mathbf{x}$ (features) matrix $\mathbb{A}$ (weights), bias $\mathbf{b}$, non-linearity $f$. Given some data, the algorithm should tell us which of a pre-defined set of categories the data fall into, even if it's a complicated non-linear function that describes the boundary between these categories.
-
-  
-\end{frame}
-  
-%-----------------------------------------------------------------------------------------
-\subsection[Motivations from the perspective of modeling]{Motivations from the perspective of modeling}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Motivations for neural networks}
-
-  If we can use a neural network to approximate any (incl. non-linear) function, then this is strong motivation for using it to learn complicated functions that describe classes of objects, potentially in high-dimensional spaces.
-
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.9\textwidth]{SimpleNeuralNetwork.pdf}
+  \center
+  \includegraphics<1>[width=5cm]{\ATLASGraphics/SiPixel-ATLAS.png}
+  \includegraphics<2>[width=6cm]{\ATLASPhotos/SCTmodule-ATLAS.pdf}
+  \includegraphics<3>[width=6cm]{\ATLASPhotos/TRT-ATLAS-SCTInsertion.pdf}
+  \includegraphics<4>[width=7cm]{\DetPicPath/cosmic3.pdf}
   \end{figure}
   
-  
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Very, very naive strawman example}
-
-  Suppose the ``function'' we want to learn is to map kilometers\ra\ miles. 
-  
-  \mysp
-  
-  Given a \alertbf{``training dataset''} of input and output pairs, we can test a simple function with a parameter the defines the conversion, and then \bluebf{iteratively update} the parameters based on how far from the \alertbf{``true''} value we end up.
-
+  \column{5cm}
   \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.7\textwidth]{km-to-mi-1.png}%
-    \includegraphics<2>[width=0.8\textwidth]{km-to-mi-2.png}%
-    \includegraphics<3>[width=0.8\textwidth]{km-to-mi-3.png}%
-    \includegraphics<4>[width=0.8\textwidth]{km-to-mi-4.png}%
-    \includegraphics<5>[width=0.8\textwidth]{km-to-mi-5.png}%
-\end{figure}
-  
-  Obviously, we want to extend this to non-linear cases.
-  
-\end{frame}
-
-
-%-----------------------------------------------------------------------------------------
-\subsection[Motivations from the perspective of biology]{Motivations from the perspective of biology}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{The biological model}
-
-  The way brains work is by establishing connections between various neurons.
-  
-  \mysp
-  
-  Once connections are made, initial stimuli give similar (though not always identical) results
-  
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.95\textwidth]{NeuronModel.pdf}%
-\end{figure}
-    
-\end{frame}
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Artificial neuron model}
-
-  McCulloch and Pitts (1943) model of a single neuron. Rosenblatt (1958) then developed the \bluebf{ perceptron} based on this, the oldest neural network still in use today; provided an algorithm to train the perceptron network, built it in electronics, and proved convergence in linearly separable case.
-  
-  \mysp
-    
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.45\textwidth]{The-McCulloch-and-Pitts-1943-model-of-a-single-neuron-Source-Adapted-from-Franck.png}%
-    \includegraphics[width=0.45\textwidth]{PittsModel.pdf}%
-\end{figure}
-    
-\end{frame}
-
-
-
-%-----------------------------------------------------------------------------------------
-\subsection[Discussion of applications]{Discussion of applications}
-%-----------------------------------------------------------------------------------------
-
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Neural networks are, maybe literally, everywhere}
-
-    
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.95\textwidth]{NNs-1.png}%
-    \includegraphics<2>[width=0.95\textwidth]{NNs-2.png}%
-    \includegraphics<3>[width=0.95\textwidth]{NNs-3.png}%
-    \includegraphics<4>[width=0.95\textwidth]{QuarksGluons.pdf}%
-\end{figure}
-    
-\end{frame}
-
-
-%==========================================================================================
-\section[Foundations of Neural Networks]{Foundations of Neural Networks}
-%==========================================================================================
-
-%-----------------------------------------------------------------------------------------
-\subsection[Activation functions]{Activation functions}
-%-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Activation functions}
-
-  We need a network that can effectively learn a complex function by weighting the individual outputs of each node.  
-    
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.75\textwidth]{NN-2layer.png}%
+  \center
+  \includegraphics[width=5cm]{\ATLASGraphics/ID_Longitudinal_labels_shadow.png}\\
+  \includegraphics[width=5cm]{\ATLASGraphics/ID_radial.png}
   \end{figure}
-    
+  
+  \end{columns}
+  
 \end{frame}
 
 
-
-
+%-----------------------------------------------------------------------------------------
+\subsection[Calorimetery]{Calorimetery}
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[shrink=10]
-  \frametitle{Non-linearity functions for learning}
+\begin{frame}[shrink=10]
+  \frametitle{The ATLAS Calorimeter System}
 
-  This is the function that defines the output of a node. Typically, we want to map the resulting values into a range between $[0, 1]$, or  $[-1,1]$
-    
   \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.85\textwidth]{NonLinearFunction.pdf}%
-    \includegraphics<2>[width=0.85\textwidth]{NonLinearFunction-2.pdf}%
+    \center
+    \includegraphics[width=0.98\textwidth]{\ATLASGraphics/Calorimeters_labels.pdf}
   \end{figure}
-    
+  
 \end{frame}
 
 
 %-----------------------------------------------------------------------------------------
-\subsection[Training]{Training}
-%-----------------------------------------------------------------------------------------
 
-%-----------------------------------------------------------------------------------------
+\begin{frame}[shrink=10]
+  \frametitle{The ATLAS Calorimeter System}
 
-\begin{frame}%[shrink=10]
-  \frametitle{Training a neural network}
-
-  The \bluebf{``objective function''} is minimized using \alertbf{``stochastic gradient decent''}:
-  \begin{itemize}
-    \item iterative method for optimizing the ``loss'' or the error that we are trying to minimize 
+  \setbeamercovered{transparent}
+ 
+  \begin{columns}
+  
+  \column{6cm}
+  \only<1-4>{
+  \begin{itemize}[<+->]
+    \item Liquid Argon electromagnetic (\alert{LAr $EM$}) barrel and end-caps
+    \item Hadronic Tile barrel and extended barrel (\alert{TileCal})
+    \item LAr hadronic end-cap (\alert{HEC})
+    \item LAr forward calorimeter (\alert{FCAL})
   \end{itemize}
-    
+  }
+  
   \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.75\textwidth]{Training.pdf} \\
+  \center
+  \includegraphics<1>[width=3cm]{\ATLASPhotos/LAr-Accordion.pdf}
+  \includegraphics<2>[width=5.5cm]{\ATLASPhotos/Tile.pdf}
+  \includegraphics<3>[width=5.5cm]{\ATLASPhotos/LAr-HEC.pdf}
+  \includegraphics<4>[width=4cm]{\ATLASPhotos/FCAL.pdf}
+  \includegraphics<5>[width=6cm]{\DetPicPath/EM_calo_resolution.pdf}
+  \includegraphics<6>[width=6cm]{\DetPicPath/Calorimetry_Riegler.pdf}
   \end{figure}
-    
+  
+  \only<6>{\centering (From W. Riegler)}
+  
+  \column{8cm}
+  \begin{figure}
+  \center
+  \includegraphics[width=8cm]{\ATLASGraphics/Calorimeters_labels_shadow.png}\\
+  \includegraphics[width=5cm]{\ATLASGraphics/hadronic_cal_atlas.pdf}
+  \end{figure}
+  
+  \end{columns}
+  
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
-
-\begin{frame}%[shrink=10]
-  \frametitle{Back-propagation}
-
-  For the matrix that defines the \alertbf{weights} we want to update those weights based on 
-    
-  \begin{figure}
-    \centering
-    \includegraphics<1>[width=0.85\textwidth]{Learning.pdf} 
-  \end{figure}
-    
-  Here, \bluebf{back-propagation} is shorthand for ``the backward propagation of errors'' since an error is computed at the output and distributed backwards throughout the network's layers.
-  
-  \mysp
-  
-  Really, \bluebf{back-propagation} is \textbf{just a special case of computational differentiation!}. 
-    
-\end{frame}
-
+\subsection[Liquid argon (LAr)]{Liquid argon (LAr)}
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[fragile, shrink=20]
-  \frametitle{Back-propagation}
+\begin{frame}%[shrink=1]
+  \frametitle{Structure of the liquid argon calorimeter(s)}
 
-  Phase 1: propagation
-  \begin{itemize}
-    \item Propagation forward through the network to generate the output value(s)
-    \item Calculation of the cost (error term)
-    \item Propagation of the output activations back through the network using the training pattern target to generate the deltas (the difference between the targeted and actual output values) of all output and hidden neurons.
-  \end{itemize}
+  \vspace{-0.6cm}
 
-  Phase 2: weight update
-
-  \begin{itemize}
-    \item The weight's output delta and input activation are multiplied to find the gradient of the weight.
-    \item A ratio (percentage) of the weight's gradient is subtracted from the weight.
-  \end{itemize}
-
-This ratio (percentage) influences the speed and quality of learning; it is called the learning rate ($\eta$ on the previous slide). The greater the ratio, the faster the neuron trains, but the lower the ratio, the more accurate the training is. The sign of the gradient of a weight indicates whether the error varies directly with, or inversely to, the weight. Therefore, the weight must be updated in the opposite direction, ``descending'' the gradient. 
-
-  \begin{figure}
+  \begin{figure}%[!ht]
     \centering
-    \includegraphics<1>[width=0.99\textwidth]{Pseudocode.png} 
+    \includegraphics[width=0.55\columnwidth]{\ATLASGraphics/LAr-ATLAS.jpg}
+    \includegraphics[width=0.45\columnwidth]{\ATLASGraphics/LAr_TriggerTowers.pdf}\\
+    \vspace{-0.7cm}
+    \includegraphics[width=0.4\columnwidth]{\ATLASCalo/LArDriftSchematic.pdf}
+    \includegraphics[width=0.45\columnwidth]{\ATLASCalo/LArPulseShapeDataPrediction.pdf}
   \end{figure}
  
+
+\end{frame} 
+
+%-----------------------------------------------------------------------------------------
+\subsection[TileCal]{TileCal}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{Structure of the hadronic ``TileCal'' calorimeter}
+
+	  \begin{figure}%[!ht]
+	    \centering
+	    \includegraphics[width=0.9\columnwidth]{\ATLASSchematics/TileCalMechanicsElectronics.pdf}
+	  \end{figure}
+
+\end{frame} 
+
+%=========================================================================================
+\section[Introduction to Particle Physics Data Analysis]{Introduction to Particle Physics Data Analysis}
+%=========================================================================================
+
+%-----------------------------------------------------------------------------------------
+\subsection[Data and Simulation]{Data and Simulation}
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}%[shrink=1]
+  \frametitle{Collecting and Distributing the Data}
+
+  \begin{figure}%[!ht]
+    \centering
+    \includegraphics<1>[width=\columnwidth]{\ATLASPicPath/Trigger/TriggerDAQPipeline.png}
+    \includegraphics<2>[width=\columnwidth]{\ATLASPicPath/Trigger/TDAQ-Diagram-Run3.pdf}
+    \includegraphics<3>[width=\columnwidth]{\ATLASPicPath/GridAndComputing/GridJobs-5May2019.jpg}
+  \end{figure}
   
-    
 \end{frame}
 
 %-----------------------------------------------------------------------------------------
 
-\begin{frame}%[fragile, shrink=20]
-  \frametitle{Training and validation}
+\begin{frame}%[shrink=1]
+  \frametitle{Analyzing the Data}
 
-  \begin{figure}
+  \begin{figure}%[!ht]
     \centering
-    \includegraphics<1>[width=0.99\textwidth]{Validation.pdf} 
+    \includegraphics<1>[width=0.9\columnwidth]{\physPath/ParticlePhysicsWorkflow.png}
   \end{figure}
- 
   
-    
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+\begin{frame}{Four-Vectors in Particle Physics}
+
+A \textbf{four-vector} is an object that transforms linearly under Lorentz transformations:
+\[
+x'^{\mu} = \Lambda^{\mu}{}_{\nu}\, x^{\nu}.
+\]
+
+\vspace{0.5em}
+
+A typical example is the \textbf{spacetime position four-vector}:
+\[
+x^{\mu} = \begin{pmatrix}
+ct \\
+x \\
+y \\
+z
+\end{pmatrix}
+\qquad\text{or}\qquad
+x_{\mu} = \begin{pmatrix}
+ct \\
+-\,x \\
+-\,y \\
+-\,z
+\end{pmatrix}.
+\]
+
+\vspace{0.5em}
+
+Its \textbf{Lorentz-invariant norm} is:
+\[
+x^\mu x_\mu = c^2 t^2 - \vec{x}^{\,2}.
+\]
+
+\vspace{0.7em}
+
+Other common four-vectors:
+\[
+p^\mu = \left(E/c,\; \vec{p}\right), \qquad
+A^\mu = \left(\phi,\; \vec{A}\right).
+\]
+
+\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+%\begin{frame}{Four-Vectors in Particle Physics}
+%
+%\centering 
+%
+%\begin{tikzpicture}[>=stealth, scale=1.2]
+%
+%% axes
+%\draw[->] (0,0) -- (0,3.2) node[above] {$ct$};
+%\draw[->] (0,0) -- (4,0) node[right] {$x$};
+%
+%% 4-vector
+%\draw[very thick,blue,->] (0,0) -- (3,2) node[midway, above left] {$x^\mu$};
+%
+%% components
+%\draw[dashed] (3,2) -- (3,0) node[below] {$x$};
+%\draw[dashed] (3,2) -- (0,2) node[left] {$ct$};
+%
+%\end{tikzpicture}
+%
+%\end{frame}
+
+%-----------------------------------------------------------------------------------------
+
+
+\begin{frame}{Four-Vectors and LHC Data Analysis}
+
+
+A \textbf{four-vector} transforms under Lorentz transformations:
+\[
+p^\mu = (E,\, \vec{p}) .
+\]
+
+At the \textbf{LHC}, nearly all reconstructed physics objects  
+(jets, muons, electrons, photons) are represented as four-vectors:
+\[
+p^\mu = (E,\; p_x,\; p_y,\; p_z).
+\]
+
+\vspace{0.5em}
+
+Event-level observables are Lorentz-invariant combinations of these:
+\[
+m^2 = (p_1^\mu + p_2^\mu)(p_{1\mu} + p_{2\mu})
+\]
+for example, reconstructing the:
+\begin{itemize}
+    \item invariant mass of the Higgs candidate,
+    \item missing transverse momentum for dark matter searches.
+\end{itemize}
+
+
 \end{frame}
 
 
+%-----------------------------------------------------------------------------------------
 
+
+\begin{frame}{Four-Vectors and LHC Data Analysis}
+
+  \centering
+ 
+\begin{tikzpicture}[>=stealth, scale=1.3]
+
+% Axes
+\draw[->] (-3,0) -- (3,0) node[right] {$\phi$};
+\draw[->] (0,-2.5) -- (0,2.5) node[above] {$\eta$};
+
+% Two objects in eta-phi space
+\fill[red] (1.2,1.0) circle (2pt) node[above right] {Object 1};
+\fill[blue] (-0.5,-0.8) circle (2pt) node[below left] {Object 2};
+
+% Dashed projections
+\draw[dashed] (1.2,1.0) -- (1.2,0);
+\draw[dashed] (1.2,1.0) -- (0,1.0);
+\draw[dashed] (-0.5,-0.8) -- (-0.5,0);
+\draw[dashed] (-0.5,-0.8) -- (0,-0.8);
+
+% ΔR circle around Object 1
+\draw[green!50!black, thick, dashed] (1.2,1.0) circle [radius=1.3];
+
+% Δeta and Δphi markers
+\draw[<->] (1.2,1.0) -- (1.2,-0.8) node[midway,right] {$\Delta\eta$};
+\draw[<->] (1.2,-0.8) -- (-0.5,-0.8) node[midway,below] {$\Delta\phi$};
+
+% ΔR line
+\draw[very thick,green!60!black,->] (1.2,1.0) -- (-0.5,-0.8)
+    node[midway,above] {$\Delta R = \sqrt{(\Delta\eta)^2 + (\Delta\phi)^2}$};
+
+\end{tikzpicture}
+
+
+\end{frame}
+  
+%-----------------------------------------------------------------------------------------
+
+
+\begin{frame}{Four-Vectors and LHC Data Analysis}
+
+  \centering
+  
+\begin{tikzpicture}[>=stealth,scale=1.3]
+
+% Axes
+\draw[->] (-3,0) -- (3,0) node[right] {$p_x$};
+\draw[->] (0,-3) -- (0,3) node[above] {$p_y$};
+
+% Jet 1
+\draw[very thick,red,->] (0,0) -- (2,1)
+    node[midway, above] {$\vec{p}_{T,1}$};
+\fill[red] (2,1) circle (2pt) node[above right] {Jet 1};
+
+% Jet 2
+\draw[very thick,blue,->] (0,0) -- (-1.5,-1)
+    node[midway, below left] {$\vec{p}_{T,2}$};
+\fill[blue] (-1.5,-1) circle (2pt) node[below left] {Jet 2};
+
+% MET vector (negative vector sum)
+\draw[very thick,green!60!black,->] (0,0) -- (-0.5,2.2)
+    node[midway, left] {$\vec{E}_T^{\rm miss}$};
+\fill[green!60!black] (-0.5,2.2) circle (2pt);
+
+% Angles
+\draw[dashed] (2,1) -- (2,0);
+\node at (2,-0.2) {$\phi_1$};
+
+\draw[dashed] (-1.5,-1) -- (-1.5,0);
+\node at (-1.5,0.2) {$\phi_2$};
+
+\end{tikzpicture}
+  
+  
+\end{frame}
   
 %==========================================================================================
 %==========================================================================================
